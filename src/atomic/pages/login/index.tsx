@@ -1,18 +1,17 @@
 import { useAuthContext } from "@app/src/context/auth";
-
+import LoginForm, { LoginFormValues } from "./forms/LoginForm";
 
 const Login = () => {
     const { login } = useAuthContext();
-    function handleLogin() {
-        login({
-            email: "teste@teste.com",
-            password: "123456"
+    async function handleLogin(values: LoginFormValues) {
+        await login({
+            email: values?.email,
+            password: values?.password
         })
     }
     return (
         <>
-            <h1>Login</h1>
-            <button onClick={() => handleLogin()}>Logar</button>
+            <LoginForm handleLogin={handleLogin} />
         </>
     )
 }
