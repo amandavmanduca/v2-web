@@ -1,0 +1,12 @@
+query getTemplates($filter: InterviewTemplateFilter $sorting: [InterviewTemplateSort!] $paging: OffsetPaging) {
+    interviewTemplates(filter: $filter, sorting: $sorting, paging: $paging) {
+        nodes {
+            id
+            name
+        }
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+        }
+    }
+}

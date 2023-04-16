@@ -1,4 +1,6 @@
-import FormField, { FormFieldProps, IFormField } from "@app/src/atomic/atoms/FormField";
+import Button from "@app/src/atomic/atoms/Button";
+import FormField, { FormFieldProps } from "@app/src/atomic/atoms/FormField";
+import { Flex } from "@chakra-ui/react";
 import { ValidationErrors } from "final-form";
 import { Form } from 'react-final-form'
 
@@ -8,11 +10,13 @@ const FormProvider = ({
   title,
   submitButton = 'Submit',
   resetButton = 'Limpar',
+  initialValues = {},
   fields
 }: {
   onSubmit: (values: any) => void;
   validate?: ((values: any) => ValidationErrors | Promise<ValidationErrors>) | undefined;
   title: string
+  initialValues?: any;
   submitButton?: string;
   resetButton?: string | null
   fields: FormFieldProps[]
@@ -22,21 +26,23 @@ const FormProvider = ({
     <Form
       onSubmit={onSubmit}
       validate={validate}
+      initialValues={initialValues}
       render={({ handleSubmit, form: { reset } }) => (
-        <form onSubmit={handleSubmit}>
+        <form style={{ width: '100%' }} onSubmit={handleSubmit}>
           <h2>{title}</h2>
-          <div
-            style={{
-              display: 'grid',
-              gridGap: '10px'
-            }}
+          <Flex
+            display="grid"
+            gridGap="10px"
+            marginTop="20px"
           >
-            {fields?.map((field: IFormField, index: number) => (
+            {fields?.map((field: FormFieldProps, index: number) => (
               <FormField key={index} {...field} />
             ))}
-          </div>
-          {resetButton && <button type="reset" onClick={() => reset()}>{resetButton}</button>}
-          <button type="submit">{submitButton}</button>
+          </Flex>
+          <Flex gridGap="10px" marginTop="20px">
+            {resetButton && <Button type="reset" onClick={() => reset()}>{resetButton}</Button>}
+            <Button type="submit">{submitButton}</Button>
+          </Flex>
         </form>
       )}
     />

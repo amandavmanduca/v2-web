@@ -2698,6 +2698,33 @@ export type UserUpdateFilter = {
   role?: InputMaybe<UserRoleEnumFilterComparison>;
 };
 
+export type GetInterviewsQueryVariables = Exact<{
+  filter?: InputMaybe<InterviewFilter>;
+  sorting?: InputMaybe<Array<InterviewSort> | InterviewSort>;
+  paging?: InputMaybe<OffsetPaging>;
+}>;
+
+
+export type GetInterviewsQuery = { __typename?: 'Query', interviews: { __typename?: 'InterviewConnection', nodes: Array<{ __typename?: 'Interview', id: string, name: string }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
+
+export type GetProjectsQueryVariables = Exact<{
+  filter?: InputMaybe<ProjectFilter>;
+  sorting?: InputMaybe<Array<ProjectSort> | ProjectSort>;
+  paging?: InputMaybe<OffsetPaging>;
+}>;
+
+
+export type GetProjectsQuery = { __typename?: 'Query', projects: { __typename?: 'ProjectConnection', nodes: Array<{ __typename?: 'Project', id: string, name?: string | null }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
+
+export type GetTemplatesQueryVariables = Exact<{
+  filter?: InputMaybe<InterviewTemplateFilter>;
+  sorting?: InputMaybe<Array<InterviewTemplateSort> | InterviewTemplateSort>;
+  paging?: InputMaybe<OffsetPaging>;
+}>;
+
+
+export type GetTemplatesQuery = { __typename?: 'Query', interviewTemplates: { __typename?: 'InterviewTemplateConnection', nodes: Array<{ __typename?: 'InterviewTemplate', id: string, name: string }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
+
 export type LoginMutationVariables = Exact<{
   data: AuthInput;
 }>;
@@ -2711,6 +2738,138 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name?: string | null, email?: string | null, role: UserRoleEnum } };
 
 
+export const GetInterviewsDocument = gql`
+    query getInterviews($filter: InterviewFilter, $sorting: [InterviewSort!], $paging: OffsetPaging) {
+  interviews(filter: $filter, sorting: $sorting, paging: $paging) {
+    nodes {
+      id
+      name
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetInterviewsQuery__
+ *
+ * To run a query within a React component, call `useGetInterviewsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetInterviewsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetInterviewsQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      sorting: // value for 'sorting'
+ *      paging: // value for 'paging'
+ *   },
+ * });
+ */
+export function useGetInterviewsQuery(baseOptions?: Apollo.QueryHookOptions<GetInterviewsQuery, GetInterviewsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetInterviewsQuery, GetInterviewsQueryVariables>(GetInterviewsDocument, options);
+      }
+export function useGetInterviewsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetInterviewsQuery, GetInterviewsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetInterviewsQuery, GetInterviewsQueryVariables>(GetInterviewsDocument, options);
+        }
+export type GetInterviewsQueryHookResult = ReturnType<typeof useGetInterviewsQuery>;
+export type GetInterviewsLazyQueryHookResult = ReturnType<typeof useGetInterviewsLazyQuery>;
+export type GetInterviewsQueryResult = Apollo.QueryResult<GetInterviewsQuery, GetInterviewsQueryVariables>;
+export const GetProjectsDocument = gql`
+    query getProjects($filter: ProjectFilter, $sorting: [ProjectSort!], $paging: OffsetPaging) {
+  projects(filter: $filter, sorting: $sorting, paging: $paging) {
+    nodes {
+      id
+      name
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetProjectsQuery__
+ *
+ * To run a query within a React component, call `useGetProjectsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProjectsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProjectsQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      sorting: // value for 'sorting'
+ *      paging: // value for 'paging'
+ *   },
+ * });
+ */
+export function useGetProjectsQuery(baseOptions?: Apollo.QueryHookOptions<GetProjectsQuery, GetProjectsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProjectsQuery, GetProjectsQueryVariables>(GetProjectsDocument, options);
+      }
+export function useGetProjectsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProjectsQuery, GetProjectsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProjectsQuery, GetProjectsQueryVariables>(GetProjectsDocument, options);
+        }
+export type GetProjectsQueryHookResult = ReturnType<typeof useGetProjectsQuery>;
+export type GetProjectsLazyQueryHookResult = ReturnType<typeof useGetProjectsLazyQuery>;
+export type GetProjectsQueryResult = Apollo.QueryResult<GetProjectsQuery, GetProjectsQueryVariables>;
+export const GetTemplatesDocument = gql`
+    query getTemplates($filter: InterviewTemplateFilter, $sorting: [InterviewTemplateSort!], $paging: OffsetPaging) {
+  interviewTemplates(filter: $filter, sorting: $sorting, paging: $paging) {
+    nodes {
+      id
+      name
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetTemplatesQuery__
+ *
+ * To run a query within a React component, call `useGetTemplatesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTemplatesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTemplatesQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *      sorting: // value for 'sorting'
+ *      paging: // value for 'paging'
+ *   },
+ * });
+ */
+export function useGetTemplatesQuery(baseOptions?: Apollo.QueryHookOptions<GetTemplatesQuery, GetTemplatesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTemplatesQuery, GetTemplatesQueryVariables>(GetTemplatesDocument, options);
+      }
+export function useGetTemplatesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTemplatesQuery, GetTemplatesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTemplatesQuery, GetTemplatesQueryVariables>(GetTemplatesDocument, options);
+        }
+export type GetTemplatesQueryHookResult = ReturnType<typeof useGetTemplatesQuery>;
+export type GetTemplatesLazyQueryHookResult = ReturnType<typeof useGetTemplatesLazyQuery>;
+export type GetTemplatesQueryResult = Apollo.QueryResult<GetTemplatesQuery, GetTemplatesQueryVariables>;
 export const LoginDocument = gql`
     mutation login($data: AuthInput!) {
   login(data: $data) {

@@ -59,9 +59,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           });
           await getMe();
 
-          console.log("Autenticado com sucesso!");
+          console.log("Login realizado com sucesso!");
 
-          router.push("/admin/dashboard");
+          router.push("/dashboard/projects");
         }
       } catch (error) {
         console.log(error);

@@ -1,0 +1,12 @@
+query getInterviews($filter: InterviewFilter $sorting: [InterviewSort!] $paging: OffsetPaging) {
+    interviews(filter: $filter, sorting: $sorting, paging: $paging) {
+        nodes {
+            id
+            name
+        }
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+        }
+    }
+}

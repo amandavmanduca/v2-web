@@ -15,27 +15,28 @@ const LoginForm = ({
         {
             name: "email",
             label: "E-mail",
+            type: 'email',
             component: "input",
             placeholder: "Digite seu e-mail"
         },
         {
             name: "password",
             label: "Senha",
+            type: 'password',
             component: "input",
             placeholder: "Digite sua senha"
         },
     ]
 
     return (
-        <>
-            <FormProvider
-                title="Login Form"
-                onSubmit={handleLogin}
-                // validate={}
-                submitButton="Salvar"
-                fields={fields}
-            />
-        </>
+        <FormProvider
+            title="Login Form"
+            onSubmit={handleLogin}
+            initialValues={{}}
+            // validate={}
+            submitButton="Salvar"
+            fields={fields}
+        />
     )
 }
 

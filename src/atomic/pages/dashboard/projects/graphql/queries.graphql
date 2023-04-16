@@ -1,0 +1,12 @@
+query getProjects($filter: ProjectFilter $sorting: [ProjectSort!] $paging: OffsetPaging) {
+    projects(filter: $filter, sorting: $sorting, paging: $paging) {
+        nodes {
+            id
+            name
+        }
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+        }
+    }
+}
