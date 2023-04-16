@@ -1,4 +1,4 @@
-import { GetProjectsDocument, GetTemplatesDocument, Project } from "@app/graphql/generated";
+import { GetTemplatesDocument, Project } from "@app/graphql/generated";
 import DashboardTemplate from "@app/src/atomic/templates/DashboardTemplate"
 import LayoutTemplate from "@app/src/atomic/templates/LayoutTemplate";
 
@@ -11,6 +11,11 @@ const Templates = () => {
                 options={{
                     limit: 4
                 }}
+                refetchFilter={(value: string, refetch: any) => refetch({
+                    filter: {
+                        name: { iLike: `%${value}%` }
+                    }
+                })}
                 Card={({ item }: { item: Project }) => (
                     <div>
                         <h1>{item?.id}</h1>

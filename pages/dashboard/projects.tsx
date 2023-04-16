@@ -11,6 +11,11 @@ const Projects = () => {
                 options={{
                     limit: 4
                 }}
+                refetchFilter={(value: string, refetch: any) => refetch({
+                    filter: {
+                        name: { iLike: `%${value}%` }
+                    }
+                })}
                 Card={({ item }: { item: Project }) => (
                     <div>
                         <h1>{item?.id}</h1>
