@@ -1,13 +1,13 @@
-import { GetInterviewsDocument, Project } from "@app/graphql/generated";
+import { GetTemplatesDocument, InterviewTemplate, Project } from "@app/graphql/generated";
 import DashboardTemplate from "@app/src/atomic/templates/DashboardTemplate"
 import LayoutTemplate from "@app/src/atomic/templates/LayoutTemplate";
 
-const Projects = () => {
+const Templates = () => {
     return (
-        <DashboardTemplate title="Entrevistas">
+        <DashboardTemplate title="Modelos">
             <LayoutTemplate
-                paginatedQueryName="interviews"
-                query={GetInterviewsDocument}
+                paginatedQueryName="interviewTemplates"
+                query={GetTemplatesDocument}
                 options={{
                     limit: 4
                 }}
@@ -16,7 +16,7 @@ const Projects = () => {
                         name: { iLike: `%${value}%` }
                     }
                 })}
-                Card={({ item }: { item: Project }) => (
+                Card={({ item }: { item: InterviewTemplate }) => (
                     <div>
                         <h1>{item?.id}</h1>
                         <p>{item?.name}</p>
@@ -26,4 +26,4 @@ const Projects = () => {
         </DashboardTemplate>
     )
 }
-export default Projects;
+export default Templates;

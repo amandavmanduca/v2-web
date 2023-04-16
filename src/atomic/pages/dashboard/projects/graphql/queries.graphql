@@ -10,3 +10,17 @@ query getProjects($filter: ProjectFilter $sorting: [ProjectSort!] $paging: Offse
         }
     }
 }
+
+query getUsersToProjects($filter: UserFilter $paging: OffsetPaging) {
+    users(filter: $filter, paging: $paging) {
+        nodes {
+            id
+            name
+            role
+        }
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+        }
+    }
+}

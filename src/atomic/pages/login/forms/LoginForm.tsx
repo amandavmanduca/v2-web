@@ -16,14 +16,18 @@ const LoginForm = ({
             name: "email",
             label: "E-mail",
             type: 'email',
-            component: "input",
+            component: {
+                type: "input"
+            },
             placeholder: "Digite seu e-mail"
         },
         {
             name: "password",
             label: "Senha",
             type: 'password',
-            component: "input",
+            component: {
+                type: "input"
+            },
             placeholder: "Digite sua senha"
         },
     ]

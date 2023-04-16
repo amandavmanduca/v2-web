@@ -32,7 +32,7 @@ const FormProvider = ({
           <h2>{title}</h2>
           <Flex
             display="grid"
-            gridGap="10px"
+            gridGap="15px"
             marginTop="20px"
           >
             {fields?.map((field: FormFieldProps, index: number) => (
