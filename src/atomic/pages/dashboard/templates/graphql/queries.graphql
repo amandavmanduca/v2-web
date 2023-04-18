@@ -24,3 +24,34 @@ query getMyCreatedProjects {
     }
   }
 }
+
+query getTemplate($id: ID!) {
+  interviewTemplate(id: $id) {
+    id
+    name
+    version
+    isFinished
+    isAvailable
+    project {
+      id
+      name
+    }
+    questionGroups {
+      id
+      name
+      description
+      questions {
+        id
+        index
+        title
+        description
+        placeholder
+        type
+        group {
+          id
+        }
+        options
+      }
+    }
+  }
+}

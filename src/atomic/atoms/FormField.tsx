@@ -41,6 +41,9 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
         placeholder={placeholder}
     >
         {({ input, meta }) => {
+        const isMulti = {
+            isMulti: component?.isMulti
+        }
         return (
           <Flex display="grid" style={{ width: '100%', ...style }}>
             {label && <FormLabel w="100%">{label}</FormLabel>}
@@ -50,7 +53,7 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
                 style={{ width: '100%', backgroundColor: 'white' }}
                 {...input}
                 options={component?.options}
-                isMulti={component?.isMulti}
+                {...component.type === 'select' && isMulti}
             />
             {meta?.touched && meta?.error && <span>{meta?.error}</span>}
           </Flex>

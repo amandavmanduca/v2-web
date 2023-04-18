@@ -3,3 +3,9 @@ mutation createOneTemplate($input: CreateOneInterviewTemplateInput!) {
         id
     }
 }
+
+mutation createOneQuestionGroup($input: CreateOneQuestionGroupInput!) {
+    createOneQuestionGroup(input: $input) {
+        id
+    }
+}

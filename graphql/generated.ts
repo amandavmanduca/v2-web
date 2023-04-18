@@ -553,6 +553,7 @@ export type InterviewTemplate = {
   isAvailable: Scalars['Boolean'];
   isFinished: Scalars['Boolean'];
   name: Scalars['String'];
+  project?: Maybe<Project>;
   projectId: Scalars['String'];
   questionGroups?: Maybe<Array<QuestionGroup>>;
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -645,10 +646,25 @@ export type InterviewTemplateFilter = {
   isFinished?: InputMaybe<BooleanFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<InterviewTemplateFilter>>;
+  project?: InputMaybe<InterviewTemplateFilterProjectFilter>;
   projectId?: InputMaybe<StringFieldComparison>;
   questionGroups?: InputMaybe<InterviewTemplateFilterQuestionGroupFilter>;
   updatedAt?: InputMaybe<DateFieldComparison>;
   version?: InputMaybe<NumberFieldComparison>;
+};
+
+export type InterviewTemplateFilterProjectFilter = {
+  and?: InputMaybe<Array<InterviewTemplateFilterProjectFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  creatorId?: InputMaybe<StringFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  generalDescription?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
+  interviewerOrientations?: InputMaybe<StringFieldComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<InterviewTemplateFilterProjectFilter>>;
+  terms?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type InterviewTemplateFilterQuestionGroupFilter = {
@@ -799,6 +815,7 @@ export type Mutation = {
   removeInterviewerFromResponse: Response;
   removeInterviewersFromProject: Project;
   removeProjectFromInterview: Interview;
+  removeProjectFromInterviewTemplate: InterviewTemplate;
   removeProjectsFromUser: User;
   removeQuestionFromResponse: Response;
   removeQuestionGroupsFromInterviewTemplate: InterviewTemplate;
@@ -821,6 +838,7 @@ export type Mutation = {
   setInterviewerOnResponse: Response;
   setInterviewersOnProject: Project;
   setProjectOnInterview: Interview;
+  setProjectOnInterviewTemplate: InterviewTemplate;
   setProjectsOnUser: User;
   setQuestionGroupsOnInterviewTemplate: InterviewTemplate;
   setQuestionOnResponse: Response;
@@ -1137,6 +1155,11 @@ export type MutationRemoveProjectFromInterviewArgs = {
 };
 
 
+export type MutationRemoveProjectFromInterviewTemplateArgs = {
+  input: RemoveProjectFromInterviewTemplateInput;
+};
+
+
 export type MutationRemoveProjectsFromUserArgs = {
   input: RemoveProjectsFromUserInput;
 };
@@ -1244,6 +1267,11 @@ export type MutationSetInterviewersOnProjectArgs = {
 
 export type MutationSetProjectOnInterviewArgs = {
   input: SetProjectOnInterviewInput;
+};
+
+
+export type MutationSetProjectOnInterviewTemplateArgs = {
+  input: SetProjectOnInterviewTemplateInput;
 };
 
 
@@ -2430,6 +2458,13 @@ export type RemoveProjectFromInterviewInput = {
   relationId: Scalars['ID'];
 };
 
+export type RemoveProjectFromInterviewTemplateInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The id of relation. */
+  relationId: Scalars['ID'];
+};
+
 export type RemoveProjectsFromUserInput = {
   /** The id of the record. */
   id: Scalars['ID'];
@@ -2773,6 +2808,13 @@ export type SetInterviewersOnProjectInput = {
 };
 
 export type SetProjectOnInterviewInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The id of relation. */
+  relationId: Scalars['ID'];
+};
+
+export type SetProjectOnInterviewTemplateInput = {
   /** The id of the record. */
   id: Scalars['ID'];
   /** The id of relation. */
@@ -3276,6 +3318,13 @@ export type CreateOneTemplateMutationVariables = Exact<{
 
 export type CreateOneTemplateMutation = { __typename?: 'Mutation', createOneInterviewTemplate: { __typename?: 'InterviewTemplate', id: string } };
 
+export type CreateOneQuestionGroupMutationVariables = Exact<{
+  input: CreateOneQuestionGroupInput;
+}>;
+
+
+export type CreateOneQuestionGroupMutation = { __typename?: 'Mutation', createOneQuestionGroup: { __typename?: 'QuestionGroup', id: string } };
+
 export type GetTemplatesQueryVariables = Exact<{
   filter?: InputMaybe<InterviewTemplateFilter>;
   sorting?: InputMaybe<Array<InterviewTemplateSort> | InterviewTemplateSort>;
@@ -3289,6 +3338,13 @@ export type GetMyCreatedProjectsQueryVariables = Exact<{ [key: string]: never; }
 
 
 export type GetMyCreatedProjectsQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name?: string | null, createdProjects?: Array<{ __typename?: 'Project', id: string, name?: string | null, template?: { __typename?: 'InterviewTemplate', id: string } | null }> | null } };
+
+export type GetTemplateQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetTemplateQuery = { __typename?: 'Query', interviewTemplate?: { __typename?: 'InterviewTemplate', id: string, name: string, version: number, isFinished: boolean, isAvailable: boolean, project?: { __typename?: 'Project', id: string, name?: string | null } | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index: number, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, group?: { __typename?: 'QuestionGroup', id: string } | null }> | null }> | null } | null };
 
 export type LoginMutationVariables = Exact<{
   data: AuthInput;
@@ -3501,6 +3557,39 @@ export function useCreateOneTemplateMutation(baseOptions?: Apollo.MutationHookOp
 export type CreateOneTemplateMutationHookResult = ReturnType<typeof useCreateOneTemplateMutation>;
 export type CreateOneTemplateMutationResult = Apollo.MutationResult<CreateOneTemplateMutation>;
 export type CreateOneTemplateMutationOptions = Apollo.BaseMutationOptions<CreateOneTemplateMutation, CreateOneTemplateMutationVariables>;
+export const CreateOneQuestionGroupDocument = gql`
+    mutation createOneQuestionGroup($input: CreateOneQuestionGroupInput!) {
+  createOneQuestionGroup(input: $input) {
+    id
+  }
+}
+    `;
+export type CreateOneQuestionGroupMutationFn = Apollo.MutationFunction<CreateOneQuestionGroupMutation, CreateOneQuestionGroupMutationVariables>;
+
+/**
+ * __useCreateOneQuestionGroupMutation__
+ *
+ * To run a mutation, you first call `useCreateOneQuestionGroupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOneQuestionGroupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOneQuestionGroupMutation, { data, loading, error }] = useCreateOneQuestionGroupMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateOneQuestionGroupMutation(baseOptions?: Apollo.MutationHookOptions<CreateOneQuestionGroupMutation, CreateOneQuestionGroupMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOneQuestionGroupMutation, CreateOneQuestionGroupMutationVariables>(CreateOneQuestionGroupDocument, options);
+      }
+export type CreateOneQuestionGroupMutationHookResult = ReturnType<typeof useCreateOneQuestionGroupMutation>;
+export type CreateOneQuestionGroupMutationResult = Apollo.MutationResult<CreateOneQuestionGroupMutation>;
+export type CreateOneQuestionGroupMutationOptions = Apollo.BaseMutationOptions<CreateOneQuestionGroupMutation, CreateOneQuestionGroupMutationVariables>;
 export const GetTemplatesDocument = gql`
     query getTemplates($filter: InterviewTemplateFilter, $sorting: [InterviewTemplateSort!], $paging: OffsetPaging) {
   interviewTemplates(filter: $filter, sorting: $sorting, paging: $paging) {
@@ -3587,6 +3676,66 @@ export function useGetMyCreatedProjectsLazyQuery(baseOptions?: Apollo.LazyQueryH
 export type GetMyCreatedProjectsQueryHookResult = ReturnType<typeof useGetMyCreatedProjectsQuery>;
 export type GetMyCreatedProjectsLazyQueryHookResult = ReturnType<typeof useGetMyCreatedProjectsLazyQuery>;
 export type GetMyCreatedProjectsQueryResult = Apollo.QueryResult<GetMyCreatedProjectsQuery, GetMyCreatedProjectsQueryVariables>;
+export const GetTemplateDocument = gql`
+    query getTemplate($id: ID!) {
+  interviewTemplate(id: $id) {
+    id
+    name
+    version
+    isFinished
+    isAvailable
+    project {
+      id
+      name
+    }
+    questionGroups {
+      id
+      name
+      description
+      questions {
+        id
+        index
+        title
+        description
+        placeholder
+        type
+        group {
+          id
+        }
+        options
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetTemplateQuery__
+ *
+ * To run a query within a React component, call `useGetTemplateQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTemplateQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTemplateQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetTemplateQuery(baseOptions: Apollo.QueryHookOptions<GetTemplateQuery, GetTemplateQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTemplateQuery, GetTemplateQueryVariables>(GetTemplateDocument, options);
+      }
+export function useGetTemplateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTemplateQuery, GetTemplateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTemplateQuery, GetTemplateQueryVariables>(GetTemplateDocument, options);
+        }
+export type GetTemplateQueryHookResult = ReturnType<typeof useGetTemplateQuery>;
+export type GetTemplateLazyQueryHookResult = ReturnType<typeof useGetTemplateLazyQuery>;
+export type GetTemplateQueryResult = Apollo.QueryResult<GetTemplateQuery, GetTemplateQueryVariables>;
 export const LoginDocument = gql`
     mutation login($data: AuthInput!) {
   login(data: $data) {
