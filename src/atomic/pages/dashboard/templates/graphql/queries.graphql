@@ -10,3 +10,17 @@ query getTemplates($filter: InterviewTemplateFilter $sorting: [InterviewTemplate
         }
     }
 }
+
+query getMyCreatedProjects {
+  me {
+    id
+    name
+    createdProjects {
+      id
+      name
+      template {
+        id
+      }
+    }
+  }
+}

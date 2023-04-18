@@ -100,7 +100,6 @@ const CreateProject = () => {
         })()
     }, [])
     async function handleSubmit(values: any) {
-        console.log('values ', values)
         await createProject({
             project: {
                 name: values?.name,

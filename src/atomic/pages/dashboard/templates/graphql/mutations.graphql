@@ -1,0 +1,5 @@
+mutation createOneTemplate($input: CreateOneInterviewTemplateInput!) {
+    createOneInterviewTemplate(input: $input) {
+        id
+    }
+}

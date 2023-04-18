@@ -30,6 +30,13 @@ export type AddCoordinatorsToProjectInput = {
   relationIds: Array<Scalars['ID']>;
 };
 
+export type AddCreatedProjectsToUserInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
 export type AddDependenciesToQuestionInput = {
   /** The id of the record. */
   id: Scalars['ID'];
@@ -44,7 +51,21 @@ export type AddDependentsToQuestionInput = {
   relationIds: Array<Scalars['ID']>;
 };
 
+export type AddEnrolledProjectsToUserInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
 export type AddInterviewersToProjectInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
+export type AddProjectsToUserInput = {
   /** The id of the record. */
   id: Scalars['ID'];
   /** The ids of the relations. */
@@ -221,6 +242,26 @@ export type CreateUserInput = {
   role: UserRoleEnum;
 };
 
+export type DateFieldComparison = {
+  between?: InputMaybe<DateFieldComparisonBetween>;
+  eq?: InputMaybe<Scalars['DateTime']>;
+  gt?: InputMaybe<Scalars['DateTime']>;
+  gte?: InputMaybe<Scalars['DateTime']>;
+  in?: InputMaybe<Array<Scalars['DateTime']>>;
+  is?: InputMaybe<Scalars['Boolean']>;
+  isNot?: InputMaybe<Scalars['Boolean']>;
+  lt?: InputMaybe<Scalars['DateTime']>;
+  lte?: InputMaybe<Scalars['DateTime']>;
+  neq?: InputMaybe<Scalars['DateTime']>;
+  notBetween?: InputMaybe<DateFieldComparisonBetween>;
+  notIn?: InputMaybe<Array<Scalars['DateTime']>>;
+};
+
+export type DateFieldComparisonBetween = {
+  lower: Scalars['DateTime'];
+  upper: Scalars['DateTime'];
+};
+
 export type DeleteManyInterviewTemplatesInput = {
   /** Filter to find records to delete */
   filter: InterviewTemplateDeleteFilter;
@@ -325,10 +366,14 @@ export type Interview = {
 
 export type InterviewAggregateGroupBy = {
   __typename?: 'InterviewAggregateGroupBy';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
   interviewerId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   projectId?: Maybe<Scalars['String']>;
   templateId?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type InterviewConnection = {
@@ -341,19 +386,27 @@ export type InterviewConnection = {
 
 export type InterviewCountAggregate = {
   __typename?: 'InterviewCountAggregate';
+  createdAt?: Maybe<Scalars['Int']>;
+  deletedAt?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
   interviewerId?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['Int']>;
   projectId?: Maybe<Scalars['Int']>;
   templateId?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['Int']>;
 };
 
 export type InterviewDeleteFilter = {
   and?: InputMaybe<Array<InterviewDeleteFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   interviewerId?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<InterviewDeleteFilter>>;
   projectId?: InputMaybe<StringFieldComparison>;
   templateId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type InterviewDeleteResponse = {
@@ -371,6 +424,9 @@ export type InterviewDeleteResponse = {
 export type InterviewFilter = {
   and?: InputMaybe<Array<InterviewFilter>>;
   answers?: InputMaybe<InterviewFilterInterviewResponseFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   interviewer?: InputMaybe<InterviewFilterUserFilter>;
   interviewerId?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
@@ -379,59 +435,84 @@ export type InterviewFilter = {
   projectId?: InputMaybe<StringFieldComparison>;
   template?: InputMaybe<InterviewFilterInterviewTemplateFilter>;
   templateId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type InterviewFilterInterviewResponseFilter = {
   and?: InputMaybe<Array<InterviewFilterInterviewResponseFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   interviewId?: InputMaybe<StringFieldComparison>;
   interviewerId: StringFieldComparison;
   or?: InputMaybe<Array<InterviewFilterInterviewResponseFilter>>;
   questionId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type InterviewFilterInterviewTemplateFilter = {
   and?: InputMaybe<Array<InterviewFilterInterviewTemplateFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
   creatorId?: InputMaybe<StringFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   isAvailable?: InputMaybe<BooleanFieldComparison>;
   isFinished?: InputMaybe<BooleanFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<InterviewFilterInterviewTemplateFilter>>;
   projectId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
   version?: InputMaybe<NumberFieldComparison>;
 };
 
 export type InterviewFilterProjectFilter = {
   and?: InputMaybe<Array<InterviewFilterProjectFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
   creatorId?: InputMaybe<StringFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   generalDescription?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   interviewerOrientations?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<InterviewFilterProjectFilter>>;
   terms?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type InterviewFilterUserFilter = {
   and?: InputMaybe<Array<InterviewFilterUserFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   email?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<InterviewFilterUserFilter>>;
   role?: InputMaybe<UserRoleEnumFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type InterviewMaxAggregate = {
   __typename?: 'InterviewMaxAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
   interviewerId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   projectId?: Maybe<Scalars['String']>;
   templateId?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type InterviewMinAggregate = {
   __typename?: 'InterviewMinAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
   interviewerId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   projectId?: Maybe<Scalars['String']>;
   templateId?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type InterviewResponse = {
@@ -453,10 +534,14 @@ export type InterviewSort = {
 };
 
 export enum InterviewSortFields {
+  CreatedAt = 'createdAt',
+  DeletedAt = 'deletedAt',
+  Id = 'id',
   InterviewerId = 'interviewerId',
   Name = 'name',
   ProjectId = 'projectId',
-  TemplateId = 'templateId'
+  TemplateId = 'templateId',
+  UpdatedAt = 'updatedAt'
 }
 
 export type InterviewTemplate = {
@@ -482,11 +567,15 @@ export type InterviewTemplateQuestionGroupsArgs = {
 
 export type InterviewTemplateAggregateGroupBy = {
   __typename?: 'InterviewTemplateAggregateGroupBy';
+  createdAt?: Maybe<Scalars['DateTime']>;
   creatorId?: Maybe<Scalars['String']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
   isAvailable?: Maybe<Scalars['Boolean']>;
   isFinished?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
   projectId?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
   version?: Maybe<Scalars['Float']>;
 };
 
@@ -505,22 +594,30 @@ export type InterviewTemplateConnection = {
 
 export type InterviewTemplateCountAggregate = {
   __typename?: 'InterviewTemplateCountAggregate';
+  createdAt?: Maybe<Scalars['Int']>;
   creatorId?: Maybe<Scalars['Int']>;
+  deletedAt?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
   isAvailable?: Maybe<Scalars['Int']>;
   isFinished?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['Int']>;
   projectId?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['Int']>;
   version?: Maybe<Scalars['Int']>;
 };
 
 export type InterviewTemplateDeleteFilter = {
   and?: InputMaybe<Array<InterviewTemplateDeleteFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
   creatorId?: InputMaybe<StringFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   isAvailable?: InputMaybe<BooleanFieldComparison>;
   isFinished?: InputMaybe<BooleanFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<InterviewTemplateDeleteFilter>>;
   projectId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
   version?: InputMaybe<NumberFieldComparison>;
 };
 
@@ -540,37 +637,53 @@ export type InterviewTemplateDeleteResponse = {
 
 export type InterviewTemplateFilter = {
   and?: InputMaybe<Array<InterviewTemplateFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
   creatorId?: InputMaybe<StringFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   isAvailable?: InputMaybe<BooleanFieldComparison>;
   isFinished?: InputMaybe<BooleanFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<InterviewTemplateFilter>>;
   projectId?: InputMaybe<StringFieldComparison>;
   questionGroups?: InputMaybe<InterviewTemplateFilterQuestionGroupFilter>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
   version?: InputMaybe<NumberFieldComparison>;
 };
 
 export type InterviewTemplateFilterQuestionGroupFilter = {
   and?: InputMaybe<Array<InterviewTemplateFilterQuestionGroupFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<InterviewTemplateFilterQuestionGroupFilter>>;
   templateId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type InterviewTemplateMaxAggregate = {
   __typename?: 'InterviewTemplateMaxAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
   creatorId?: Maybe<Scalars['String']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   projectId?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
   version?: Maybe<Scalars['Float']>;
 };
 
 export type InterviewTemplateMinAggregate = {
   __typename?: 'InterviewTemplateMinAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
   creatorId?: Maybe<Scalars['String']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   projectId?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
   version?: Maybe<Scalars['Float']>;
 };
 
@@ -581,11 +694,15 @@ export type InterviewTemplateSort = {
 };
 
 export enum InterviewTemplateSortFields {
+  CreatedAt = 'createdAt',
   CreatorId = 'creatorId',
+  DeletedAt = 'deletedAt',
+  Id = 'id',
   IsAvailable = 'isAvailable',
   IsFinished = 'isFinished',
   Name = 'name',
   ProjectId = 'projectId',
+  UpdatedAt = 'updatedAt',
   Version = 'version'
 }
 
@@ -596,31 +713,42 @@ export type InterviewTemplateSumAggregate = {
 
 export type InterviewTemplateUpdateFilter = {
   and?: InputMaybe<Array<InterviewTemplateUpdateFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
   creatorId?: InputMaybe<StringFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   isAvailable?: InputMaybe<BooleanFieldComparison>;
   isFinished?: InputMaybe<BooleanFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<InterviewTemplateUpdateFilter>>;
   projectId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
   version?: InputMaybe<NumberFieldComparison>;
 };
 
 export type InterviewUpdateFilter = {
   and?: InputMaybe<Array<InterviewUpdateFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   interviewerId?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<InterviewUpdateFilter>>;
   projectId?: InputMaybe<StringFieldComparison>;
   templateId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   addAnswersToQuestion: Question;
   addCoordinatorsToProject: Project;
+  addCreatedProjectsToUser: User;
   addDependenciesToQuestion: Question;
   addDependentsToQuestion: Question;
+  addEnrolledProjectsToUser: User;
   addInterviewersToProject: Project;
+  addProjectsToUser: User;
   addQuestionGroupsToInterviewTemplate: InterviewTemplate;
   addQuestionsToQuestionGroup: QuestionGroup;
   createManyInterviewTemplates: Array<InterviewTemplate>;
@@ -659,38 +787,46 @@ export type Mutation = {
   removeAnswersFromInterview: Interview;
   removeAnswersFromQuestion: Question;
   removeCoordinatorsFromProject: Project;
+  removeCreatedProjectsFromUser: User;
   removeDependenciesFromQuestion: Question;
   removeDependencyFromQuestionDependency: QuestionDependency;
   removeDependentFromQuestionDependency: QuestionDependency;
   removeDependentsFromQuestion: Question;
+  removeEnrolledProjectsFromUser: User;
   removeGroupFromQuestion: Question;
   removeInterviewFromResponse: Response;
   removeInterviewerFromInterview: Interview;
   removeInterviewerFromResponse: Response;
   removeInterviewersFromProject: Project;
   removeProjectFromInterview: Interview;
+  removeProjectsFromUser: User;
   removeQuestionFromResponse: Response;
   removeQuestionGroupsFromInterviewTemplate: InterviewTemplate;
   removeQuestionsFromQuestionGroup: QuestionGroup;
   removeTemplateFromInterview: Interview;
+  removeTemplateFromProject: Project;
   removeTemplateFromQuestionGroup: QuestionGroup;
   setAnswersOnInterview: Interview;
   setAnswersOnQuestion: Question;
   setCoordinatorsOnProject: Project;
+  setCreatedProjectsOnUser: User;
   setDependenciesOnQuestion: Question;
   setDependencyOnQuestionDependency: QuestionDependency;
   setDependentOnQuestionDependency: QuestionDependency;
   setDependentsOnQuestion: Question;
+  setEnrolledProjectsOnUser: User;
   setGroupOnQuestion: Question;
   setInterviewOnResponse: Response;
   setInterviewerOnInterview: Interview;
   setInterviewerOnResponse: Response;
   setInterviewersOnProject: Project;
   setProjectOnInterview: Interview;
+  setProjectsOnUser: User;
   setQuestionGroupsOnInterviewTemplate: InterviewTemplate;
   setQuestionOnResponse: Response;
   setQuestionsOnQuestionGroup: QuestionGroup;
   setTemplateOnInterview: Interview;
+  setTemplateOnProject: Project;
   setTemplateOnQuestionGroup: QuestionGroup;
   updateManyInterviewTemplates: UpdateManyResponse;
   updateManyInterviews: UpdateManyResponse;
@@ -721,6 +857,11 @@ export type MutationAddCoordinatorsToProjectArgs = {
 };
 
 
+export type MutationAddCreatedProjectsToUserArgs = {
+  input: AddCreatedProjectsToUserInput;
+};
+
+
 export type MutationAddDependenciesToQuestionArgs = {
   input: AddDependenciesToQuestionInput;
 };
@@ -731,8 +872,18 @@ export type MutationAddDependentsToQuestionArgs = {
 };
 
 
+export type MutationAddEnrolledProjectsToUserArgs = {
+  input: AddEnrolledProjectsToUserInput;
+};
+
+
 export type MutationAddInterviewersToProjectArgs = {
   input: AddInterviewersToProjectInput;
+};
+
+
+export type MutationAddProjectsToUserArgs = {
+  input: AddProjectsToUserInput;
 };
 
 
@@ -926,6 +1077,11 @@ export type MutationRemoveCoordinatorsFromProjectArgs = {
 };
 
 
+export type MutationRemoveCreatedProjectsFromUserArgs = {
+  input: RemoveCreatedProjectsFromUserInput;
+};
+
+
 export type MutationRemoveDependenciesFromQuestionArgs = {
   input: RemoveDependenciesFromQuestionInput;
 };
@@ -943,6 +1099,11 @@ export type MutationRemoveDependentFromQuestionDependencyArgs = {
 
 export type MutationRemoveDependentsFromQuestionArgs = {
   input: RemoveDependentsFromQuestionInput;
+};
+
+
+export type MutationRemoveEnrolledProjectsFromUserArgs = {
+  input: RemoveEnrolledProjectsFromUserInput;
 };
 
 
@@ -976,6 +1137,11 @@ export type MutationRemoveProjectFromInterviewArgs = {
 };
 
 
+export type MutationRemoveProjectsFromUserArgs = {
+  input: RemoveProjectsFromUserInput;
+};
+
+
 export type MutationRemoveQuestionFromResponseArgs = {
   input: RemoveQuestionFromResponseInput;
 };
@@ -993,6 +1159,11 @@ export type MutationRemoveQuestionsFromQuestionGroupArgs = {
 
 export type MutationRemoveTemplateFromInterviewArgs = {
   input: RemoveTemplateFromInterviewInput;
+};
+
+
+export type MutationRemoveTemplateFromProjectArgs = {
+  input: RemoveTemplateFromProjectInput;
 };
 
 
@@ -1016,6 +1187,11 @@ export type MutationSetCoordinatorsOnProjectArgs = {
 };
 
 
+export type MutationSetCreatedProjectsOnUserArgs = {
+  input: SetCreatedProjectsOnUserInput;
+};
+
+
 export type MutationSetDependenciesOnQuestionArgs = {
   input: SetDependenciesOnQuestionInput;
 };
@@ -1033,6 +1209,11 @@ export type MutationSetDependentOnQuestionDependencyArgs = {
 
 export type MutationSetDependentsOnQuestionArgs = {
   input: SetDependentsOnQuestionInput;
+};
+
+
+export type MutationSetEnrolledProjectsOnUserArgs = {
+  input: SetEnrolledProjectsOnUserInput;
 };
 
 
@@ -1066,6 +1247,11 @@ export type MutationSetProjectOnInterviewArgs = {
 };
 
 
+export type MutationSetProjectsOnUserArgs = {
+  input: SetProjectsOnUserInput;
+};
+
+
 export type MutationSetQuestionGroupsOnInterviewTemplateArgs = {
   input: SetQuestionGroupsOnInterviewTemplateInput;
 };
@@ -1083,6 +1269,11 @@ export type MutationSetQuestionsOnQuestionGroupArgs = {
 
 export type MutationSetTemplateOnInterviewArgs = {
   input: SetTemplateOnInterviewInput;
+};
+
+
+export type MutationSetTemplateOnProjectArgs = {
+  input: SetTemplateOnProjectInput;
 };
 
 
@@ -1216,6 +1407,7 @@ export type Project = {
   interviewerOrientations?: Maybe<Scalars['String']>;
   interviewers?: Maybe<ProjectInterviewersConnection>;
   name?: Maybe<Scalars['String']>;
+  template?: Maybe<InterviewTemplate>;
   terms?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
@@ -1235,11 +1427,15 @@ export type ProjectInterviewersArgs = {
 
 export type ProjectAggregateGroupBy = {
   __typename?: 'ProjectAggregateGroupBy';
+  createdAt?: Maybe<Scalars['DateTime']>;
   creatorId?: Maybe<Scalars['String']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   generalDescription?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   interviewerOrientations?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   terms?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type ProjectConnection = {
@@ -1252,21 +1448,29 @@ export type ProjectConnection = {
 
 export type ProjectCountAggregate = {
   __typename?: 'ProjectCountAggregate';
+  createdAt?: Maybe<Scalars['Int']>;
   creatorId?: Maybe<Scalars['Int']>;
+  deletedAt?: Maybe<Scalars['Int']>;
   generalDescription?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
   interviewerOrientations?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['Int']>;
   terms?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['Int']>;
 };
 
 export type ProjectDeleteFilter = {
   and?: InputMaybe<Array<ProjectDeleteFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
   creatorId?: InputMaybe<StringFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   generalDescription?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   interviewerOrientations?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<ProjectDeleteFilter>>;
   terms?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type ProjectDeleteResponse = {
@@ -1285,21 +1489,45 @@ export type ProjectDeleteResponse = {
 export type ProjectFilter = {
   and?: InputMaybe<Array<ProjectFilter>>;
   coordinators?: InputMaybe<ProjectFilterUserFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
   creatorId?: InputMaybe<StringFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   generalDescription?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   interviewerOrientations?: InputMaybe<StringFieldComparison>;
   interviewers?: InputMaybe<ProjectFilterUserFilter>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<ProjectFilter>>;
+  template?: InputMaybe<ProjectFilterInterviewTemplateFilter>;
   terms?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type ProjectFilterInterviewTemplateFilter = {
+  and?: InputMaybe<Array<ProjectFilterInterviewTemplateFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  creatorId?: InputMaybe<StringFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
+  isAvailable?: InputMaybe<BooleanFieldComparison>;
+  isFinished?: InputMaybe<BooleanFieldComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<ProjectFilterInterviewTemplateFilter>>;
+  projectId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+  version?: InputMaybe<NumberFieldComparison>;
 };
 
 export type ProjectFilterUserFilter = {
   and?: InputMaybe<Array<ProjectFilterUserFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   email?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<ProjectFilterUserFilter>>;
   role?: InputMaybe<UserRoleEnumFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type ProjectInterviewersConnection = {
@@ -1312,20 +1540,28 @@ export type ProjectInterviewersConnection = {
 
 export type ProjectMaxAggregate = {
   __typename?: 'ProjectMaxAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
   creatorId?: Maybe<Scalars['String']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   generalDescription?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   interviewerOrientations?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   terms?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type ProjectMinAggregate = {
   __typename?: 'ProjectMinAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
   creatorId?: Maybe<Scalars['String']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   generalDescription?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   interviewerOrientations?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   terms?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type ProjectSort = {
@@ -1335,21 +1571,29 @@ export type ProjectSort = {
 };
 
 export enum ProjectSortFields {
+  CreatedAt = 'createdAt',
   CreatorId = 'creatorId',
+  DeletedAt = 'deletedAt',
   GeneralDescription = 'generalDescription',
+  Id = 'id',
   InterviewerOrientations = 'interviewerOrientations',
   Name = 'name',
-  Terms = 'terms'
+  Terms = 'terms',
+  UpdatedAt = 'updatedAt'
 }
 
 export type ProjectUpdateFilter = {
   and?: InputMaybe<Array<ProjectUpdateFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
   creatorId?: InputMaybe<StringFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   generalDescription?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   interviewerOrientations?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<ProjectUpdateFilter>>;
   terms?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type Query = {
@@ -1519,11 +1763,15 @@ export type QuestionDependentsArgs = {
 
 export type QuestionAggregateGroupBy = {
   __typename?: 'QuestionAggregateGroupBy';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   index?: Maybe<Scalars['Float']>;
   placeholder?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   type?: Maybe<QuestionTypeEnum>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type QuestionAvgAggregate = {
@@ -1541,21 +1789,29 @@ export type QuestionConnection = {
 
 export type QuestionCountAggregate = {
   __typename?: 'QuestionCountAggregate';
+  createdAt?: Maybe<Scalars['Int']>;
+  deletedAt?: Maybe<Scalars['Int']>;
   description?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
   index?: Maybe<Scalars['Int']>;
   placeholder?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['Int']>;
   type?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['Int']>;
 };
 
 export type QuestionDeleteFilter = {
   and?: InputMaybe<Array<QuestionDeleteFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   index?: InputMaybe<NumberFieldComparison>;
   or?: InputMaybe<Array<QuestionDeleteFilter>>;
   placeholder?: InputMaybe<StringFieldComparison>;
   title?: InputMaybe<StringFieldComparison>;
   type?: InputMaybe<QuestionTypeEnumFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type QuestionDeleteResponse = {
@@ -1614,10 +1870,14 @@ export type QuestionDependencyActionEnumFilterComparison = {
 export type QuestionDependencyAggregateGroupBy = {
   __typename?: 'QuestionDependencyAggregateGroupBy';
   action?: Maybe<QuestionDependencyActionEnum>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   dependencyId?: Maybe<Scalars['String']>;
   dependentId?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   referenceValue?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type QuestionDependencyConnection = {
@@ -1631,20 +1891,28 @@ export type QuestionDependencyConnection = {
 export type QuestionDependencyCountAggregate = {
   __typename?: 'QuestionDependencyCountAggregate';
   action?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['Int']>;
+  deletedAt?: Maybe<Scalars['Int']>;
   dependencyId?: Maybe<Scalars['Int']>;
   dependentId?: Maybe<Scalars['Int']>;
   description?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
   referenceValue?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['Int']>;
 };
 
 export type QuestionDependencyDeleteFilter = {
   action?: InputMaybe<QuestionDependencyActionEnumFilterComparison>;
   and?: InputMaybe<Array<QuestionDependencyDeleteFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   dependencyId?: InputMaybe<StringFieldComparison>;
   dependentId?: InputMaybe<StringFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<QuestionDependencyDeleteFilter>>;
   referenceValue?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type QuestionDependencyDeleteResponse = {
@@ -1663,41 +1931,57 @@ export type QuestionDependencyDeleteResponse = {
 export type QuestionDependencyFilter = {
   action?: InputMaybe<QuestionDependencyActionEnumFilterComparison>;
   and?: InputMaybe<Array<QuestionDependencyFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   dependency?: InputMaybe<QuestionDependencyFilterQuestionFilter>;
   dependencyId?: InputMaybe<StringFieldComparison>;
   dependent?: InputMaybe<QuestionDependencyFilterQuestionFilter>;
   dependentId?: InputMaybe<StringFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<QuestionDependencyFilter>>;
   referenceValue?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type QuestionDependencyFilterQuestionFilter = {
   and?: InputMaybe<Array<QuestionDependencyFilterQuestionFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   index?: InputMaybe<NumberFieldComparison>;
   or?: InputMaybe<Array<QuestionDependencyFilterQuestionFilter>>;
   placeholder?: InputMaybe<StringFieldComparison>;
   title?: InputMaybe<StringFieldComparison>;
   type?: InputMaybe<QuestionTypeEnumFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type QuestionDependencyMaxAggregate = {
   __typename?: 'QuestionDependencyMaxAggregate';
   action?: Maybe<QuestionDependencyActionEnum>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   dependencyId?: Maybe<Scalars['String']>;
   dependentId?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   referenceValue?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type QuestionDependencyMinAggregate = {
   __typename?: 'QuestionDependencyMinAggregate';
   action?: Maybe<QuestionDependencyActionEnum>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   dependencyId?: Maybe<Scalars['String']>;
   dependentId?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   referenceValue?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type QuestionDependencySort = {
@@ -1708,60 +1992,84 @@ export type QuestionDependencySort = {
 
 export enum QuestionDependencySortFields {
   Action = 'action',
+  CreatedAt = 'createdAt',
+  DeletedAt = 'deletedAt',
   DependencyId = 'dependencyId',
   DependentId = 'dependentId',
   Description = 'description',
-  ReferenceValue = 'referenceValue'
+  Id = 'id',
+  ReferenceValue = 'referenceValue',
+  UpdatedAt = 'updatedAt'
 }
 
 export type QuestionDependencyUpdateFilter = {
   action?: InputMaybe<QuestionDependencyActionEnumFilterComparison>;
   and?: InputMaybe<Array<QuestionDependencyUpdateFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   dependencyId?: InputMaybe<StringFieldComparison>;
   dependentId?: InputMaybe<StringFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<QuestionDependencyUpdateFilter>>;
   referenceValue?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type QuestionFilter = {
   and?: InputMaybe<Array<QuestionFilter>>;
   answers?: InputMaybe<QuestionFilterResponseFilter>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   dependencies?: InputMaybe<QuestionFilterQuestionDependencyFilter>;
   dependents?: InputMaybe<QuestionFilterQuestionDependencyFilter>;
   description?: InputMaybe<StringFieldComparison>;
   group?: InputMaybe<QuestionFilterQuestionGroupFilter>;
+  id?: InputMaybe<StringFieldComparison>;
   index?: InputMaybe<NumberFieldComparison>;
   or?: InputMaybe<Array<QuestionFilter>>;
   placeholder?: InputMaybe<StringFieldComparison>;
   title?: InputMaybe<StringFieldComparison>;
   type?: InputMaybe<QuestionTypeEnumFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type QuestionFilterQuestionDependencyFilter = {
   action?: InputMaybe<QuestionDependencyActionEnumFilterComparison>;
   and?: InputMaybe<Array<QuestionFilterQuestionDependencyFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   dependencyId?: InputMaybe<StringFieldComparison>;
   dependentId?: InputMaybe<StringFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<QuestionFilterQuestionDependencyFilter>>;
   referenceValue?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type QuestionFilterQuestionGroupFilter = {
   and?: InputMaybe<Array<QuestionFilterQuestionGroupFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<QuestionFilterQuestionGroupFilter>>;
   templateId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type QuestionFilterResponseFilter = {
   and?: InputMaybe<Array<QuestionFilterResponseFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   interviewId?: InputMaybe<StringFieldComparison>;
   interviewerId?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<QuestionFilterResponseFilter>>;
   questionId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type QuestionGroup = {
@@ -1785,9 +2093,13 @@ export type QuestionGroupQuestionsArgs = {
 
 export type QuestionGroupAggregateGroupBy = {
   __typename?: 'QuestionGroupAggregateGroupBy';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   templateId?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type QuestionGroupConnection = {
@@ -1800,17 +2112,25 @@ export type QuestionGroupConnection = {
 
 export type QuestionGroupCountAggregate = {
   __typename?: 'QuestionGroupCountAggregate';
+  createdAt?: Maybe<Scalars['Int']>;
+  deletedAt?: Maybe<Scalars['Int']>;
   description?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['Int']>;
   templateId?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['Int']>;
 };
 
 export type QuestionGroupDeleteFilter = {
   and?: InputMaybe<Array<QuestionGroupDeleteFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<QuestionGroupDeleteFilter>>;
   templateId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type QuestionGroupDeleteResponse = {
@@ -1826,47 +2146,67 @@ export type QuestionGroupDeleteResponse = {
 
 export type QuestionGroupFilter = {
   and?: InputMaybe<Array<QuestionGroupFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<QuestionGroupFilter>>;
   questions?: InputMaybe<QuestionGroupFilterQuestionFilter>;
   template?: InputMaybe<QuestionGroupFilterInterviewTemplateFilter>;
   templateId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type QuestionGroupFilterInterviewTemplateFilter = {
   and?: InputMaybe<Array<QuestionGroupFilterInterviewTemplateFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
   creatorId?: InputMaybe<StringFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   isAvailable?: InputMaybe<BooleanFieldComparison>;
   isFinished?: InputMaybe<BooleanFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<QuestionGroupFilterInterviewTemplateFilter>>;
   projectId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
   version?: InputMaybe<NumberFieldComparison>;
 };
 
 export type QuestionGroupFilterQuestionFilter = {
   and?: InputMaybe<Array<QuestionGroupFilterQuestionFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   index?: InputMaybe<NumberFieldComparison>;
   or?: InputMaybe<Array<QuestionGroupFilterQuestionFilter>>;
   placeholder?: InputMaybe<StringFieldComparison>;
   title?: InputMaybe<StringFieldComparison>;
   type?: InputMaybe<QuestionTypeEnumFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type QuestionGroupMaxAggregate = {
   __typename?: 'QuestionGroupMaxAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   templateId?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type QuestionGroupMinAggregate = {
   __typename?: 'QuestionGroupMinAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   templateId?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type QuestionGroupSort = {
@@ -1876,35 +2216,51 @@ export type QuestionGroupSort = {
 };
 
 export enum QuestionGroupSortFields {
+  CreatedAt = 'createdAt',
+  DeletedAt = 'deletedAt',
   Description = 'description',
+  Id = 'id',
   Name = 'name',
-  TemplateId = 'templateId'
+  TemplateId = 'templateId',
+  UpdatedAt = 'updatedAt'
 }
 
 export type QuestionGroupUpdateFilter = {
   and?: InputMaybe<Array<QuestionGroupUpdateFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<QuestionGroupUpdateFilter>>;
   templateId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type QuestionMaxAggregate = {
   __typename?: 'QuestionMaxAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   index?: Maybe<Scalars['Float']>;
   placeholder?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   type?: Maybe<QuestionTypeEnum>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type QuestionMinAggregate = {
   __typename?: 'QuestionMinAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   index?: Maybe<Scalars['Float']>;
   placeholder?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   type?: Maybe<QuestionTypeEnum>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type QuestionSort = {
@@ -1914,11 +2270,15 @@ export type QuestionSort = {
 };
 
 export enum QuestionSortFields {
+  CreatedAt = 'createdAt',
+  DeletedAt = 'deletedAt',
   Description = 'description',
+  Id = 'id',
   Index = 'index',
   Placeholder = 'placeholder',
   Title = 'title',
-  Type = 'type'
+  Type = 'type',
+  UpdatedAt = 'updatedAt'
 }
 
 export type QuestionSumAggregate = {
@@ -1953,12 +2313,16 @@ export type QuestionTypeEnumFilterComparison = {
 
 export type QuestionUpdateFilter = {
   and?: InputMaybe<Array<QuestionUpdateFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   index?: InputMaybe<NumberFieldComparison>;
   or?: InputMaybe<Array<QuestionUpdateFilter>>;
   placeholder?: InputMaybe<StringFieldComparison>;
   title?: InputMaybe<StringFieldComparison>;
   type?: InputMaybe<QuestionTypeEnumFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type RemoveAnswersFromInterviewInput = {
@@ -1976,6 +2340,13 @@ export type RemoveAnswersFromQuestionInput = {
 };
 
 export type RemoveCoordinatorsFromProjectInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
+export type RemoveCreatedProjectsFromUserInput = {
   /** The id of the record. */
   id: Scalars['ID'];
   /** The ids of the relations. */
@@ -2004,6 +2375,13 @@ export type RemoveDependentFromQuestionDependencyInput = {
 };
 
 export type RemoveDependentsFromQuestionInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
+export type RemoveEnrolledProjectsFromUserInput = {
   /** The id of the record. */
   id: Scalars['ID'];
   /** The ids of the relations. */
@@ -2052,6 +2430,13 @@ export type RemoveProjectFromInterviewInput = {
   relationId: Scalars['ID'];
 };
 
+export type RemoveProjectsFromUserInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
 export type RemoveQuestionFromResponseInput = {
   /** The id of the record. */
   id: Scalars['ID'];
@@ -2074,6 +2459,13 @@ export type RemoveQuestionsFromQuestionGroupInput = {
 };
 
 export type RemoveTemplateFromInterviewInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The id of relation. */
+  relationId: Scalars['ID'];
+};
+
+export type RemoveTemplateFromProjectInput = {
   /** The id of the record. */
   id: Scalars['ID'];
   /** The id of relation. */
@@ -2104,17 +2496,25 @@ export type Response = {
 
 export type ResponseAggregateFilter = {
   and?: InputMaybe<Array<ResponseAggregateFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   interviewId?: InputMaybe<StringFieldComparison>;
   interviewerId?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<ResponseAggregateFilter>>;
   questionId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type ResponseAggregateGroupBy = {
   __typename?: 'ResponseAggregateGroupBy';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
   interviewId?: Maybe<Scalars['String']>;
   interviewerId?: Maybe<Scalars['String']>;
   questionId?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type ResponseAggregateResponse = {
@@ -2137,17 +2537,25 @@ export type ResponseConnection = {
 
 export type ResponseCountAggregate = {
   __typename?: 'ResponseCountAggregate';
+  createdAt?: Maybe<Scalars['Int']>;
+  deletedAt?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
   interviewId?: Maybe<Scalars['Int']>;
   interviewerId?: Maybe<Scalars['Int']>;
   questionId?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['Int']>;
 };
 
 export type ResponseDeleteFilter = {
   and?: InputMaybe<Array<ResponseDeleteFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   interviewId?: InputMaybe<StringFieldComparison>;
   interviewerId?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<ResponseDeleteFilter>>;
   questionId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type ResponseDeleteResponse = {
@@ -2164,6 +2572,9 @@ export type ResponseDeleteResponse = {
 
 export type ResponseFilter = {
   and?: InputMaybe<Array<ResponseFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   interview?: InputMaybe<ResponseFilterInterviewFilter>;
   interviewId?: InputMaybe<StringFieldComparison>;
   interviewer?: InputMaybe<ResponseFilterUserFilter>;
@@ -2171,47 +2582,68 @@ export type ResponseFilter = {
   or?: InputMaybe<Array<ResponseFilter>>;
   question?: InputMaybe<ResponseFilterQuestionFilter>;
   questionId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type ResponseFilterInterviewFilter = {
   and?: InputMaybe<Array<ResponseFilterInterviewFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   interviewerId?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<ResponseFilterInterviewFilter>>;
   projectId?: InputMaybe<StringFieldComparison>;
   templateId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type ResponseFilterQuestionFilter = {
   and?: InputMaybe<Array<ResponseFilterQuestionFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   index?: InputMaybe<NumberFieldComparison>;
   or?: InputMaybe<Array<ResponseFilterQuestionFilter>>;
   placeholder?: InputMaybe<StringFieldComparison>;
   title?: InputMaybe<StringFieldComparison>;
   type?: InputMaybe<QuestionTypeEnumFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type ResponseFilterUserFilter = {
   and?: InputMaybe<Array<ResponseFilterUserFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   email?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<ResponseFilterUserFilter>>;
   role?: InputMaybe<UserRoleEnumFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type ResponseMaxAggregate = {
   __typename?: 'ResponseMaxAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
   interviewId?: Maybe<Scalars['String']>;
   interviewerId?: Maybe<Scalars['String']>;
   questionId?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type ResponseMinAggregate = {
   __typename?: 'ResponseMinAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['String']>;
   interviewId?: Maybe<Scalars['String']>;
   interviewerId?: Maybe<Scalars['String']>;
   questionId?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type ResponseSort = {
@@ -2221,17 +2653,25 @@ export type ResponseSort = {
 };
 
 export enum ResponseSortFields {
+  CreatedAt = 'createdAt',
+  DeletedAt = 'deletedAt',
+  Id = 'id',
   InterviewId = 'interviewId',
   InterviewerId = 'interviewerId',
-  QuestionId = 'questionId'
+  QuestionId = 'questionId',
+  UpdatedAt = 'updatedAt'
 }
 
 export type ResponseUpdateFilter = {
   and?: InputMaybe<Array<ResponseUpdateFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   interviewId?: InputMaybe<StringFieldComparison>;
   interviewerId?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<ResponseUpdateFilter>>;
   questionId?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type SetAnswersOnInterviewInput = {
@@ -2249,6 +2689,13 @@ export type SetAnswersOnQuestionInput = {
 };
 
 export type SetCoordinatorsOnProjectInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
+export type SetCreatedProjectsOnUserInput = {
   /** The id of the record. */
   id: Scalars['ID'];
   /** The ids of the relations. */
@@ -2277,6 +2724,13 @@ export type SetDependentOnQuestionDependencyInput = {
 };
 
 export type SetDependentsOnQuestionInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
+export type SetEnrolledProjectsOnUserInput = {
   /** The id of the record. */
   id: Scalars['ID'];
   /** The ids of the relations. */
@@ -2325,6 +2779,13 @@ export type SetProjectOnInterviewInput = {
   relationId: Scalars['ID'];
 };
 
+export type SetProjectsOnUserInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
 export type SetQuestionGroupsOnInterviewTemplateInput = {
   /** The id of the record. */
   id: Scalars['ID'];
@@ -2347,6 +2808,13 @@ export type SetQuestionsOnQuestionGroupInput = {
 };
 
 export type SetTemplateOnInterviewInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The id of relation. */
+  relationId: Scalars['ID'];
+};
+
+export type SetTemplateOnProjectInput = {
   /** The id of the record. */
   id: Scalars['ID'];
   /** The id of relation. */
@@ -2583,19 +3051,44 @@ export type UpdateUserInput = {
 export type User = {
   __typename?: 'User';
   createdAt?: Maybe<Scalars['DateTime']>;
+  createdProjects?: Maybe<Array<Project>>;
   deletedAt?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
+  enrolledProjects?: Maybe<Array<Project>>;
   id: Scalars['String'];
   name?: Maybe<Scalars['String']>;
+  projects?: Maybe<Array<Project>>;
   role: UserRoleEnum;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
+
+export type UserCreatedProjectsArgs = {
+  filter?: ProjectFilter;
+  sorting?: Array<ProjectSort>;
+};
+
+
+export type UserEnrolledProjectsArgs = {
+  filter?: ProjectFilter;
+  sorting?: Array<ProjectSort>;
+};
+
+
+export type UserProjectsArgs = {
+  filter?: ProjectFilter;
+  sorting?: Array<ProjectSort>;
+};
+
 export type UserAggregateGroupBy = {
   __typename?: 'UserAggregateGroupBy';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   role?: Maybe<UserRoleEnum>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserConnection = {
@@ -2608,17 +3101,25 @@ export type UserConnection = {
 
 export type UserCountAggregate = {
   __typename?: 'UserCountAggregate';
+  createdAt?: Maybe<Scalars['Int']>;
+  deletedAt?: Maybe<Scalars['Int']>;
   email?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['Int']>;
   role?: Maybe<Scalars['Int']>;
+  updatedAt?: Maybe<Scalars['Int']>;
 };
 
 export type UserDeleteFilter = {
   and?: InputMaybe<Array<UserDeleteFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   email?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<UserDeleteFilter>>;
   role?: InputMaybe<UserRoleEnumFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type UserDeleteResponse = {
@@ -2634,24 +3135,53 @@ export type UserDeleteResponse = {
 
 export type UserFilter = {
   and?: InputMaybe<Array<UserFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  createdProjects?: InputMaybe<UserFilterProjectFilter>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   email?: InputMaybe<StringFieldComparison>;
+  enrolledProjects?: InputMaybe<UserFilterProjectFilter>;
+  id?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<UserFilter>>;
+  projects?: InputMaybe<UserFilterProjectFilter>;
   role?: InputMaybe<UserRoleEnumFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type UserFilterProjectFilter = {
+  and?: InputMaybe<Array<UserFilterProjectFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  creatorId?: InputMaybe<StringFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  generalDescription?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
+  interviewerOrientations?: InputMaybe<StringFieldComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<UserFilterProjectFilter>>;
+  terms?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type UserMaxAggregate = {
   __typename?: 'UserMaxAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   role?: Maybe<UserRoleEnum>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserMinAggregate = {
   __typename?: 'UserMinAggregate';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   role?: Maybe<UserRoleEnum>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export enum UserRoleEnum {
@@ -2685,17 +3215,25 @@ export type UserSort = {
 };
 
 export enum UserSortFields {
+  CreatedAt = 'createdAt',
+  DeletedAt = 'deletedAt',
   Email = 'email',
+  Id = 'id',
   Name = 'name',
-  Role = 'role'
+  Role = 'role',
+  UpdatedAt = 'updatedAt'
 }
 
 export type UserUpdateFilter = {
   and?: InputMaybe<Array<UserUpdateFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
   email?: InputMaybe<StringFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
   or?: InputMaybe<Array<UserUpdateFilter>>;
   role?: InputMaybe<UserRoleEnumFilterComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
 export type GetInterviewsQueryVariables = Exact<{
@@ -2731,6 +3269,13 @@ export type GetUsersToProjectsQueryVariables = Exact<{
 
 export type GetUsersToProjectsQuery = { __typename?: 'Query', users: { __typename?: 'UserConnection', nodes: Array<{ __typename?: 'User', id: string, name?: string | null, role: UserRoleEnum }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
 
+export type CreateOneTemplateMutationVariables = Exact<{
+  input: CreateOneInterviewTemplateInput;
+}>;
+
+
+export type CreateOneTemplateMutation = { __typename?: 'Mutation', createOneInterviewTemplate: { __typename?: 'InterviewTemplate', id: string } };
+
 export type GetTemplatesQueryVariables = Exact<{
   filter?: InputMaybe<InterviewTemplateFilter>;
   sorting?: InputMaybe<Array<InterviewTemplateSort> | InterviewTemplateSort>;
@@ -2739,6 +3284,11 @@ export type GetTemplatesQueryVariables = Exact<{
 
 
 export type GetTemplatesQuery = { __typename?: 'Query', interviewTemplates: { __typename?: 'InterviewTemplateConnection', nodes: Array<{ __typename?: 'InterviewTemplate', id: string, name: string }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
+
+export type GetMyCreatedProjectsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMyCreatedProjectsQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name?: string | null, createdProjects?: Array<{ __typename?: 'Project', id: string, name?: string | null, template?: { __typename?: 'InterviewTemplate', id: string } | null }> | null } };
 
 export type LoginMutationVariables = Exact<{
   data: AuthInput;
@@ -2918,6 +3468,39 @@ export function useGetUsersToProjectsLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type GetUsersToProjectsQueryHookResult = ReturnType<typeof useGetUsersToProjectsQuery>;
 export type GetUsersToProjectsLazyQueryHookResult = ReturnType<typeof useGetUsersToProjectsLazyQuery>;
 export type GetUsersToProjectsQueryResult = Apollo.QueryResult<GetUsersToProjectsQuery, GetUsersToProjectsQueryVariables>;
+export const CreateOneTemplateDocument = gql`
+    mutation createOneTemplate($input: CreateOneInterviewTemplateInput!) {
+  createOneInterviewTemplate(input: $input) {
+    id
+  }
+}
+    `;
+export type CreateOneTemplateMutationFn = Apollo.MutationFunction<CreateOneTemplateMutation, CreateOneTemplateMutationVariables>;
+
+/**
+ * __useCreateOneTemplateMutation__
+ *
+ * To run a mutation, you first call `useCreateOneTemplateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOneTemplateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOneTemplateMutation, { data, loading, error }] = useCreateOneTemplateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateOneTemplateMutation(baseOptions?: Apollo.MutationHookOptions<CreateOneTemplateMutation, CreateOneTemplateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOneTemplateMutation, CreateOneTemplateMutationVariables>(CreateOneTemplateDocument, options);
+      }
+export type CreateOneTemplateMutationHookResult = ReturnType<typeof useCreateOneTemplateMutation>;
+export type CreateOneTemplateMutationResult = Apollo.MutationResult<CreateOneTemplateMutation>;
+export type CreateOneTemplateMutationOptions = Apollo.BaseMutationOptions<CreateOneTemplateMutation, CreateOneTemplateMutationVariables>;
 export const GetTemplatesDocument = gql`
     query getTemplates($filter: InterviewTemplateFilter, $sorting: [InterviewTemplateSort!], $paging: OffsetPaging) {
   interviewTemplates(filter: $filter, sorting: $sorting, paging: $paging) {
@@ -2962,6 +3545,48 @@ export function useGetTemplatesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetTemplatesQueryHookResult = ReturnType<typeof useGetTemplatesQuery>;
 export type GetTemplatesLazyQueryHookResult = ReturnType<typeof useGetTemplatesLazyQuery>;
 export type GetTemplatesQueryResult = Apollo.QueryResult<GetTemplatesQuery, GetTemplatesQueryVariables>;
+export const GetMyCreatedProjectsDocument = gql`
+    query getMyCreatedProjects {
+  me {
+    id
+    name
+    createdProjects {
+      id
+      name
+      template {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMyCreatedProjectsQuery__
+ *
+ * To run a query within a React component, call `useGetMyCreatedProjectsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMyCreatedProjectsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMyCreatedProjectsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMyCreatedProjectsQuery(baseOptions?: Apollo.QueryHookOptions<GetMyCreatedProjectsQuery, GetMyCreatedProjectsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMyCreatedProjectsQuery, GetMyCreatedProjectsQueryVariables>(GetMyCreatedProjectsDocument, options);
+      }
+export function useGetMyCreatedProjectsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMyCreatedProjectsQuery, GetMyCreatedProjectsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMyCreatedProjectsQuery, GetMyCreatedProjectsQueryVariables>(GetMyCreatedProjectsDocument, options);
+        }
+export type GetMyCreatedProjectsQueryHookResult = ReturnType<typeof useGetMyCreatedProjectsQuery>;
+export type GetMyCreatedProjectsLazyQueryHookResult = ReturnType<typeof useGetMyCreatedProjectsLazyQuery>;
+export type GetMyCreatedProjectsQueryResult = Apollo.QueryResult<GetMyCreatedProjectsQuery, GetMyCreatedProjectsQueryVariables>;
 export const LoginDocument = gql`
     mutation login($data: AuthInput!) {
   login(data: $data) {

@@ -26,12 +26,12 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
     type = 'text',
     placeholder,
     label,
-    style
+    style,
 }: FormFieldProps) => {
     const components = {
         input: Input,
         textarea: Textarea,
-        select: SelectField
+        select: SelectField,
     }
     const SelectedComponent = components[component.type]
     return (
