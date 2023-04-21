@@ -1,6 +1,8 @@
-import { CreateOneInterviewTemplateInput, CreateOneProjectInput, InterviewTemplate, UpdateUserInput, useCreateOneTemplateMutation } from "@app/graphql/generated"
+import { CreateOneInterviewTemplateInput, InterviewTemplate, useCreateOneTemplateMutation } from "@app/graphql/generated"
+import { useRouter } from "next/router"
 
 const useCreateOneTemplate = () => {
+    const router = useRouter()
     const [mutate] = useCreateOneTemplateMutation({
         refetchQueries: ['getTemplates']
     })
@@ -13,7 +15,7 @@ const useCreateOneTemplate = () => {
                             isAvailable: false,
                             isFinished: false,
                             name: interviewTemplate?.name,
-                            version: interviewTemplate?.version,
+                            version: Number(interviewTemplate?.version),
                             projectId: interviewTemplate?.projectId ?? null
                         }
                     }
@@ -24,8 +26,23 @@ const useCreateOneTemplate = () => {
             console.log(err)
         }
     }
+    async function handleCreate() {
+        const response = await createTemplate({
+            interviewTemplate: {
+                name: 'Novo Modelo',
+                version: 1,
+                isFinished: false,
+                isAvailable: false,
+                projectId: null
+            }
+        })
+        if (response) {
+            router.push(`/dashboard/templates/${response?.id}`)
+        }
+    }
     return {
-        createTemplate
+        createTemplate,
+        handleCreate
     }
 }
 export default useCreateOneTemplate;

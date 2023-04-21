@@ -1,39 +1,25 @@
+#import "./fragments.graphql"
+
 mutation createOneTemplate($input: CreateOneInterviewTemplateInput!) {
     createOneInterviewTemplate(input: $input) {
-      id
-      name
-      version
-      isFinished
-      isAvailable
-      projectId
+        ...TemplateFields
     }
 }
 
 mutation updateOneTemplate($input: UpdateOneInterviewTemplateInput!) {
     updateOneInterviewTemplate(input: $input) {
-      id
-      name
-      version
-      isFinished
-      isAvailable
-      projectId
+        ...TemplateFields
     }
 }
 
 mutation createOneQuestionGroup($input: CreateOneQuestionGroupInput!) {
     createOneQuestionGroup(input: $input) {
-        id
-        name
-        description
-        templateId
+        ...GroupFields
     }
 }
 
 mutation updateOneQuestionGroup($input: UpdateOneQuestionGroupInput!) {
     updateOneQuestionGroup(input: $input) {
-        id
-        name
-        description
-        templateId
+        ...GroupFields
     }
 }

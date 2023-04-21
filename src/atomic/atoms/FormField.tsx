@@ -18,6 +18,7 @@ export type FormFieldProps = {
     placeholder?: string;
     label?: string;
     style?: CSSProperties | undefined
+    onBlur?: any
 }
 
 const FormField: React.FunctionComponent<FormFieldProps> = ({
@@ -27,6 +28,7 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
     placeholder,
     label,
     style,
+    onBlur,
 }: FormFieldProps) => {
     const components = {
         input: Input,
@@ -53,6 +55,7 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
                 style={{ width: '100%', backgroundColor: 'white' }}
                 {...input}
                 options={component?.options}
+                onBlur={onBlur}
                 {...component.type === 'select' && isMulti}
             />
             {meta?.touched && meta?.error && <span>{meta?.error}</span>}

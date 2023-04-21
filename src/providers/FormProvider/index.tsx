@@ -11,15 +11,19 @@ const FormProvider = ({
   submitButton = 'Submit',
   resetButton = 'Limpar',
   initialValues = {},
-  fields
+  fields,
+  submitOnBlur = false,
+  displayButtons = true
 }: {
   onSubmit: (values: any) => void;
   validate?: ((values: any) => ValidationErrors | Promise<ValidationErrors>) | undefined;
-  title: string
+  title: string;
   initialValues?: any;
   submitButton?: string;
-  resetButton?: string | null
-  fields: FormFieldProps[]
+  resetButton?: string | null;
+  fields: FormFieldProps[];
+  submitOnBlur?: boolean;
+  displayButtons?: boolean;
 }) => {
 
   return (
@@ -36,13 +40,15 @@ const FormProvider = ({
             marginTop="20px"
           >
             {fields?.map((field: FormFieldProps, index: number) => (
-              <FormField key={index} {...field} />
+              <FormField key={index} {...field} {...(submitOnBlur) && { onBlur: handleSubmit }} />
             ))}
           </Flex>
-          <Flex gridGap="10px" marginTop="20px">
-            {resetButton && <Button type="reset" onClick={() => reset()}>{resetButton}</Button>}
-            <Button type="submit">{submitButton}</Button>
-          </Flex>
+          {displayButtons && (
+            <Flex gridGap="10px" marginTop="20px">
+              {resetButton && <Button type="reset" onClick={() => reset()}>{resetButton}</Button>}
+              <Button type="submit">{submitButton}</Button>
+            </Flex>
+          )}
         </form>
       )}
     />

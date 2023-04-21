@@ -1,10 +1,13 @@
-import { GetTemplatesDocument, InterviewTemplate, Project } from "@app/graphql/generated";
+import { GetTemplatesDocument, InterviewTemplate } from "@app/graphql/generated";
+import useCreateOneTemplate from "@app/src/atomic/pages/dashboard/templates/hooks/useCreateOneTemplate";
 import DashboardTemplate from "@app/src/atomic/templates/DashboardTemplate"
 import LayoutTemplate from "@app/src/atomic/templates/LayoutTemplate";
 
 const Templates = () => {
+    const { handleCreate } = useCreateOneTemplate()
     return (
         <DashboardTemplate title="Modelos">
+            <button onClick={() => handleCreate()}>Create</button>
             <LayoutTemplate
                 paginatedQueryName="interviewTemplates"
                 query={GetTemplatesDocument}

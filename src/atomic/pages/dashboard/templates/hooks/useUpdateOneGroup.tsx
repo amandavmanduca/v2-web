@@ -2,7 +2,7 @@ import { QuestionGroup, UpdateOneQuestionGroupInput, useUpdateOneQuestionGroupMu
 
 const useUpdateOneGroup = () => {
     const [mutate] = useUpdateOneQuestionGroupMutation({
-        refetchQueries: ['getTemplates']
+        refetchQueries: ['getTemplates', 'getTemplate']
     })
     async function updateGroup({ id, update }: UpdateOneQuestionGroupInput): Promise<QuestionGroup | null | any> {
         try {

@@ -2,7 +2,7 @@ import { InterviewTemplate, UpdateOneInterviewTemplateInput, useUpdateOneTemplat
 
 const useUpdateOneTemplate = () => {
     const [mutate] = useUpdateOneTemplateMutation({
-        refetchQueries: ['getTemplates']
+        refetchQueries: ['getTemplates', 'getTemplate']
     })
     async function updateTemplate({ id, update }: UpdateOneInterviewTemplateInput): Promise<InterviewTemplate | null | any> {
         try {
@@ -14,7 +14,7 @@ const useUpdateOneTemplate = () => {
                             isAvailable: update?.isAvailable ?? false,
                             isFinished: update?.isFinished ?? false,
                             name: update?.name,
-                            version: update?.version,
+                            version: Number(update?.version),
                             projectId: update?.projectId ?? null
                         }
                     }

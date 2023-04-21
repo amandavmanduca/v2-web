@@ -2,7 +2,7 @@ import { CreateOneQuestionGroupInput, QuestionGroup, useCreateOneQuestionGroupMu
 
 const useCreateOneGroup = () => {
     const [mutate] = useCreateOneQuestionGroupMutation({
-        refetchQueries: ['getTemplates']
+        refetchQueries: ['getTemplates', 'getTemplate']
     })
     async function createGroup({ questionGroup }: CreateOneQuestionGroupInput): Promise<QuestionGroup | null | any> {
         try {
@@ -23,8 +23,19 @@ const useCreateOneGroup = () => {
             console.log(err)
         }
     }
+    async function handleCreate(templateId: string) {
+        const created = await createGroup({
+            questionGroup: {
+                name: 'Novo Grupo',
+                description: null,
+                templateId: templateId
+            }
+        })
+        return created
+    }
     return {
-        createGroup
+        createGroup,
+        handleCreate
     }
 }
 export default useCreateOneGroup;

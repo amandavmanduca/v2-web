@@ -3,16 +3,18 @@ import FormProvider from "@app/src/providers/FormProvider";
 import useCreateOneGroup from "../hooks/useCreateOneGroup";
 import useUpdateOneGroup from "../hooks/useUpdateOneGroup";
 import { useState } from "react";
-import { QuestionGroup } from "@app/graphql/generated";
+import { Maybe, QuestionGroup } from "@app/graphql/generated";
 
 type GroupFormProps = {
-    templateId: string
+    templateId: Maybe<string> | undefined;
+    values?: QuestionGroup | null
 }
 
 const GroupForm = ({
-    templateId
+    templateId,
+    values = null
 }: GroupFormProps) => {
-    const [group, setGroup] = useState<QuestionGroup | null>(null)
+    const [group, setGroup] = useState<QuestionGroup | null>(values)
     const { createGroup } = useCreateOneGroup()
     const { updateGroup } = useUpdateOneGroup()
 
@@ -83,14 +85,16 @@ const GroupForm = ({
     }
 
     return (
-            <FormProvider
-                title="Group"
-                onSubmit={(v) => handleSubmit(v)}
-                initialValues={initialValues}
-                // validate={}
-                submitButton="Salvar"
-                fields={fields}
-            />
+        <FormProvider
+            title="Group"
+            onSubmit={(v) => handleSubmit(v)}
+            initialValues={initialValues}
+            // validate={}
+            submitButton="Salvar"
+            submitOnBlur={true}
+            displayButtons={false}
+            fields={fields}
+        />
     )
 }
 export default GroupForm;

@@ -1,22 +1,25 @@
-import { InterviewTemplate, Maybe, Project } from "@app/graphql/generated";
+import { InterviewTemplate, Maybe, QuestionGroup } from "@app/graphql/generated";
 import { FormFieldProps } from "@app/src/atomic/atoms/FormField";
-import useCreateOneTemplate from "@app/src/atomic/pages/dashboard/templates/hooks/useCreateOneTemplate";
 import DashboardTemplate from "@app/src/atomic/templates/DashboardTemplate"
 import FormProvider from "@app/src/providers/FormProvider";
 import { useState } from "react";
 import useUpdateOneTemplate from "../hooks/updateOneTemplate";
 import { setSelectedValue } from "@app/src/common/utils/setSelectedValue";
+import GroupForm from "./GroupForm";
+import useCreateOneGroup from "../hooks/useCreateOneGroup";
 
 const TemplateForm = ({
-    projects = []
+    projects,
+    values
 }: {
     projects: {
         value: string;
         label: Maybe<string> | undefined;
-    }[] | []
+    }[] | [],
+    values: InterviewTemplate
 }) => {
-    const [template, setTemplate] = useState<InterviewTemplate | null>(null)
-    const { createTemplate } = useCreateOneTemplate()
+    const [template, setTemplate] = useState<InterviewTemplate>(values)
+    const { handleCreate: createGroup } = useCreateOneGroup()
     const { updateTemplate } = useUpdateOneTemplate()
     const fields: FormFieldProps[] = [
         {
@@ -50,21 +53,6 @@ const TemplateForm = ({
         },
     ]
 
-    async function handleCreate(values: any) {
-        const response = await createTemplate({
-            interviewTemplate: {
-                name: values?.name,
-                version: values?.version,
-                isFinished: false,
-                isAvailable: false,
-                projectId: values?.projectId?.value
-            }
-        })
-        if (response) {
-            setTemplate(response)
-        }
-    }
-
     async function handleUpdate(values: any) {
         const response = await updateTemplate({
             id: values?.id,
@@ -82,22 +70,23 @@ const TemplateForm = ({
     }
 
     async function handleSubmit(values: any) {
-        if (!template) {
-            await handleCreate(values)
-        } else {
-            await handleUpdate(values)
-        }
+        await handleUpdate(values)
     }
 
-    const initialValues = template ? {
+    const initialValues = {
         id: template?.id,
         name: template?.name,
         version: template?.version,
         isFinished: template?.isFinished,
         isAvailable: template?.isAvailable,
         projectId: setSelectedValue(projects, template?.projectId)
-    } : {
-        version: 1
+    }
+
+    const [questionGroups, setQuestionGroups] = useState(template?.questionGroups ?? [])
+
+    async function handleCreateGroup(templateId: string) {
+        const response = await createGroup(templateId)
+        setQuestionGroups(prev => [...prev, response])
     }
 
     return (
@@ -108,8 +97,14 @@ const TemplateForm = ({
                 initialValues={initialValues}
                 // validate={}
                 submitButton="Salvar"
+                submitOnBlur={true}
+                displayButtons={false}
                 fields={fields}
             />
+            {questionGroups?.map((g: QuestionGroup, index: number) => (
+                <GroupForm key={index} templateId={template?.id} values={g} />
+            ))}
+            <button onClick={() => handleCreateGroup(template?.id)}>+ Grupo</button>
         </DashboardTemplate>
     )
 }

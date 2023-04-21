@@ -3311,33 +3311,37 @@ export type GetUsersToProjectsQueryVariables = Exact<{
 
 export type GetUsersToProjectsQuery = { __typename?: 'Query', users: { __typename?: 'UserConnection', nodes: Array<{ __typename?: 'User', id: string, name?: string | null, role: UserRoleEnum }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
 
+export type TemplateFieldsFragment = { __typename?: 'InterviewTemplate', id: string, name: string, version: number, isFinished: boolean, isAvailable: boolean, projectId: string, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index: number, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, group?: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } | null }> | null }> | null };
+
+export type GroupFieldsFragment = { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index: number, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, group?: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } | null }> | null };
+
 export type CreateOneTemplateMutationVariables = Exact<{
   input: CreateOneInterviewTemplateInput;
 }>;
 
 
-export type CreateOneTemplateMutation = { __typename?: 'Mutation', createOneInterviewTemplate: { __typename?: 'InterviewTemplate', id: string, name: string, version: number, isFinished: boolean, isAvailable: boolean, projectId: string } };
+export type CreateOneTemplateMutation = { __typename?: 'Mutation', createOneInterviewTemplate: { __typename?: 'InterviewTemplate', id: string, name: string, version: number, isFinished: boolean, isAvailable: boolean, projectId: string, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index: number, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, group?: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } | null }> | null }> | null } };
 
 export type UpdateOneTemplateMutationVariables = Exact<{
   input: UpdateOneInterviewTemplateInput;
 }>;
 
 
-export type UpdateOneTemplateMutation = { __typename?: 'Mutation', updateOneInterviewTemplate: { __typename?: 'InterviewTemplate', id: string, name: string, version: number, isFinished: boolean, isAvailable: boolean, projectId: string } };
+export type UpdateOneTemplateMutation = { __typename?: 'Mutation', updateOneInterviewTemplate: { __typename?: 'InterviewTemplate', id: string, name: string, version: number, isFinished: boolean, isAvailable: boolean, projectId: string, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index: number, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, group?: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } | null }> | null }> | null } };
 
 export type CreateOneQuestionGroupMutationVariables = Exact<{
   input: CreateOneQuestionGroupInput;
 }>;
 
 
-export type CreateOneQuestionGroupMutation = { __typename?: 'Mutation', createOneQuestionGroup: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } };
+export type CreateOneQuestionGroupMutation = { __typename?: 'Mutation', createOneQuestionGroup: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index: number, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, group?: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } | null }> | null } };
 
 export type UpdateOneQuestionGroupMutationVariables = Exact<{
   input: UpdateOneQuestionGroupInput;
 }>;
 
 
-export type UpdateOneQuestionGroupMutation = { __typename?: 'Mutation', updateOneQuestionGroup: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } };
+export type UpdateOneQuestionGroupMutation = { __typename?: 'Mutation', updateOneQuestionGroup: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index: number, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, group?: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } | null }> | null } };
 
 export type GetTemplatesQueryVariables = Exact<{
   filter?: InputMaybe<InterviewTemplateFilter>;
@@ -3358,7 +3362,7 @@ export type GetTemplateQueryVariables = Exact<{
 }>;
 
 
-export type GetTemplateQuery = { __typename?: 'Query', interviewTemplate?: { __typename?: 'InterviewTemplate', id: string, name: string, version: number, isFinished: boolean, isAvailable: boolean, project?: { __typename?: 'Project', id: string, name?: string | null } | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index: number, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, group?: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } | null }> | null }> | null } | null };
+export type GetTemplateQuery = { __typename?: 'Query', interviewTemplate?: { __typename?: 'InterviewTemplate', id: string, name: string, version: number, isFinished: boolean, isAvailable: boolean, projectId: string, project?: { __typename?: 'Project', id: string, name?: string | null } | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index: number, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, group?: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } | null }> | null }> | null } | null };
 
 export type LoginMutationVariables = Exact<{
   data: AuthInput;
@@ -3372,7 +3376,42 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name?: string | null, email?: string | null, role: UserRoleEnum } };
 
-
+export const GroupFieldsFragmentDoc = gql`
+    fragment GroupFields on QuestionGroup {
+  id
+  name
+  description
+  templateId
+  questions {
+    id
+    index
+    title
+    description
+    placeholder
+    type
+    group {
+      id
+      name
+      description
+      templateId
+    }
+    options
+  }
+}
+    `;
+export const TemplateFieldsFragmentDoc = gql`
+    fragment TemplateFields on InterviewTemplate {
+  id
+  name
+  version
+  isFinished
+  isAvailable
+  projectId
+  questionGroups {
+    ...GroupFields
+  }
+}
+    ${GroupFieldsFragmentDoc}`;
 export const GetInterviewsDocument = gql`
     query getInterviews($filter: InterviewFilter, $sorting: [InterviewSort!], $paging: OffsetPaging) {
   interviews(filter: $filter, sorting: $sorting, paging: $paging) {
@@ -3541,15 +3580,10 @@ export type GetUsersToProjectsQueryResult = Apollo.QueryResult<GetUsersToProject
 export const CreateOneTemplateDocument = gql`
     mutation createOneTemplate($input: CreateOneInterviewTemplateInput!) {
   createOneInterviewTemplate(input: $input) {
-    id
-    name
-    version
-    isFinished
-    isAvailable
-    projectId
+    ...TemplateFields
   }
 }
-    `;
+    ${TemplateFieldsFragmentDoc}`;
 export type CreateOneTemplateMutationFn = Apollo.MutationFunction<CreateOneTemplateMutation, CreateOneTemplateMutationVariables>;
 
 /**
@@ -3579,15 +3613,10 @@ export type CreateOneTemplateMutationOptions = Apollo.BaseMutationOptions<Create
 export const UpdateOneTemplateDocument = gql`
     mutation updateOneTemplate($input: UpdateOneInterviewTemplateInput!) {
   updateOneInterviewTemplate(input: $input) {
-    id
-    name
-    version
-    isFinished
-    isAvailable
-    projectId
+    ...TemplateFields
   }
 }
-    `;
+    ${TemplateFieldsFragmentDoc}`;
 export type UpdateOneTemplateMutationFn = Apollo.MutationFunction<UpdateOneTemplateMutation, UpdateOneTemplateMutationVariables>;
 
 /**
@@ -3617,13 +3646,10 @@ export type UpdateOneTemplateMutationOptions = Apollo.BaseMutationOptions<Update
 export const CreateOneQuestionGroupDocument = gql`
     mutation createOneQuestionGroup($input: CreateOneQuestionGroupInput!) {
   createOneQuestionGroup(input: $input) {
-    id
-    name
-    description
-    templateId
+    ...GroupFields
   }
 }
-    `;
+    ${GroupFieldsFragmentDoc}`;
 export type CreateOneQuestionGroupMutationFn = Apollo.MutationFunction<CreateOneQuestionGroupMutation, CreateOneQuestionGroupMutationVariables>;
 
 /**
@@ -3653,13 +3679,10 @@ export type CreateOneQuestionGroupMutationOptions = Apollo.BaseMutationOptions<C
 export const UpdateOneQuestionGroupDocument = gql`
     mutation updateOneQuestionGroup($input: UpdateOneQuestionGroupInput!) {
   updateOneQuestionGroup(input: $input) {
-    id
-    name
-    description
-    templateId
+    ...GroupFields
   }
 }
-    `;
+    ${GroupFieldsFragmentDoc}`;
 export type UpdateOneQuestionGroupMutationFn = Apollo.MutationFunction<UpdateOneQuestionGroupMutation, UpdateOneQuestionGroupMutationVariables>;
 
 /**
@@ -3775,39 +3798,14 @@ export type GetMyCreatedProjectsQueryResult = Apollo.QueryResult<GetMyCreatedPro
 export const GetTemplateDocument = gql`
     query getTemplate($id: ID!) {
   interviewTemplate(id: $id) {
-    id
-    name
-    version
-    isFinished
-    isAvailable
+    ...TemplateFields
     project {
       id
       name
     }
-    questionGroups {
-      id
-      name
-      description
-      templateId
-      questions {
-        id
-        index
-        title
-        description
-        placeholder
-        type
-        group {
-          id
-          name
-          description
-          templateId
-        }
-        options
-      }
-    }
   }
 }
-    `;
+    ${TemplateFieldsFragmentDoc}`;
 
 /**
  * __useGetTemplateQuery__

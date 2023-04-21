@@ -1,0 +1,34 @@
+
+fragment TemplateFields on InterviewTemplate {
+    id
+    name
+    version
+    isFinished
+    isAvailable
+    projectId
+    questionGroups {
+        ...GroupFields
+    }
+}
+
+fragment GroupFields on QuestionGroup {
+    id
+    name
+    description
+    templateId
+    questions {
+    id
+    index
+    title
+    description
+    placeholder
+    type
+    group {
+        id
+        name
+        description
+        templateId
+    }
+    options
+    }
+}

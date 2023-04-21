@@ -1,3 +1,5 @@
+#import "./fragments.graphql"
+
 query getTemplates($filter: InterviewTemplateFilter $sorting: [InterviewTemplateSort!] $paging: OffsetPaging) {
     interviewTemplates(filter: $filter, sorting: $sorting, paging: $paging) {
         nodes {
@@ -27,35 +29,10 @@ query getMyCreatedProjects {
 
 query getTemplate($id: ID!) {
   interviewTemplate(id: $id) {
-    id
-    name
-    version
-    isFinished
-    isAvailable
+    ...TemplateFields
     project {
       id
       name
-    }
-    questionGroups {
-      id
-      name
-      description
-      templateId
-      questions {
-        id
-        index
-        title
-        description
-        placeholder
-        type
-        group {
-          id
-          name
-          description
-          templateId
-        }
-        options
-      }
     }
   }
 }
