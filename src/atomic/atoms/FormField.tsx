@@ -13,6 +13,7 @@ export type FormFieldProps = {
             label:  Maybe<string> | undefined;
         }[],
         isMulti?: boolean
+        isCreatable?: boolean
     };
     type: HTMLInputTypeAttribute;
     placeholder?: string;
@@ -46,6 +47,9 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
         const isMulti = {
             isMulti: component?.isMulti
         }
+        const isCreatable = {
+            isCreatable: component?.isCreatable
+        }
         return (
           <Flex display="grid" style={{ width: '100%', ...style }}>
             {label && <FormLabel w="100%">{label}</FormLabel>}
@@ -57,6 +61,7 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
                 options={component?.options}
                 onBlur={onBlur}
                 {...component.type === 'select' && isMulti}
+                {...component.type === 'select' && isCreatable}
             />
             {meta?.touched && meta?.error && <span>{meta?.error}</span>}
           </Flex>

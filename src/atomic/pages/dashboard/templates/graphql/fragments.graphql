@@ -17,18 +17,17 @@ fragment GroupFields on QuestionGroup {
     description
     templateId
     questions {
+        ...QuestionFields
+    }
+}
+
+fragment QuestionFields on Question {
     id
     index
     title
     description
     placeholder
     type
-    group {
-        id
-        name
-        description
-        templateId
-    }
     options
-    }
+    groupId
 }

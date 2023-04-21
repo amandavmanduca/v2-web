@@ -79,7 +79,7 @@ const TemplateForm = ({
         version: template?.version,
         isFinished: template?.isFinished,
         isAvailable: template?.isAvailable,
-        projectId: setSelectedValue(projects, template?.projectId)
+        projectId: template?.projectId ? setSelectedValue(projects, template?.projectId) : null
     }
 
     const [questionGroups, setQuestionGroups] = useState(template?.questionGroups ?? [])

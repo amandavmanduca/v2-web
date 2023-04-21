@@ -3,20 +3,24 @@ import FormProvider from "@app/src/providers/FormProvider";
 import useCreateOneGroup from "../hooks/useCreateOneGroup";
 import useUpdateOneGroup from "../hooks/useUpdateOneGroup";
 import { useState } from "react";
-import { Maybe, QuestionGroup } from "@app/graphql/generated";
+import { Maybe, Question, QuestionGroup } from "@app/graphql/generated";
+import useCreateOneQuestion from "../hooks/useCreateOneQuestion";
+import QuestionForm from "./QuestionForm";
 
 type GroupFormProps = {
     templateId: Maybe<string> | undefined;
-    values?: QuestionGroup | null
+    values: QuestionGroup
 }
 
 const GroupForm = ({
     templateId,
-    values = null
+    values
 }: GroupFormProps) => {
-    const [group, setGroup] = useState<QuestionGroup | null>(values)
+    const [group, setGroup] = useState<QuestionGroup>(values)
     const { createGroup } = useCreateOneGroup()
     const { updateGroup } = useUpdateOneGroup()
+
+    const { handleCreate: createQuestion } = useCreateOneQuestion()
 
     const fields: FormFieldProps[] = [
         {
@@ -84,17 +88,31 @@ const GroupForm = ({
         templateId: templateId
     }
 
+    
+    const [questions, setQuestions] = useState(group?.questions ?? [])
+
+    async function handleCreateQuestion(groupId: string) {
+        const response = await createQuestion(groupId)
+        setQuestions(prev => [...prev, response])
+    }
+
     return (
-        <FormProvider
-            title="Group"
-            onSubmit={(v) => handleSubmit(v)}
-            initialValues={initialValues}
-            // validate={}
-            submitButton="Salvar"
-            submitOnBlur={true}
-            displayButtons={false}
-            fields={fields}
-        />
+        <>
+            <FormProvider
+                title="Group"
+                onSubmit={(v) => handleSubmit(v)}
+                initialValues={initialValues}
+                // validate={}
+                submitButton="Salvar"
+                submitOnBlur={true}
+                displayButtons={false}
+                fields={fields}
+            />
+            {questions?.map((g: Question, index: number) => (
+                <QuestionForm key={index} groupId={group?.id} values={g} />
+            ))}
+            <button onClick={() => handleCreateQuestion(group?.id)}>+ Questão</button>
+        </>
     )
 }
 export default GroupForm;

@@ -9,3 +9,10 @@ export const setSelectedValue = (
 ) => {
     return options?.filter(v => v?.value === selectedValue) ?? {}
 }
+
+export const createAndsetSelectedValue = (options: string[] | []) => {
+    return options?.map((o: string) => ({
+        value: o,
+        label: o
+    }))
+}

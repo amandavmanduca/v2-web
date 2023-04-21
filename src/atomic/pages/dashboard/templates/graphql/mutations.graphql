@@ -23,3 +23,15 @@ mutation updateOneQuestionGroup($input: UpdateOneQuestionGroupInput!) {
         ...GroupFields
     }
 }
+
+mutation createOneQuestion($input: CreateOneQuestionInput!) {
+    createOneQuestion(input: $input) {
+        ...QuestionFields
+    }
+}
+
+mutation updateOneQuestion($input: UpdateOneQuestionInput!) {
+    updateOneQuestion(input: $input) {
+        ...QuestionFields
+    }
+}

@@ -222,7 +222,7 @@ export type CreateQuestionGroupInput = {
 export type CreateQuestionInput = {
   description?: InputMaybe<Scalars['String']>;
   groupId?: InputMaybe<Scalars['String']>;
-  index: Scalars['Float'];
+  index?: InputMaybe<Scalars['Float']>;
   options?: InputMaybe<Array<Scalars['String']>>;
   placeholder?: InputMaybe<Scalars['String']>;
   title: Scalars['String'];
@@ -554,10 +554,10 @@ export type InterviewTemplate = {
   isFinished: Scalars['Boolean'];
   name: Scalars['String'];
   project?: Maybe<Project>;
-  projectId: Scalars['String'];
+  projectId?: Maybe<Scalars['String']>;
   questionGroups?: Maybe<Array<QuestionGroup>>;
   updatedAt?: Maybe<Scalars['DateTime']>;
-  version: Scalars['Float'];
+  version?: Maybe<Scalars['Float']>;
 };
 
 
@@ -1762,8 +1762,9 @@ export type Question = {
   dependents?: Maybe<Array<QuestionDependency>>;
   description?: Maybe<Scalars['String']>;
   group?: Maybe<QuestionGroup>;
+  groupId?: Maybe<Scalars['String']>;
   id: Scalars['String'];
-  index: Scalars['Float'];
+  index?: Maybe<Scalars['Float']>;
   options?: Maybe<Array<Scalars['String']>>;
   placeholder?: Maybe<Scalars['String']>;
   title: Scalars['String'];
@@ -1794,6 +1795,7 @@ export type QuestionAggregateGroupBy = {
   createdAt?: Maybe<Scalars['DateTime']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
+  groupId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   index?: Maybe<Scalars['Float']>;
   placeholder?: Maybe<Scalars['String']>;
@@ -1820,6 +1822,7 @@ export type QuestionCountAggregate = {
   createdAt?: Maybe<Scalars['Int']>;
   deletedAt?: Maybe<Scalars['Int']>;
   description?: Maybe<Scalars['Int']>;
+  groupId?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
   index?: Maybe<Scalars['Int']>;
   placeholder?: Maybe<Scalars['Int']>;
@@ -1833,6 +1836,7 @@ export type QuestionDeleteFilter = {
   createdAt?: InputMaybe<DateFieldComparison>;
   deletedAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  groupId?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<StringFieldComparison>;
   index?: InputMaybe<NumberFieldComparison>;
   or?: InputMaybe<Array<QuestionDeleteFilter>>;
@@ -1847,6 +1851,7 @@ export type QuestionDeleteResponse = {
   createdAt?: Maybe<Scalars['DateTime']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
+  groupId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   index?: Maybe<Scalars['Float']>;
   options?: Maybe<Array<Scalars['String']>>;
@@ -1977,6 +1982,7 @@ export type QuestionDependencyFilterQuestionFilter = {
   createdAt?: InputMaybe<DateFieldComparison>;
   deletedAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  groupId?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<StringFieldComparison>;
   index?: InputMaybe<NumberFieldComparison>;
   or?: InputMaybe<Array<QuestionDependencyFilterQuestionFilter>>;
@@ -2053,6 +2059,7 @@ export type QuestionFilter = {
   dependents?: InputMaybe<QuestionFilterQuestionDependencyFilter>;
   description?: InputMaybe<StringFieldComparison>;
   group?: InputMaybe<QuestionFilterQuestionGroupFilter>;
+  groupId?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<StringFieldComparison>;
   index?: InputMaybe<NumberFieldComparison>;
   or?: InputMaybe<Array<QuestionFilter>>;
@@ -2206,6 +2213,7 @@ export type QuestionGroupFilterQuestionFilter = {
   createdAt?: InputMaybe<DateFieldComparison>;
   deletedAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  groupId?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<StringFieldComparison>;
   index?: InputMaybe<NumberFieldComparison>;
   or?: InputMaybe<Array<QuestionGroupFilterQuestionFilter>>;
@@ -2270,6 +2278,7 @@ export type QuestionMaxAggregate = {
   createdAt?: Maybe<Scalars['DateTime']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
+  groupId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   index?: Maybe<Scalars['Float']>;
   placeholder?: Maybe<Scalars['String']>;
@@ -2283,6 +2292,7 @@ export type QuestionMinAggregate = {
   createdAt?: Maybe<Scalars['DateTime']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
+  groupId?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   index?: Maybe<Scalars['Float']>;
   placeholder?: Maybe<Scalars['String']>;
@@ -2301,6 +2311,7 @@ export enum QuestionSortFields {
   CreatedAt = 'createdAt',
   DeletedAt = 'deletedAt',
   Description = 'description',
+  GroupId = 'groupId',
   Id = 'id',
   Index = 'index',
   Placeholder = 'placeholder',
@@ -2344,6 +2355,7 @@ export type QuestionUpdateFilter = {
   createdAt?: InputMaybe<DateFieldComparison>;
   deletedAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  groupId?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<StringFieldComparison>;
   index?: InputMaybe<NumberFieldComparison>;
   or?: InputMaybe<Array<QuestionUpdateFilter>>;
@@ -2638,6 +2650,7 @@ export type ResponseFilterQuestionFilter = {
   createdAt?: InputMaybe<DateFieldComparison>;
   deletedAt?: InputMaybe<DateFieldComparison>;
   description?: InputMaybe<StringFieldComparison>;
+  groupId?: InputMaybe<StringFieldComparison>;
   id?: InputMaybe<StringFieldComparison>;
   index?: InputMaybe<NumberFieldComparison>;
   or?: InputMaybe<Array<ResponseFilterQuestionFilter>>;
@@ -3311,37 +3324,53 @@ export type GetUsersToProjectsQueryVariables = Exact<{
 
 export type GetUsersToProjectsQuery = { __typename?: 'Query', users: { __typename?: 'UserConnection', nodes: Array<{ __typename?: 'User', id: string, name?: string | null, role: UserRoleEnum }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
 
-export type TemplateFieldsFragment = { __typename?: 'InterviewTemplate', id: string, name: string, version: number, isFinished: boolean, isAvailable: boolean, projectId: string, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index: number, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, group?: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } | null }> | null }> | null };
+export type TemplateFieldsFragment = { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, isFinished: boolean, isAvailable: boolean, projectId?: string | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index?: number | null, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, groupId?: string | null }> | null }> | null };
 
-export type GroupFieldsFragment = { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index: number, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, group?: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } | null }> | null };
+export type GroupFieldsFragment = { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index?: number | null, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, groupId?: string | null }> | null };
+
+export type QuestionFieldsFragment = { __typename?: 'Question', id: string, index?: number | null, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, groupId?: string | null };
 
 export type CreateOneTemplateMutationVariables = Exact<{
   input: CreateOneInterviewTemplateInput;
 }>;
 
 
-export type CreateOneTemplateMutation = { __typename?: 'Mutation', createOneInterviewTemplate: { __typename?: 'InterviewTemplate', id: string, name: string, version: number, isFinished: boolean, isAvailable: boolean, projectId: string, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index: number, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, group?: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } | null }> | null }> | null } };
+export type CreateOneTemplateMutation = { __typename?: 'Mutation', createOneInterviewTemplate: { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, isFinished: boolean, isAvailable: boolean, projectId?: string | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index?: number | null, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, groupId?: string | null }> | null }> | null } };
 
 export type UpdateOneTemplateMutationVariables = Exact<{
   input: UpdateOneInterviewTemplateInput;
 }>;
 
 
-export type UpdateOneTemplateMutation = { __typename?: 'Mutation', updateOneInterviewTemplate: { __typename?: 'InterviewTemplate', id: string, name: string, version: number, isFinished: boolean, isAvailable: boolean, projectId: string, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index: number, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, group?: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } | null }> | null }> | null } };
+export type UpdateOneTemplateMutation = { __typename?: 'Mutation', updateOneInterviewTemplate: { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, isFinished: boolean, isAvailable: boolean, projectId?: string | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index?: number | null, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, groupId?: string | null }> | null }> | null } };
 
 export type CreateOneQuestionGroupMutationVariables = Exact<{
   input: CreateOneQuestionGroupInput;
 }>;
 
 
-export type CreateOneQuestionGroupMutation = { __typename?: 'Mutation', createOneQuestionGroup: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index: number, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, group?: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } | null }> | null } };
+export type CreateOneQuestionGroupMutation = { __typename?: 'Mutation', createOneQuestionGroup: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index?: number | null, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, groupId?: string | null }> | null } };
 
 export type UpdateOneQuestionGroupMutationVariables = Exact<{
   input: UpdateOneQuestionGroupInput;
 }>;
 
 
-export type UpdateOneQuestionGroupMutation = { __typename?: 'Mutation', updateOneQuestionGroup: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index: number, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, group?: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } | null }> | null } };
+export type UpdateOneQuestionGroupMutation = { __typename?: 'Mutation', updateOneQuestionGroup: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index?: number | null, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, groupId?: string | null }> | null } };
+
+export type CreateOneQuestionMutationVariables = Exact<{
+  input: CreateOneQuestionInput;
+}>;
+
+
+export type CreateOneQuestionMutation = { __typename?: 'Mutation', createOneQuestion: { __typename?: 'Question', id: string, index?: number | null, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, groupId?: string | null } };
+
+export type UpdateOneQuestionMutationVariables = Exact<{
+  input: UpdateOneQuestionInput;
+}>;
+
+
+export type UpdateOneQuestionMutation = { __typename?: 'Mutation', updateOneQuestion: { __typename?: 'Question', id: string, index?: number | null, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, groupId?: string | null } };
 
 export type GetTemplatesQueryVariables = Exact<{
   filter?: InputMaybe<InterviewTemplateFilter>;
@@ -3362,7 +3391,7 @@ export type GetTemplateQueryVariables = Exact<{
 }>;
 
 
-export type GetTemplateQuery = { __typename?: 'Query', interviewTemplate?: { __typename?: 'InterviewTemplate', id: string, name: string, version: number, isFinished: boolean, isAvailable: boolean, projectId: string, project?: { __typename?: 'Project', id: string, name?: string | null } | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index: number, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, group?: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } | null }> | null }> | null } | null };
+export type GetTemplateQuery = { __typename?: 'Query', interviewTemplate?: { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, isFinished: boolean, isAvailable: boolean, projectId?: string | null, project?: { __typename?: 'Project', id: string, name?: string | null } | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index?: number | null, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, groupId?: string | null }> | null }> | null } | null };
 
 export type LoginMutationVariables = Exact<{
   data: AuthInput;
@@ -3376,6 +3405,18 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name?: string | null, email?: string | null, role: UserRoleEnum } };
 
+export const QuestionFieldsFragmentDoc = gql`
+    fragment QuestionFields on Question {
+  id
+  index
+  title
+  description
+  placeholder
+  type
+  options
+  groupId
+}
+    `;
 export const GroupFieldsFragmentDoc = gql`
     fragment GroupFields on QuestionGroup {
   id
@@ -3383,22 +3424,10 @@ export const GroupFieldsFragmentDoc = gql`
   description
   templateId
   questions {
-    id
-    index
-    title
-    description
-    placeholder
-    type
-    group {
-      id
-      name
-      description
-      templateId
-    }
-    options
+    ...QuestionFields
   }
 }
-    `;
+    ${QuestionFieldsFragmentDoc}`;
 export const TemplateFieldsFragmentDoc = gql`
     fragment TemplateFields on InterviewTemplate {
   id
@@ -3709,6 +3738,72 @@ export function useUpdateOneQuestionGroupMutation(baseOptions?: Apollo.MutationH
 export type UpdateOneQuestionGroupMutationHookResult = ReturnType<typeof useUpdateOneQuestionGroupMutation>;
 export type UpdateOneQuestionGroupMutationResult = Apollo.MutationResult<UpdateOneQuestionGroupMutation>;
 export type UpdateOneQuestionGroupMutationOptions = Apollo.BaseMutationOptions<UpdateOneQuestionGroupMutation, UpdateOneQuestionGroupMutationVariables>;
+export const CreateOneQuestionDocument = gql`
+    mutation createOneQuestion($input: CreateOneQuestionInput!) {
+  createOneQuestion(input: $input) {
+    ...QuestionFields
+  }
+}
+    ${QuestionFieldsFragmentDoc}`;
+export type CreateOneQuestionMutationFn = Apollo.MutationFunction<CreateOneQuestionMutation, CreateOneQuestionMutationVariables>;
+
+/**
+ * __useCreateOneQuestionMutation__
+ *
+ * To run a mutation, you first call `useCreateOneQuestionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOneQuestionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOneQuestionMutation, { data, loading, error }] = useCreateOneQuestionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateOneQuestionMutation(baseOptions?: Apollo.MutationHookOptions<CreateOneQuestionMutation, CreateOneQuestionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOneQuestionMutation, CreateOneQuestionMutationVariables>(CreateOneQuestionDocument, options);
+      }
+export type CreateOneQuestionMutationHookResult = ReturnType<typeof useCreateOneQuestionMutation>;
+export type CreateOneQuestionMutationResult = Apollo.MutationResult<CreateOneQuestionMutation>;
+export type CreateOneQuestionMutationOptions = Apollo.BaseMutationOptions<CreateOneQuestionMutation, CreateOneQuestionMutationVariables>;
+export const UpdateOneQuestionDocument = gql`
+    mutation updateOneQuestion($input: UpdateOneQuestionInput!) {
+  updateOneQuestion(input: $input) {
+    ...QuestionFields
+  }
+}
+    ${QuestionFieldsFragmentDoc}`;
+export type UpdateOneQuestionMutationFn = Apollo.MutationFunction<UpdateOneQuestionMutation, UpdateOneQuestionMutationVariables>;
+
+/**
+ * __useUpdateOneQuestionMutation__
+ *
+ * To run a mutation, you first call `useUpdateOneQuestionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOneQuestionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOneQuestionMutation, { data, loading, error }] = useUpdateOneQuestionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateOneQuestionMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOneQuestionMutation, UpdateOneQuestionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOneQuestionMutation, UpdateOneQuestionMutationVariables>(UpdateOneQuestionDocument, options);
+      }
+export type UpdateOneQuestionMutationHookResult = ReturnType<typeof useUpdateOneQuestionMutation>;
+export type UpdateOneQuestionMutationResult = Apollo.MutationResult<UpdateOneQuestionMutation>;
+export type UpdateOneQuestionMutationOptions = Apollo.BaseMutationOptions<UpdateOneQuestionMutation, UpdateOneQuestionMutationVariables>;
 export const GetTemplatesDocument = gql`
     query getTemplates($filter: InterviewTemplateFilter, $sorting: [InterviewTemplateSort!], $paging: OffsetPaging) {
   interviewTemplates(filter: $filter, sorting: $sorting, paging: $paging) {

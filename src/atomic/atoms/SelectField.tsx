@@ -1,8 +1,25 @@
-import Select, { components, Props } from "react-select";
+import Select, { Props } from "react-select";
+import Creatable from 'react-select/creatable';
 
-const SelectField = (props: Props) => {
+interface SelectFieldProps extends Props {
+    isCreatable?: boolean
+}
+
+const SelectField = (props: SelectFieldProps) => {
+    const type = props?.isCreatable ? 'creatable' : 'default'
+    const typeOptions = {
+        default: Select,
+        creatable: Creatable
+    }
+    const SelectType = typeOptions[type]
     return (
-        <Select isClearable defaultValue={props?.defaultValue} instanceId={props?.name} onBlur={props?.onBlur} {...props} />
+        <SelectType
+            isClearable
+            defaultValue={props?.defaultValue}
+            instanceId={props?.name}
+            onBlur={props?.onBlur}
+            {...props}
+        />
     )
 }
 
