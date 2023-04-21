@@ -3316,7 +3316,14 @@ export type CreateOneTemplateMutationVariables = Exact<{
 }>;
 
 
-export type CreateOneTemplateMutation = { __typename?: 'Mutation', createOneInterviewTemplate: { __typename?: 'InterviewTemplate', id: string } };
+export type CreateOneTemplateMutation = { __typename?: 'Mutation', createOneInterviewTemplate: { __typename?: 'InterviewTemplate', id: string, name: string, version: number, isFinished: boolean, isAvailable: boolean, projectId: string } };
+
+export type UpdateOneTemplateMutationVariables = Exact<{
+  input: UpdateOneInterviewTemplateInput;
+}>;
+
+
+export type UpdateOneTemplateMutation = { __typename?: 'Mutation', updateOneInterviewTemplate: { __typename?: 'InterviewTemplate', id: string, name: string, version: number, isFinished: boolean, isAvailable: boolean, projectId: string } };
 
 export type CreateOneQuestionGroupMutationVariables = Exact<{
   input: CreateOneQuestionGroupInput;
@@ -3535,6 +3542,11 @@ export const CreateOneTemplateDocument = gql`
     mutation createOneTemplate($input: CreateOneInterviewTemplateInput!) {
   createOneInterviewTemplate(input: $input) {
     id
+    name
+    version
+    isFinished
+    isAvailable
+    projectId
   }
 }
     `;
@@ -3564,6 +3576,44 @@ export function useCreateOneTemplateMutation(baseOptions?: Apollo.MutationHookOp
 export type CreateOneTemplateMutationHookResult = ReturnType<typeof useCreateOneTemplateMutation>;
 export type CreateOneTemplateMutationResult = Apollo.MutationResult<CreateOneTemplateMutation>;
 export type CreateOneTemplateMutationOptions = Apollo.BaseMutationOptions<CreateOneTemplateMutation, CreateOneTemplateMutationVariables>;
+export const UpdateOneTemplateDocument = gql`
+    mutation updateOneTemplate($input: UpdateOneInterviewTemplateInput!) {
+  updateOneInterviewTemplate(input: $input) {
+    id
+    name
+    version
+    isFinished
+    isAvailable
+    projectId
+  }
+}
+    `;
+export type UpdateOneTemplateMutationFn = Apollo.MutationFunction<UpdateOneTemplateMutation, UpdateOneTemplateMutationVariables>;
+
+/**
+ * __useUpdateOneTemplateMutation__
+ *
+ * To run a mutation, you first call `useUpdateOneTemplateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOneTemplateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOneTemplateMutation, { data, loading, error }] = useUpdateOneTemplateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateOneTemplateMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOneTemplateMutation, UpdateOneTemplateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOneTemplateMutation, UpdateOneTemplateMutationVariables>(UpdateOneTemplateDocument, options);
+      }
+export type UpdateOneTemplateMutationHookResult = ReturnType<typeof useUpdateOneTemplateMutation>;
+export type UpdateOneTemplateMutationResult = Apollo.MutationResult<UpdateOneTemplateMutation>;
+export type UpdateOneTemplateMutationOptions = Apollo.BaseMutationOptions<UpdateOneTemplateMutation, UpdateOneTemplateMutationVariables>;
 export const CreateOneQuestionGroupDocument = gql`
     mutation createOneQuestionGroup($input: CreateOneQuestionGroupInput!) {
   createOneQuestionGroup(input: $input) {

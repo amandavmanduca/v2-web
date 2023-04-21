@@ -1,6 +1,22 @@
 mutation createOneTemplate($input: CreateOneInterviewTemplateInput!) {
     createOneInterviewTemplate(input: $input) {
-        id
+      id
+      name
+      version
+      isFinished
+      isAvailable
+      projectId
+    }
+}
+
+mutation updateOneTemplate($input: UpdateOneInterviewTemplateInput!) {
+    updateOneInterviewTemplate(input: $input) {
+      id
+      name
+      version
+      isFinished
+      isAvailable
+      projectId
     }
 }
 
