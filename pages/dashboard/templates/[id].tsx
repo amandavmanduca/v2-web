@@ -7,7 +7,7 @@ import { useEffect, useState } from "react"
 const UpdateTemplate = () => {
     const router = useRouter()
     const { id: templateId } = router.query
-    const { getTemplate } = useGetTemplate()
+    const { getTemplate, loading } = useGetTemplate()
     const [template, setTemplate] = useState<InterviewTemplate | null | any>(null)
 
     useEffect(() => {
@@ -19,6 +19,10 @@ const UpdateTemplate = () => {
         })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [templateId])
+
+    if (loading) {
+        return <p>Aguarde...</p>
+    }
 
     if (!template) {
         return <p>Modelo não encontrado</p>

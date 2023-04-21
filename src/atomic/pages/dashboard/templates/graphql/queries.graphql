@@ -40,6 +40,7 @@ query getTemplate($id: ID!) {
       id
       name
       description
+      templateId
       questions {
         id
         index
@@ -49,6 +50,9 @@ query getTemplate($id: ID!) {
         type
         group {
           id
+          name
+          description
+          templateId
         }
         options
       }

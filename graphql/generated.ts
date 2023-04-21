@@ -2905,14 +2905,14 @@ export type TokenValidType = {
 };
 
 export type UpdateInterviewInput = {
-  id: Scalars['ID'];
+  id?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
   projectId?: InputMaybe<Scalars['String']>;
   templateId?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateInterviewTemplateInput = {
-  id: Scalars['ID'];
+  id?: InputMaybe<Scalars['ID']>;
   isAvailable?: InputMaybe<Scalars['Boolean']>;
   isFinished?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
@@ -3041,7 +3041,7 @@ export type UpdateOneUserInput = {
 export type UpdateProjectInput = {
   coordinators?: InputMaybe<Array<UpdateUserInput>>;
   generalDescription?: InputMaybe<Scalars['String']>;
-  id: Scalars['ID'];
+  id?: InputMaybe<Scalars['ID']>;
   interviewerOrientations?: InputMaybe<Scalars['String']>;
   interviewers?: InputMaybe<Array<UpdateUserInput>>;
   name?: InputMaybe<Scalars['String']>;
@@ -3053,13 +3053,13 @@ export type UpdateQuestionDependencyInput = {
   dependencyId?: InputMaybe<Scalars['String']>;
   dependentId?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
-  id: Scalars['ID'];
+  id?: InputMaybe<Scalars['ID']>;
   referenceValue?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateQuestionGroupInput = {
   description?: InputMaybe<Scalars['String']>;
-  id: Scalars['ID'];
+  id?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
   templateId?: InputMaybe<Scalars['String']>;
 };
@@ -3067,7 +3067,7 @@ export type UpdateQuestionGroupInput = {
 export type UpdateQuestionInput = {
   description?: InputMaybe<Scalars['String']>;
   groupId?: InputMaybe<Scalars['String']>;
-  id: Scalars['ID'];
+  id?: InputMaybe<Scalars['ID']>;
   index?: InputMaybe<Scalars['Float']>;
   options?: InputMaybe<Array<Scalars['String']>>;
   placeholder?: InputMaybe<Scalars['String']>;
@@ -3077,14 +3077,14 @@ export type UpdateQuestionInput = {
 
 export type UpdateResponseInput = {
   answer?: InputMaybe<Array<Scalars['String']>>;
-  id: Scalars['ID'];
+  id?: InputMaybe<Scalars['ID']>;
   interviewId?: InputMaybe<Scalars['String']>;
   questionId?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateUserInput = {
   email?: InputMaybe<Scalars['String']>;
-  id: Scalars['ID'];
+  id?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
   role?: InputMaybe<UserRoleEnum>;
@@ -3323,7 +3323,14 @@ export type CreateOneQuestionGroupMutationVariables = Exact<{
 }>;
 
 
-export type CreateOneQuestionGroupMutation = { __typename?: 'Mutation', createOneQuestionGroup: { __typename?: 'QuestionGroup', id: string } };
+export type CreateOneQuestionGroupMutation = { __typename?: 'Mutation', createOneQuestionGroup: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } };
+
+export type UpdateOneQuestionGroupMutationVariables = Exact<{
+  input: UpdateOneQuestionGroupInput;
+}>;
+
+
+export type UpdateOneQuestionGroupMutation = { __typename?: 'Mutation', updateOneQuestionGroup: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } };
 
 export type GetTemplatesQueryVariables = Exact<{
   filter?: InputMaybe<InterviewTemplateFilter>;
@@ -3344,7 +3351,7 @@ export type GetTemplateQueryVariables = Exact<{
 }>;
 
 
-export type GetTemplateQuery = { __typename?: 'Query', interviewTemplate?: { __typename?: 'InterviewTemplate', id: string, name: string, version: number, isFinished: boolean, isAvailable: boolean, project?: { __typename?: 'Project', id: string, name?: string | null } | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index: number, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, group?: { __typename?: 'QuestionGroup', id: string } | null }> | null }> | null } | null };
+export type GetTemplateQuery = { __typename?: 'Query', interviewTemplate?: { __typename?: 'InterviewTemplate', id: string, name: string, version: number, isFinished: boolean, isAvailable: boolean, project?: { __typename?: 'Project', id: string, name?: string | null } | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index: number, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, group?: { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null } | null }> | null }> | null } | null };
 
 export type LoginMutationVariables = Exact<{
   data: AuthInput;
@@ -3561,6 +3568,9 @@ export const CreateOneQuestionGroupDocument = gql`
     mutation createOneQuestionGroup($input: CreateOneQuestionGroupInput!) {
   createOneQuestionGroup(input: $input) {
     id
+    name
+    description
+    templateId
   }
 }
     `;
@@ -3590,6 +3600,42 @@ export function useCreateOneQuestionGroupMutation(baseOptions?: Apollo.MutationH
 export type CreateOneQuestionGroupMutationHookResult = ReturnType<typeof useCreateOneQuestionGroupMutation>;
 export type CreateOneQuestionGroupMutationResult = Apollo.MutationResult<CreateOneQuestionGroupMutation>;
 export type CreateOneQuestionGroupMutationOptions = Apollo.BaseMutationOptions<CreateOneQuestionGroupMutation, CreateOneQuestionGroupMutationVariables>;
+export const UpdateOneQuestionGroupDocument = gql`
+    mutation updateOneQuestionGroup($input: UpdateOneQuestionGroupInput!) {
+  updateOneQuestionGroup(input: $input) {
+    id
+    name
+    description
+    templateId
+  }
+}
+    `;
+export type UpdateOneQuestionGroupMutationFn = Apollo.MutationFunction<UpdateOneQuestionGroupMutation, UpdateOneQuestionGroupMutationVariables>;
+
+/**
+ * __useUpdateOneQuestionGroupMutation__
+ *
+ * To run a mutation, you first call `useUpdateOneQuestionGroupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOneQuestionGroupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOneQuestionGroupMutation, { data, loading, error }] = useUpdateOneQuestionGroupMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateOneQuestionGroupMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOneQuestionGroupMutation, UpdateOneQuestionGroupMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOneQuestionGroupMutation, UpdateOneQuestionGroupMutationVariables>(UpdateOneQuestionGroupDocument, options);
+      }
+export type UpdateOneQuestionGroupMutationHookResult = ReturnType<typeof useUpdateOneQuestionGroupMutation>;
+export type UpdateOneQuestionGroupMutationResult = Apollo.MutationResult<UpdateOneQuestionGroupMutation>;
+export type UpdateOneQuestionGroupMutationOptions = Apollo.BaseMutationOptions<UpdateOneQuestionGroupMutation, UpdateOneQuestionGroupMutationVariables>;
 export const GetTemplatesDocument = gql`
     query getTemplates($filter: InterviewTemplateFilter, $sorting: [InterviewTemplateSort!], $paging: OffsetPaging) {
   interviewTemplates(filter: $filter, sorting: $sorting, paging: $paging) {
@@ -3692,6 +3738,7 @@ export const GetTemplateDocument = gql`
       id
       name
       description
+      templateId
       questions {
         id
         index
@@ -3701,6 +3748,9 @@ export const GetTemplateDocument = gql`
         type
         group {
           id
+          name
+          description
+          templateId
         }
         options
       }

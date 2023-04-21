@@ -7,5 +7,17 @@ mutation createOneTemplate($input: CreateOneInterviewTemplateInput!) {
 mutation createOneQuestionGroup($input: CreateOneQuestionGroupInput!) {
     createOneQuestionGroup(input: $input) {
         id
+        name
+        description
+        templateId
+    }
+}
+
+mutation updateOneQuestionGroup($input: UpdateOneQuestionGroupInput!) {
+    updateOneQuestionGroup(input: $input) {
+        id
+        name
+        description
+        templateId
     }
 }

@@ -1,7 +1,7 @@
 import { InterviewTemplate, useGetTemplateLazyQuery } from "@app/graphql/generated"
 
 const useGetTemplate = () => {
-    const [fetch] = useGetTemplateLazyQuery({
+    const [fetch, { loading }] = useGetTemplateLazyQuery({
         fetchPolicy: "network-only"
     })
     async function getTemplate(id: string): Promise<InterviewTemplate | null | any> {
@@ -13,7 +13,8 @@ const useGetTemplate = () => {
         return response?.data?.interviewTemplate ?? null
     }
     return {
-        getTemplate
+        getTemplate,
+        loading
     }
 }
 export default useGetTemplate;
