@@ -42,6 +42,7 @@ export const formatQuestionToField = (q: Question): FormFieldProps => {
                 label: o
             })) ?? []
         },
+        description: q?.description,
         placeholder: q?.placeholder ?? ''
     })
 }

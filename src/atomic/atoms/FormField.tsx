@@ -3,6 +3,7 @@ import { Field as FinalFormField, SupportedInputs } from 'react-final-form'
 import { Flex, FormLabel, Input, Textarea } from '@chakra-ui/react';
 import SelectField from './SelectField';
 import { Maybe } from 'graphql/jsutils/Maybe';
+import Text from './Text';
 
 export type FormFieldProps = {
     name: string;
@@ -17,6 +18,7 @@ export type FormFieldProps = {
     };
     type: HTMLInputTypeAttribute;
     placeholder?: string;
+    description?: Maybe<string> | undefined;
     label?: string;
     style?: CSSProperties | undefined
     onBlur?: any
@@ -27,6 +29,7 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
     component,
     type = 'text',
     placeholder,
+    description,
     label,
     style,
     onBlur,
@@ -52,7 +55,12 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
         }
         return (
           <Flex display="grid" style={{ width: '100%', ...style }}>
-            {label && <FormLabel w="100%">{label}</FormLabel>}
+            {label && (
+                <FormLabel w="100%">
+                    {label}
+                    {description && <Text fontWeight="normal">Obs: <i>{description}</i></Text>}
+                </FormLabel>
+            )}
             <SelectedComponent
                 placeholder={placeholder}
                 type={type}

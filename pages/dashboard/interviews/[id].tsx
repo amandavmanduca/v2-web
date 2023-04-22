@@ -78,7 +78,7 @@ const UpdateInterview = () => {
                         return (
                         <FormProvider
                             key={question?.id}
-                            title={interview?.name}
+                            title={""}
                             onSubmit={(v) => handleSubmit(v, question, hasInitialValue)}
                             initialValues={{
                                 interviewId: interview?.id,
