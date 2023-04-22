@@ -1,0 +1,19 @@
+#import "./fragments.graphql"
+
+mutation createOneResponse($input: CreateOneResponseInput!) {
+    createOneResponse(input: $input) {
+        id
+        questionId
+        interviewId
+        answer
+    }
+}
+
+mutation updateOneResponse($input: UpdateOneResponseInput!) {
+    updateOneResponse(input: $input) {
+        id
+        questionId
+        interviewId
+        answer
+    }
+}

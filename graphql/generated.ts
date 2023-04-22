@@ -350,7 +350,6 @@ export type DeleteOneUserInput = {
 
 export type Interview = {
   __typename?: 'Interview';
-  answers?: Maybe<InterviewResponse>;
   createdAt?: Maybe<Scalars['DateTime']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
   id: Scalars['String'];
@@ -423,7 +422,6 @@ export type InterviewDeleteResponse = {
 
 export type InterviewFilter = {
   and?: InputMaybe<Array<InterviewFilter>>;
-  answers?: InputMaybe<InterviewFilterInterviewResponseFilter>;
   createdAt?: InputMaybe<DateFieldComparison>;
   deletedAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<StringFieldComparison>;
@@ -435,18 +433,6 @@ export type InterviewFilter = {
   projectId?: InputMaybe<StringFieldComparison>;
   template?: InputMaybe<InterviewFilterInterviewTemplateFilter>;
   templateId?: InputMaybe<StringFieldComparison>;
-  updatedAt?: InputMaybe<DateFieldComparison>;
-};
-
-export type InterviewFilterInterviewResponseFilter = {
-  and?: InputMaybe<Array<InterviewFilterInterviewResponseFilter>>;
-  createdAt?: InputMaybe<DateFieldComparison>;
-  deletedAt?: InputMaybe<DateFieldComparison>;
-  id?: InputMaybe<StringFieldComparison>;
-  interviewId?: InputMaybe<StringFieldComparison>;
-  interviewerId: StringFieldComparison;
-  or?: InputMaybe<Array<InterviewFilterInterviewResponseFilter>>;
-  questionId?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -512,18 +498,6 @@ export type InterviewMinAggregate = {
   name?: Maybe<Scalars['String']>;
   projectId?: Maybe<Scalars['String']>;
   templateId?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-};
-
-export type InterviewResponse = {
-  __typename?: 'InterviewResponse';
-  answer: Array<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  deletedAt?: Maybe<Scalars['DateTime']>;
-  id: Scalars['String'];
-  interviewId: Scalars['String'];
-  interviewerId: Scalars['String'];
-  questionId: Scalars['String'];
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -800,7 +774,6 @@ export type Mutation = {
   deleteOneResponse: ResponseDeleteResponse;
   deleteOneUser: UserDeleteResponse;
   login: AuthType;
-  removeAnswersFromInterview: Interview;
   removeAnswersFromQuestion: Question;
   removeCoordinatorsFromProject: Project;
   removeCreatedProjectsFromUser: User;
@@ -823,7 +796,6 @@ export type Mutation = {
   removeTemplateFromInterview: Interview;
   removeTemplateFromProject: Project;
   removeTemplateFromQuestionGroup: QuestionGroup;
-  setAnswersOnInterview: Interview;
   setAnswersOnQuestion: Question;
   setCoordinatorsOnProject: Project;
   setCreatedProjectsOnUser: User;
@@ -1080,11 +1052,6 @@ export type MutationLoginArgs = {
 };
 
 
-export type MutationRemoveAnswersFromInterviewArgs = {
-  input: RemoveAnswersFromInterviewInput;
-};
-
-
 export type MutationRemoveAnswersFromQuestionArgs = {
   input: RemoveAnswersFromQuestionInput;
 };
@@ -1192,11 +1159,6 @@ export type MutationRemoveTemplateFromProjectArgs = {
 
 export type MutationRemoveTemplateFromQuestionGroupArgs = {
   input: RemoveTemplateFromQuestionGroupInput;
-};
-
-
-export type MutationSetAnswersOnInterviewArgs = {
-  input: SetAnswersOnInterviewInput;
 };
 
 
@@ -2365,13 +2327,6 @@ export type QuestionUpdateFilter = {
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
-export type RemoveAnswersFromInterviewInput = {
-  /** The id of the record. */
-  id: Scalars['ID'];
-  /** The id of relation. */
-  relationId: Scalars['ID'];
-};
-
 export type RemoveAnswersFromQuestionInput = {
   /** The id of the record. */
   id: Scalars['ID'];
@@ -2720,13 +2675,6 @@ export type ResponseUpdateFilter = {
   or?: InputMaybe<Array<ResponseUpdateFilter>>;
   questionId?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
-};
-
-export type SetAnswersOnInterviewInput = {
-  /** The id of the record. */
-  id: Scalars['ID'];
-  /** The id of relation. */
-  relationId: Scalars['ID'];
 };
 
 export type SetAnswersOnQuestionInput = {
@@ -3291,7 +3239,23 @@ export type UserUpdateFilter = {
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
-export type InterviewFieldsFragment = { __typename?: 'Interview', id: string, name: string, template: { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, questions?: Array<{ __typename?: 'Question', id: string, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null }> | null }> | null } };
+export type InterviewResponseFieldsFragment = { __typename?: 'Response', id: string, questionId: string, interviewId: string, answer: Array<string> };
+
+export type InterviewFieldsFragment = { __typename?: 'Interview', id: string, name: string, template: { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, questions?: Array<{ __typename?: 'Question', id: string, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, answers?: Array<{ __typename?: 'Response', id: string, questionId: string, interviewId: string, answer: Array<string> }> | null }> | null }> | null } };
+
+export type CreateOneResponseMutationVariables = Exact<{
+  input: CreateOneResponseInput;
+}>;
+
+
+export type CreateOneResponseMutation = { __typename?: 'Mutation', createOneResponse: { __typename?: 'Response', id: string, questionId: string, interviewId: string, answer: Array<string> } };
+
+export type UpdateOneResponseMutationVariables = Exact<{
+  input: UpdateOneResponseInput;
+}>;
+
+
+export type UpdateOneResponseMutation = { __typename?: 'Mutation', updateOneResponse: { __typename?: 'Response', id: string, questionId: string, interviewId: string, answer: Array<string> } };
 
 export type GetInterviewsQueryVariables = Exact<{
   filter?: InputMaybe<InterviewFilter>;
@@ -3307,7 +3271,7 @@ export type GetInterviewQueryVariables = Exact<{
 }>;
 
 
-export type GetInterviewQuery = { __typename?: 'Query', interview?: { __typename?: 'Interview', id: string, name: string, template: { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, questions?: Array<{ __typename?: 'Question', id: string, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null }> | null }> | null } } | null };
+export type GetInterviewQuery = { __typename?: 'Query', interview?: { __typename?: 'Interview', id: string, name: string, template: { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, questions?: Array<{ __typename?: 'Question', id: string, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, answers?: Array<{ __typename?: 'Response', id: string, questionId: string, interviewId: string, answer: Array<string> }> | null }> | null }> | null } } | null };
 
 export type CreateOneProjectMutationVariables = Exact<{
   input: CreateOneProjectInput;
@@ -3414,6 +3378,14 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name?: string | null, email?: string | null, role: UserRoleEnum } };
 
+export const InterviewResponseFieldsFragmentDoc = gql`
+    fragment InterviewResponseFields on Response {
+  id
+  questionId
+  interviewId
+  answer
+}
+    `;
 export const InterviewFieldsFragmentDoc = gql`
     fragment InterviewFields on Interview {
   id
@@ -3433,11 +3405,14 @@ export const InterviewFieldsFragmentDoc = gql`
         placeholder
         type
         options
+        answers {
+          ...InterviewResponseFields
+        }
       }
     }
   }
 }
-    `;
+    ${InterviewResponseFieldsFragmentDoc}`;
 export const QuestionFieldsFragmentDoc = gql`
     fragment QuestionFields on Question {
   id
@@ -3474,6 +3449,78 @@ export const TemplateFieldsFragmentDoc = gql`
   }
 }
     ${GroupFieldsFragmentDoc}`;
+export const CreateOneResponseDocument = gql`
+    mutation createOneResponse($input: CreateOneResponseInput!) {
+  createOneResponse(input: $input) {
+    id
+    questionId
+    interviewId
+    answer
+  }
+}
+    `;
+export type CreateOneResponseMutationFn = Apollo.MutationFunction<CreateOneResponseMutation, CreateOneResponseMutationVariables>;
+
+/**
+ * __useCreateOneResponseMutation__
+ *
+ * To run a mutation, you first call `useCreateOneResponseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOneResponseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOneResponseMutation, { data, loading, error }] = useCreateOneResponseMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateOneResponseMutation(baseOptions?: Apollo.MutationHookOptions<CreateOneResponseMutation, CreateOneResponseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOneResponseMutation, CreateOneResponseMutationVariables>(CreateOneResponseDocument, options);
+      }
+export type CreateOneResponseMutationHookResult = ReturnType<typeof useCreateOneResponseMutation>;
+export type CreateOneResponseMutationResult = Apollo.MutationResult<CreateOneResponseMutation>;
+export type CreateOneResponseMutationOptions = Apollo.BaseMutationOptions<CreateOneResponseMutation, CreateOneResponseMutationVariables>;
+export const UpdateOneResponseDocument = gql`
+    mutation updateOneResponse($input: UpdateOneResponseInput!) {
+  updateOneResponse(input: $input) {
+    id
+    questionId
+    interviewId
+    answer
+  }
+}
+    `;
+export type UpdateOneResponseMutationFn = Apollo.MutationFunction<UpdateOneResponseMutation, UpdateOneResponseMutationVariables>;
+
+/**
+ * __useUpdateOneResponseMutation__
+ *
+ * To run a mutation, you first call `useUpdateOneResponseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOneResponseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOneResponseMutation, { data, loading, error }] = useUpdateOneResponseMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateOneResponseMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOneResponseMutation, UpdateOneResponseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOneResponseMutation, UpdateOneResponseMutationVariables>(UpdateOneResponseDocument, options);
+      }
+export type UpdateOneResponseMutationHookResult = ReturnType<typeof useUpdateOneResponseMutation>;
+export type UpdateOneResponseMutationResult = Apollo.MutationResult<UpdateOneResponseMutation>;
+export type UpdateOneResponseMutationOptions = Apollo.BaseMutationOptions<UpdateOneResponseMutation, UpdateOneResponseMutationVariables>;
 export const GetInterviewsDocument = gql`
     query getInterviews($filter: InterviewFilter, $sorting: [InterviewSort!], $paging: OffsetPaging) {
   interviews(filter: $filter, sorting: $sorting, paging: $paging) {

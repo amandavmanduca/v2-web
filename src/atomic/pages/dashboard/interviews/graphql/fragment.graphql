@@ -1,3 +1,10 @@
+fragment InterviewResponseFields on Response {
+    id
+    questionId
+    interviewId
+    answer
+}
+
 fragment InterviewFields on Interview {
     id
     name
@@ -16,6 +23,9 @@ fragment InterviewFields on Interview {
                 placeholder
                 type
                 options
+                answers {
+                    ...InterviewResponseFields
+                }
             }
         }  
     }
