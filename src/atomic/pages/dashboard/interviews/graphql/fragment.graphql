@@ -1,0 +1,22 @@
+fragment InterviewFields on Interview {
+    id
+    name
+    template {
+        id
+        name
+        version
+        questionGroups {
+            id
+            name
+            description
+            questions {
+                id
+                title
+                description
+                placeholder
+                type
+                options
+            }
+        }  
+    }
+}

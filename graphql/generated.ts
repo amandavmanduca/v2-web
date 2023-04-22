@@ -3291,6 +3291,8 @@ export type UserUpdateFilter = {
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
+export type InterviewFieldsFragment = { __typename?: 'Interview', id: string, name: string, template: { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, questions?: Array<{ __typename?: 'Question', id: string, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null }> | null }> | null } };
+
 export type GetInterviewsQueryVariables = Exact<{
   filter?: InputMaybe<InterviewFilter>;
   sorting?: InputMaybe<Array<InterviewSort> | InterviewSort>;
@@ -3299,6 +3301,13 @@ export type GetInterviewsQueryVariables = Exact<{
 
 
 export type GetInterviewsQuery = { __typename?: 'Query', interviews: { __typename?: 'InterviewConnection', nodes: Array<{ __typename?: 'Interview', id: string, name: string }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
+
+export type GetInterviewQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetInterviewQuery = { __typename?: 'Query', interview?: { __typename?: 'Interview', id: string, name: string, template: { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, questions?: Array<{ __typename?: 'Question', id: string, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null }> | null }> | null } } | null };
 
 export type CreateOneProjectMutationVariables = Exact<{
   input: CreateOneProjectInput;
@@ -3405,6 +3414,30 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name?: string | null, email?: string | null, role: UserRoleEnum } };
 
+export const InterviewFieldsFragmentDoc = gql`
+    fragment InterviewFields on Interview {
+  id
+  name
+  template {
+    id
+    name
+    version
+    questionGroups {
+      id
+      name
+      description
+      questions {
+        id
+        title
+        description
+        placeholder
+        type
+        options
+      }
+    }
+  }
+}
+    `;
 export const QuestionFieldsFragmentDoc = gql`
     fragment QuestionFields on Question {
   id
@@ -3485,6 +3518,41 @@ export function useGetInterviewsLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetInterviewsQueryHookResult = ReturnType<typeof useGetInterviewsQuery>;
 export type GetInterviewsLazyQueryHookResult = ReturnType<typeof useGetInterviewsLazyQuery>;
 export type GetInterviewsQueryResult = Apollo.QueryResult<GetInterviewsQuery, GetInterviewsQueryVariables>;
+export const GetInterviewDocument = gql`
+    query getInterview($id: ID!) {
+  interview(id: $id) {
+    ...InterviewFields
+  }
+}
+    ${InterviewFieldsFragmentDoc}`;
+
+/**
+ * __useGetInterviewQuery__
+ *
+ * To run a query within a React component, call `useGetInterviewQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetInterviewQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetInterviewQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetInterviewQuery(baseOptions: Apollo.QueryHookOptions<GetInterviewQuery, GetInterviewQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetInterviewQuery, GetInterviewQueryVariables>(GetInterviewDocument, options);
+      }
+export function useGetInterviewLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetInterviewQuery, GetInterviewQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetInterviewQuery, GetInterviewQueryVariables>(GetInterviewDocument, options);
+        }
+export type GetInterviewQueryHookResult = ReturnType<typeof useGetInterviewQuery>;
+export type GetInterviewLazyQueryHookResult = ReturnType<typeof useGetInterviewLazyQuery>;
+export type GetInterviewQueryResult = Apollo.QueryResult<GetInterviewQuery, GetInterviewQueryVariables>;
 export const CreateOneProjectDocument = gql`
     mutation createOneProject($input: CreateOneProjectInput!) {
   createOneProject(input: $input) {

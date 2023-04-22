@@ -10,3 +10,9 @@ query getInterviews($filter: InterviewFilter $sorting: [InterviewSort!] $paging:
         }
     }
 }
+
+query getInterview($id: ID!) {
+    interview(id: $id) {
+        ...InterviewFields
+    }
+}

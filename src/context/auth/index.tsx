@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createContext, useCallback, useContext } from "react";
 
 import { ApolloQueryResult } from "@apollo/client";
@@ -74,6 +74,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await destroyCookie("authToken");
     router.push("/auth/login");
   }, [router]);
+
+  useEffect(() => {
+    if(!me) {
+      getMe()
+    }
+  }, [])
 
   return (
     <AuthContext.Provider

@@ -6,11 +6,11 @@ export type RouteProps = {
     permission: UserRoleEnum[] | string[]
 }
 
-const routesOptions = [
+export const routesOptions = [
     {
         name: 'Projetos',
         path: '/dashboard/projects',
-        permission: []
+        permission: [UserRoleEnum.Coordinator, UserRoleEnum.Interviewer]
     },
     {
         name: 'Modelos',
@@ -20,7 +20,7 @@ const routesOptions = [
     {
         name: 'Entrevistas',
         path: '/dashboard/interviews',
-        permission: []
+        permission: [UserRoleEnum.Coordinator, UserRoleEnum.Interviewer]
     },
 ]
 
