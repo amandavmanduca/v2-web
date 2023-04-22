@@ -3,6 +3,9 @@ query getProjects($filter: ProjectFilter $sorting: [ProjectSort!] $paging: Offse
         nodes {
             id
             name
+            template {
+                id
+            }
         }
         pageInfo {
             hasNextPage

@@ -11,8 +11,31 @@ query getInterviews($filter: InterviewFilter $sorting: [InterviewSort!] $paging:
     }
 }
 
-query getInterview($id: ID!) {
+query getInterview($id: ID!, $answerFilter: ResponseFilter) {
     interview(id: $id) {
-        ...InterviewFields
+    id
+    name
+    interviewerId
+    template {
+        id
+        name
+        version
+        questionGroups {
+            id
+            name
+            description
+            questions {
+                id
+                title
+                description
+                placeholder
+                type
+                options
+                answers(filter: $answerFilter) {
+                    ...InterviewResponseFields
+                }
+            }
+        }  
+    }
     }
 }

@@ -3,15 +3,19 @@ import { formatAnswerBeforeSubmit, formatAnswerInitialValue, formatQuestionToFie
 import useCreateOneResponse from "@app/src/atomic/pages/dashboard/interviews/hooks/useCreateOneResponse"
 import useGetInterview from "@app/src/atomic/pages/dashboard/interviews/hooks/useGetInterview"
 import useUpdateOneResponse from "@app/src/atomic/pages/dashboard/interviews/hooks/useUpdateOneResponse"
+import { useAuthContext } from "@app/src/context/auth"
 import FormProvider from "@app/src/providers/FormProvider"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
 const UpdateInterview = () => {
+    const { me } = useAuthContext()
     const router = useRouter()
     const { id: interviewId } = router.query
     const { getInterview, loading } = useGetInterview()
     const [interview, setInterview] = useState<Interview | null | any>(null)
+
+    const [viewOnly, setViewOnly] = useState<boolean>(false)
 
     const { createResponse } = useCreateOneResponse()
     const { updateResponse } = useUpdateOneResponse()
@@ -20,6 +24,8 @@ const UpdateInterview = () => {
         const response = await getInterview(interviewId)
         if (response) {
             setInterview(response)
+            const isInterviewer = response?.interviewerId === me?.id
+            setViewOnly(!isInterviewer)
         } else {
             router.push('/dashboard/templates')
         }
@@ -34,7 +40,7 @@ const UpdateInterview = () => {
                 
         })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [interviewId])
+    }, [interviewId, me])
 
     if (loading) {
         return <p>Aguarde...</p>
@@ -73,7 +79,7 @@ const UpdateInterview = () => {
                     <p>{g?.name}</p>
                     <p>{g?.description}</p>
                     {g?.questions?.map((question: Question) => {
-                        const initialAnswerValue = formatAnswerInitialValue(question, question?.answers)
+                        const initialAnswerValue = formatAnswerInitialValue(question, question?.answers, interview?.id)
                         const hasInitialValue = initialAnswerValue?.id ? true : false
                         return (
                         <FormProvider
@@ -89,7 +95,7 @@ const UpdateInterview = () => {
                             submitButton="Salvar"
                             submitOnBlur={true}
                             displayButtons={false}
-                            fields={[formatQuestionToField(question)]}
+                            fields={[formatQuestionToField(question, viewOnly)]}
                         />
                     )})}
                 </div>

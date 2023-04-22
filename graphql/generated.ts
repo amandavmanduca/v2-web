@@ -3241,7 +3241,7 @@ export type UserUpdateFilter = {
 
 export type InterviewResponseFieldsFragment = { __typename?: 'Response', id: string, questionId: string, interviewId: string, answer: Array<string> };
 
-export type InterviewFieldsFragment = { __typename?: 'Interview', id: string, name: string, template: { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, questions?: Array<{ __typename?: 'Question', id: string, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, answers?: Array<{ __typename?: 'Response', id: string, questionId: string, interviewId: string, answer: Array<string> }> | null }> | null }> | null } };
+export type InterviewFieldsFragment = { __typename?: 'Interview', id: string, name: string, interviewerId: string, template: { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, questions?: Array<{ __typename?: 'Question', id: string, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, answers?: Array<{ __typename?: 'Response', id: string, questionId: string, interviewId: string, answer: Array<string> }> | null }> | null }> | null } };
 
 export type CreateOneResponseMutationVariables = Exact<{
   input: CreateOneResponseInput;
@@ -3257,6 +3257,13 @@ export type UpdateOneResponseMutationVariables = Exact<{
 
 export type UpdateOneResponseMutation = { __typename?: 'Mutation', updateOneResponse: { __typename?: 'Response', id: string, questionId: string, interviewId: string, answer: Array<string> } };
 
+export type CreateOneInterviewMutationVariables = Exact<{
+  input: CreateOneInterviewInput;
+}>;
+
+
+export type CreateOneInterviewMutation = { __typename?: 'Mutation', createOneInterview: { __typename?: 'Interview', id: string } };
+
 export type GetInterviewsQueryVariables = Exact<{
   filter?: InputMaybe<InterviewFilter>;
   sorting?: InputMaybe<Array<InterviewSort> | InterviewSort>;
@@ -3268,10 +3275,11 @@ export type GetInterviewsQuery = { __typename?: 'Query', interviews: { __typenam
 
 export type GetInterviewQueryVariables = Exact<{
   id: Scalars['ID'];
+  answerFilter?: InputMaybe<ResponseFilter>;
 }>;
 
 
-export type GetInterviewQuery = { __typename?: 'Query', interview?: { __typename?: 'Interview', id: string, name: string, template: { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, questions?: Array<{ __typename?: 'Question', id: string, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, answers?: Array<{ __typename?: 'Response', id: string, questionId: string, interviewId: string, answer: Array<string> }> | null }> | null }> | null } } | null };
+export type GetInterviewQuery = { __typename?: 'Query', interview?: { __typename?: 'Interview', id: string, name: string, interviewerId: string, template: { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, questions?: Array<{ __typename?: 'Question', id: string, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, answers?: Array<{ __typename?: 'Response', id: string, questionId: string, interviewId: string, answer: Array<string> }> | null }> | null }> | null } } | null };
 
 export type CreateOneProjectMutationVariables = Exact<{
   input: CreateOneProjectInput;
@@ -3287,7 +3295,7 @@ export type GetProjectsQueryVariables = Exact<{
 }>;
 
 
-export type GetProjectsQuery = { __typename?: 'Query', projects: { __typename?: 'ProjectConnection', nodes: Array<{ __typename?: 'Project', id: string, name?: string | null }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
+export type GetProjectsQuery = { __typename?: 'Query', projects: { __typename?: 'ProjectConnection', nodes: Array<{ __typename?: 'Project', id: string, name?: string | null, template?: { __typename?: 'InterviewTemplate', id: string } | null }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
 
 export type GetUsersToProjectsQueryVariables = Exact<{
   filter?: InputMaybe<UserFilter>;
@@ -3390,6 +3398,7 @@ export const InterviewFieldsFragmentDoc = gql`
     fragment InterviewFields on Interview {
   id
   name
+  interviewerId
   template {
     id
     name
@@ -3521,6 +3530,39 @@ export function useUpdateOneResponseMutation(baseOptions?: Apollo.MutationHookOp
 export type UpdateOneResponseMutationHookResult = ReturnType<typeof useUpdateOneResponseMutation>;
 export type UpdateOneResponseMutationResult = Apollo.MutationResult<UpdateOneResponseMutation>;
 export type UpdateOneResponseMutationOptions = Apollo.BaseMutationOptions<UpdateOneResponseMutation, UpdateOneResponseMutationVariables>;
+export const CreateOneInterviewDocument = gql`
+    mutation createOneInterview($input: CreateOneInterviewInput!) {
+  createOneInterview(input: $input) {
+    id
+  }
+}
+    `;
+export type CreateOneInterviewMutationFn = Apollo.MutationFunction<CreateOneInterviewMutation, CreateOneInterviewMutationVariables>;
+
+/**
+ * __useCreateOneInterviewMutation__
+ *
+ * To run a mutation, you first call `useCreateOneInterviewMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOneInterviewMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOneInterviewMutation, { data, loading, error }] = useCreateOneInterviewMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateOneInterviewMutation(baseOptions?: Apollo.MutationHookOptions<CreateOneInterviewMutation, CreateOneInterviewMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOneInterviewMutation, CreateOneInterviewMutationVariables>(CreateOneInterviewDocument, options);
+      }
+export type CreateOneInterviewMutationHookResult = ReturnType<typeof useCreateOneInterviewMutation>;
+export type CreateOneInterviewMutationResult = Apollo.MutationResult<CreateOneInterviewMutation>;
+export type CreateOneInterviewMutationOptions = Apollo.BaseMutationOptions<CreateOneInterviewMutation, CreateOneInterviewMutationVariables>;
 export const GetInterviewsDocument = gql`
     query getInterviews($filter: InterviewFilter, $sorting: [InterviewSort!], $paging: OffsetPaging) {
   interviews(filter: $filter, sorting: $sorting, paging: $paging) {
@@ -3566,12 +3608,35 @@ export type GetInterviewsQueryHookResult = ReturnType<typeof useGetInterviewsQue
 export type GetInterviewsLazyQueryHookResult = ReturnType<typeof useGetInterviewsLazyQuery>;
 export type GetInterviewsQueryResult = Apollo.QueryResult<GetInterviewsQuery, GetInterviewsQueryVariables>;
 export const GetInterviewDocument = gql`
-    query getInterview($id: ID!) {
+    query getInterview($id: ID!, $answerFilter: ResponseFilter) {
   interview(id: $id) {
-    ...InterviewFields
+    id
+    name
+    interviewerId
+    template {
+      id
+      name
+      version
+      questionGroups {
+        id
+        name
+        description
+        questions {
+          id
+          title
+          description
+          placeholder
+          type
+          options
+          answers(filter: $answerFilter) {
+            ...InterviewResponseFields
+          }
+        }
+      }
+    }
   }
 }
-    ${InterviewFieldsFragmentDoc}`;
+    ${InterviewResponseFieldsFragmentDoc}`;
 
 /**
  * __useGetInterviewQuery__
@@ -3586,6 +3651,7 @@ export const GetInterviewDocument = gql`
  * const { data, loading, error } = useGetInterviewQuery({
  *   variables: {
  *      id: // value for 'id'
+ *      answerFilter: // value for 'answerFilter'
  *   },
  * });
  */
@@ -3639,6 +3705,9 @@ export const GetProjectsDocument = gql`
     nodes {
       id
       name
+      template {
+        id
+      }
     }
     pageInfo {
       hasNextPage

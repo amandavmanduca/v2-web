@@ -7,7 +7,10 @@ const useGetInterview = () => {
     async function getInterview(id: string): Promise<Interview | null | any> {
         const response = await fetch({
             variables: {
-                id: id
+                id: id,
+                answerFilter: {
+                    interviewId: { eq: id }
+                }
             }
         })
         return response?.data?.interview ?? null

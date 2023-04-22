@@ -17,3 +17,9 @@ mutation updateOneResponse($input: UpdateOneResponseInput!) {
         answer
     }
 }
+
+mutation createOneInterview($input: CreateOneInterviewInput!) {
+    createOneInterview(input: $input) {
+        id
+    }
+}

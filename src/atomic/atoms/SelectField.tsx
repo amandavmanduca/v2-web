@@ -3,9 +3,10 @@ import Creatable from 'react-select/creatable';
 
 interface SelectFieldProps extends Props {
     isCreatable?: boolean
+    disabled?: boolean
 }
 
-const SelectField = (props: SelectFieldProps) => {
+const SelectField = ({ disabled, ...props}: SelectFieldProps) => {
     const type = props?.isCreatable ? 'creatable' : 'default'
     const typeOptions = {
         default: Select,
@@ -18,6 +19,7 @@ const SelectField = (props: SelectFieldProps) => {
             defaultValue={props?.defaultValue}
             instanceId={props?.name}
             onBlur={props?.onBlur}
+            isDisabled={disabled}
             {...props}
         />
     )

@@ -29,7 +29,7 @@ export const formatQuestionsToFields = (rawFields: Question[] | []): FormFieldPr
     return rawFields?.map((q: Question) => formatQuestionToField(q))
 }
 
-export const formatQuestionToField = (q: Question): FormFieldProps => {
+export const formatQuestionToField = (q: Question, disabled = false): FormFieldProps => {
     return ({
         label: q?.title,
         name: "answer",
@@ -43,6 +43,7 @@ export const formatQuestionToField = (q: Question): FormFieldProps => {
             })) ?? []
         },
         description: q?.description,
+        disabled: disabled,
         placeholder: q?.placeholder ?? ''
     })
 }
@@ -51,11 +52,11 @@ export const setAnswerToQuestion = (answers: Response[] | [], questionId: string
     return answers?.find((a: Response) => a?.questionId === questionId) || null
 }
 
-export const formatAnswerInitialValue = (question: Question, answers: Response[] | undefined | null) => {
+export const formatAnswerInitialValue = (question: Question, answers: Response[] | undefined | null, interviewId: string) => {
     if (!answers) {
         return null
     }
-    const response = answers?.find(a => a?.questionId === question?.id)
+    const response = answers?.find(a => a?.interviewId === interviewId)
     
     if (question?.type === QuestionTypeEnum.MultiSelect) {
         return ({

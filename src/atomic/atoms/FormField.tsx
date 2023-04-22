@@ -21,6 +21,7 @@ export type FormFieldProps = {
     description?: Maybe<string> | undefined;
     label?: string;
     style?: CSSProperties | undefined
+    disabled?: boolean
     onBlur?: any
 }
 
@@ -32,6 +33,7 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
     description,
     label,
     style,
+    disabled = false,
     onBlur,
 }: FormFieldProps) => {
     const components = {
@@ -64,6 +66,7 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
             <SelectedComponent
                 placeholder={placeholder}
                 type={type}
+                disabled={disabled}
                 style={{ width: '100%', backgroundColor: 'white' }}
                 {...input}
                 options={component?.options}
