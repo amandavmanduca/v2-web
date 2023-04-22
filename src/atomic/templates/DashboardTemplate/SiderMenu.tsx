@@ -1,34 +1,18 @@
+import { useAuthContext } from "@app/src/context/auth";
 import { Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-
-type RouteProps = {
-    name: string;
-    path: string
-}
-
-const routes: RouteProps[] = [
-    {
-        name: 'Projetos',
-        path: '/dashboard/projects'
-    },
-    {
-        name: 'Modelos',
-        path: '/dashboard/templates'
-    },
-    {
-        name: 'Entrevistas',
-        path: '/dashboard/interviews'
-    },
-]
+import { RouteProps, routes } from "./routes";
 
 const SiderMenu = () => {
+    const { me } = useAuthContext();
+    console.log('me ', me)
     const router = useRouter()
     return (
         <Flex
             flexDirection="column"
             gap="5px"
         >
-            {routes?.map((route: RouteProps, index) => {
+            {routes(me?.role)?.map((route: RouteProps, index) => {
             const isSelectedPath = router?.pathname === route?.path
             return ( 
                 <Flex

@@ -1,6 +1,6 @@
 import { CSSProperties, HTMLInputTypeAttribute } from 'react';
 import { Field as FinalFormField, SupportedInputs } from 'react-final-form'
-import { Flex, FormLabel, Input, Select, Textarea } from '@chakra-ui/react';
+import { Flex, FormLabel, Input, Textarea } from '@chakra-ui/react';
 import SelectField from './SelectField';
 import { Maybe } from 'graphql/jsutils/Maybe';
 

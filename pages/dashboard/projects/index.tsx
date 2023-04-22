@@ -9,7 +9,7 @@ const Projects = () => {
                 paginatedQueryName="projects"
                 query={GetProjectsDocument}
                 options={{
-                    limit: 4
+                    limit: 10
                 }}
                 refetchFilter={(value: string, refetch: any) => refetch({
                     filter: {
