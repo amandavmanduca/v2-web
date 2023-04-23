@@ -3271,7 +3271,7 @@ export type GetInterviewsQueryVariables = Exact<{
 }>;
 
 
-export type GetInterviewsQuery = { __typename?: 'Query', interviews: { __typename?: 'InterviewConnection', nodes: Array<{ __typename?: 'Interview', id: string, name: string }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
+export type GetInterviewsQuery = { __typename?: 'Query', interviews: { __typename?: 'InterviewConnection', nodes: Array<{ __typename?: 'Interview', id: string, name: string, createdAt?: any | null, project: { __typename?: 'Project', id: string, name?: string | null }, interviewer: { __typename?: 'User', id: string, name?: string | null, role: UserRoleEnum }, template: { __typename?: 'InterviewTemplate', id: string, name: string } }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
 
 export type GetInterviewQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -3295,7 +3295,7 @@ export type GetProjectsQueryVariables = Exact<{
 }>;
 
 
-export type GetProjectsQuery = { __typename?: 'Query', projects: { __typename?: 'ProjectConnection', nodes: Array<{ __typename?: 'Project', id: string, name?: string | null, template?: { __typename?: 'InterviewTemplate', id: string } | null }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
+export type GetProjectsQuery = { __typename?: 'Query', projects: { __typename?: 'ProjectConnection', nodes: Array<{ __typename?: 'Project', id: string, name?: string | null, template?: { __typename?: 'InterviewTemplate', id: string, name: string, isAvailable: boolean, isFinished: boolean } | null }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
 
 export type GetUsersToProjectsQueryVariables = Exact<{
   filter?: InputMaybe<UserFilter>;
@@ -3360,7 +3360,7 @@ export type GetTemplatesQueryVariables = Exact<{
 }>;
 
 
-export type GetTemplatesQuery = { __typename?: 'Query', interviewTemplates: { __typename?: 'InterviewTemplateConnection', nodes: Array<{ __typename?: 'InterviewTemplate', id: string, name: string }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
+export type GetTemplatesQuery = { __typename?: 'Query', interviewTemplates: { __typename?: 'InterviewTemplateConnection', nodes: Array<{ __typename?: 'InterviewTemplate', id: string, name: string, project?: { __typename?: 'Project', id: string, name?: string | null } | null }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
 
 export type GetMyCreatedProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3569,6 +3569,20 @@ export const GetInterviewsDocument = gql`
     nodes {
       id
       name
+      createdAt
+      project {
+        id
+        name
+      }
+      interviewer {
+        id
+        name
+        role
+      }
+      template {
+        id
+        name
+      }
     }
     pageInfo {
       hasNextPage
@@ -3707,6 +3721,9 @@ export const GetProjectsDocument = gql`
       name
       template {
         id
+        name
+        isAvailable
+        isFinished
       }
     }
     pageInfo {
@@ -3994,6 +4011,10 @@ export const GetTemplatesDocument = gql`
     nodes {
       id
       name
+      project {
+        id
+        name
+      }
     }
     pageInfo {
       hasNextPage

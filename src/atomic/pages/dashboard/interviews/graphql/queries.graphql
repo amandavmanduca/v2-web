@@ -3,6 +3,20 @@ query getInterviews($filter: InterviewFilter $sorting: [InterviewSort!] $paging:
         nodes {
             id
             name
+            createdAt
+            project {
+                id
+                name
+            }
+            interviewer {
+                id
+                name
+                role
+            }
+            template {
+                id
+                name
+            }
         }
         pageInfo {
             hasNextPage

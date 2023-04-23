@@ -42,12 +42,12 @@ const LayoutTemplate = ({
 
     const dataArray = data?.[paginatedQueryName]?.nodes
 
-    useEffect(() => {
+    async function handleSearch() {
         if(refetchFilter) {
             refetchFilter(input, refetch)
             setOffset(0)
         }
-    }, [input, refetch, refetchFilter, setOffset])
+    }
 
     if (loading) {
         return <></>
@@ -60,11 +60,12 @@ const LayoutTemplate = ({
                     type="text"
                     value={input}
                     onChange={(v) => setInput(v?.target?.value)}
+                    onKeyUp={(e) => e.key === "Enter" && handleSearch()}
                     placeholder="Buscar por nome"
                     style={{ padding: '5px 10px' }}
                 />
             )}
-            <Flex display="grid" gridTemplateColumns={['1fr', '1fr 1fr', '1fr 1fr', '1fr 1fr 1fr']}>
+            <Flex display="grid" gap="15px" gridTemplateColumns={['1fr', '1fr 1fr', '1fr 1fr', '1fr 1fr 1fr']}>
                 {dataArray?.map((item: any, index: number) => (
                     <Card key={index} item={item} style={{ width: '100%' }} />
                 ))}

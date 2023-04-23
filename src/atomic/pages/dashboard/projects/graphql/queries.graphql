@@ -5,6 +5,9 @@ query getProjects($filter: ProjectFilter $sorting: [ProjectSort!] $paging: Offse
             name
             template {
                 id
+                name
+                isAvailable
+                isFinished
             }
         }
         pageInfo {

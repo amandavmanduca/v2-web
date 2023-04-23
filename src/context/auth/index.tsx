@@ -76,9 +76,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [router]);
 
   useEffect(() => {
-    if(!me) {
-      getMe()
-    }
+    getMe()
   }, [])
 
   return (

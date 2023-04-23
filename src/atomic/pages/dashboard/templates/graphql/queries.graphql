@@ -5,6 +5,10 @@ query getTemplates($filter: InterviewTemplateFilter $sorting: [InterviewTemplate
         nodes {
             id
             name
+            project {
+              id
+              name
+            }
         }
         pageInfo {
             hasNextPage

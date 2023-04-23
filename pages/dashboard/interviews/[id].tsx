@@ -3,6 +3,7 @@ import { formatAnswerBeforeSubmit, formatAnswerInitialValue, formatQuestionToFie
 import useCreateOneResponse from "@app/src/atomic/pages/dashboard/interviews/hooks/useCreateOneResponse"
 import useGetInterview from "@app/src/atomic/pages/dashboard/interviews/hooks/useGetInterview"
 import useUpdateOneResponse from "@app/src/atomic/pages/dashboard/interviews/hooks/useUpdateOneResponse"
+import DashboardTemplate from "@app/src/atomic/templates/DashboardTemplate"
 import { useAuthContext } from "@app/src/context/auth"
 import FormProvider from "@app/src/providers/FormProvider"
 import { useRouter } from "next/router"
@@ -73,7 +74,7 @@ const UpdateInterview = () => {
     }
 
     return (
-        <div>
+        <DashboardTemplate title="Entrevistas">
             {groups?.map((g: QuestionGroup) => (
                 <div key={g?.id}>
                     <p>{g?.name}</p>
@@ -100,8 +101,7 @@ const UpdateInterview = () => {
                     )})}
                 </div>
             ))}
-
-        </div>
+        </DashboardTemplate>
     )
 }
 export default UpdateInterview
