@@ -71,9 +71,9 @@ const LayoutTemplate = ({
                 ))}
             </Flex>
             <Flex>
-                {hasPrev && <Button onClick={() => prevPage()}>Voltar</Button>}
+                {hasPrev && <Button onClick={() => prevPage()}>{"<"}</Button>}
                 <Button>{page}</Button>
-                {hasNext && <Button onClick={() => nextPage()}>Avançar</Button>}
+                {hasNext && <Button onClick={() => nextPage()}>{">"}</Button>}
             </Flex>
         </Flex>
     )

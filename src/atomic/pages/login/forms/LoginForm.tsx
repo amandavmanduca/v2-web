@@ -34,7 +34,7 @@ const LoginForm = ({
 
     return (
         <FormProvider
-            title="Login Form"
+            title="Login"
             onSubmit={handleLogin}
             initialValues={{}}
             // validate={}

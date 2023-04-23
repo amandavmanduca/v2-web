@@ -56,7 +56,14 @@ const Projects = () => {
                                     </Text>
                                     <Text><i>{finished ? "Template Pronto" : "Template em Andamento"}</i></Text>
                                     {isInterviewer && readyForInterviews && (
-                                        <Text onClick={() => startInterview(item)}>Iniciar Entrevista</Text>
+                                        <Text
+                                            cursor="pointer"
+                                            textDecoration="underline"
+                                            onClick={() => startInterview(item)}
+                                            alignSelf="end"
+                                        >
+                                            Iniciar Entrevista
+                                        </Text>
                                     )}
                                 </>
                             ) : (

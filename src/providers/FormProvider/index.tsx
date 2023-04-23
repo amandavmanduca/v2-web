@@ -1,5 +1,6 @@
 import Button from "@app/src/atomic/atoms/Button";
 import FormField, { FormFieldProps } from "@app/src/atomic/atoms/FormField";
+import Text from "@app/src/atomic/atoms/Text";
 import { Flex } from "@chakra-ui/react";
 import { ValidationErrors } from "final-form";
 import { Form } from 'react-final-form'
@@ -33,7 +34,7 @@ const FormProvider = ({
       initialValues={initialValues}
       render={({ handleSubmit, form: { reset } }) => (
         <form style={{ width: '100%' }} onSubmit={handleSubmit}>
-          <h2>{title}</h2>
+          <Text fontSize="24px" fontWeight="bold">{title}</Text>
           <Flex
             display="grid"
             gridGap="15px"
