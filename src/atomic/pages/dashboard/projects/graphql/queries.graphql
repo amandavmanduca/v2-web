@@ -1,14 +1,7 @@
 query getProjects($filter: ProjectFilter $sorting: [ProjectSort!] $paging: OffsetPaging) {
     projects(filter: $filter, sorting: $sorting, paging: $paging) {
         nodes {
-            id
-            name
-            template {
-                id
-                name
-                isAvailable
-                isFinished
-            }
+            ...ProjectFields
         }
         pageInfo {
             hasNextPage
@@ -29,4 +22,10 @@ query getUsersToProjects($filter: UserFilter $paging: OffsetPaging) {
             hasPreviousPage
         }
     }
+}
+
+query getProject($id: ID!) {
+  project(id: $id) {
+    ...ProjectFields
+  }
 }

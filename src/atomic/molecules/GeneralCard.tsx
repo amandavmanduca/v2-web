@@ -4,7 +4,7 @@ import { Maybe } from "graphql/jsutils/Maybe";
 
 interface GeneralCardProps extends FlexProps {
     children: React.ReactNode;
-    cardTitle?: Maybe<string> | undefined;
+    cardtitle?: Maybe<string> | undefined;
 }
 
 const GeneralCard = (props: GeneralCardProps) => {
@@ -17,7 +17,7 @@ const GeneralCard = (props: GeneralCardProps) => {
             minHeight="100px"
             {...props}
         >
-            {props?.cardTitle && <Text fontWeight="bold">{props?.cardTitle}</Text>}
+            {props?.cardtitle && <Text fontWeight="bold">{props?.cardtitle}</Text>}
             {props?.children}
         </Flex>
     )

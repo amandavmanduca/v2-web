@@ -1,15 +1,17 @@
-import { Maybe, User } from "@app/graphql/generated";
+import { Project } from "@app/graphql/generated";
 import { FormFieldProps } from "@app/src/atomic/atoms/FormField";
-import useCreateOneProject from "@app/src/atomic/pages/dashboard/projects/hooks/useCreateOneProject";
-import useGetUsersToProject from "@app/src/atomic/pages/dashboard/projects/hooks/useGetUsersToProjects";
-import DashboardTemplate from "@app/src/atomic/templates/DashboardTemplate"
+import DashboardTemplate from "@app/src/atomic/templates/DashboardTemplate";
+import { setSelectedArrayOfValues } from "@app/src/common/utils/setSelectedValue";
 import FormProvider from "@app/src/providers/FormProvider";
-import { useEffect, useState } from "react";
+import { Maybe } from "graphql/jsutils/Maybe";
+import { useState } from "react";
+import useUpdateOneProject from "../hooks/useUpdateOneProject";
 
-const CreateProject = () => {
-    const { getAllUsers } = useGetUsersToProject()
-    const { createProject } = useCreateOneProject()
-    const [users, setUsers] = useState<{
+const ProjectForm = ({
+    users,
+    values
+}: {
+    users: {
         coordinators: {
             value: string;
             label: Maybe<string> | undefined;
@@ -18,10 +20,11 @@ const CreateProject = () => {
             value: string;
             label: Maybe<string> | undefined;
         }[] | []
-    }>({
-        coordinators: [],
-        interviewers: []
-    })
+    },
+    values: Project
+}) => {
+    const [project, setProject] = useState<Project>(values)
+    const { updateProject } = useUpdateOneProject()
     const fields: FormFieldProps[] = [
         {
             label: "Nome",
@@ -31,6 +34,15 @@ const CreateProject = () => {
                 type: "input"
             },
             placeholder: "Digite o nome do projeto"
+        },
+        {
+            label: "Total de Entrevistas Estimadas",
+            name: "numberOfEstimatedInterviews",
+            type: 'number',
+            component: {
+                type: "input"
+            },
+            placeholder: "Digite o número estimado de entrevistas"
         },
         {
             label: "Orientações",
@@ -82,41 +94,50 @@ const CreateProject = () => {
             placeholder: "Selecione entrevistadores"
         },
     ]
-    useEffect(() => {
-        (async () => {
-            const response = await getAllUsers()
-            const coordinators = response?.coordinators?.map((c: User) => ({
-                value: c?.id,
-                label: c?.name
-            }))
-            const interviewers = response?.allUsers?.map((c: User) => ({
-                value: c?.id,
-                label: c?.name
-            }))
-            setUsers({
-                coordinators: coordinators,
-                interviewers: interviewers,
-            })
-        })()
-    }, [])
-    async function handleSubmit(values: any) {
-        await createProject({
-            project: {
+    
+    async function handleUpdate(values: any) {
+        const response = await updateProject({
+            id: values?.id,
+            update: {
                 name: values?.name,
+                numberOfEstimatedInterviews: values?.numberOfEstimatedInterviews,
                 coordinators: values?.coordinators,
                 interviewers: values?.interviewers,
                 generalDescription: values?.generalDescription,
                 interviewerOrientations: values?.interviewerOrientations,
-                terms: values?.terms,
+                terms: values?.terms
             }
         })
+        if (response) {
+            setProject(response)
+        }
     }
+
+    async function handleSubmit(values: any) {
+        await handleUpdate(values)
+    }
+
+    const coordinatorsIds = project?.coordinators?.map(c => c?.id) ?? []
+    const interviewesIds = project?.interviewers?.map(i => i?.id) ?? []
+    
+    const initialValues = {
+        id: project?.id,
+        name: project?.name,
+        terms: project?.terms,
+        generalDescription: project?.generalDescription,
+        interviewerOrientations: project?.interviewerOrientations,
+        numberOfEstimatedInterviews: Number(project?.numberOfEstimatedInterviews),
+        coordinators: project?.coordinators ? setSelectedArrayOfValues(users?.coordinators, coordinatorsIds) : null,
+        interviewers: project?.coordinators ? setSelectedArrayOfValues(users?.interviewers, interviewesIds) : null
+    }
+
+    console.log(initialValues)
     return (
         <DashboardTemplate title="Projetos">
             <FormProvider
-                title="Novo Projeto"
+                title="Editando Projeto"
                 onSubmit={(v) => handleSubmit(v)}
-                // initialValues={{}}
+                initialValues={initialValues}
                 // validate={}
                 submitButton="Salvar"
                 fields={fields}
@@ -124,4 +145,4 @@ const CreateProject = () => {
         </DashboardTemplate>
     )
 }
-export default CreateProject;
+export default ProjectForm;

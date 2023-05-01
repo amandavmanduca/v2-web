@@ -1,5 +1,11 @@
 mutation createOneProject($input: CreateOneProjectInput!) {
     createOneProject(input: $input) {
-        id
+        ...ProjectFields
+    }
+}
+
+mutation updateOneProject($input: UpdateOneProjectInput!) {
+    updateOneProject(input: $input) {
+        ...ProjectFields
     }
 }

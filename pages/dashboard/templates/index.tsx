@@ -33,7 +33,7 @@ const Templates = () => {
                 })}
                 Card={({ item }: { item: InterviewTemplate }) => (
                     <GeneralCard
-                        cardTitle={item?.name}
+                        cardtitle={item?.name}
                     >
                         <Text>{item?.project?.name}</Text>
                         <Text

@@ -11,6 +11,7 @@ import { Maybe, SortDirection, SortNulls } from '@app/graphql/generated'
 export type usePaginatedQueryProps = {
   limit?: number
   offset?: number
+  sorting?: SortType | null
 } & QueryHookOptions<any, Record<string, any>>
 
 export type SortType = {
@@ -27,9 +28,9 @@ export function usePaginatedQuery<Result>(
 ) {
   const [limit, setLimit] = useState(options?.limit ?? 20)
   const [offset, setOffset] = useState(options?.offset ?? 0)
-  const [sorting, setSorting] = useState<SortType>(null)
+  const [sorting, setSorting] = useState<SortType>(options?.sorting ?? null)
   
-  if (options && !options?.fetchPolicy) options.fetchPolicy = 'cache-and-network'
+  if (options && !options?.fetchPolicy) options.fetchPolicy = 'network-only'
 
   let variables: any = {
     ...options?.variables,
@@ -37,7 +38,9 @@ export function usePaginatedQuery<Result>(
   }
 
   if (sorting) {
-    const sortingClone = { ...sorting }
+    const sortingClone = {
+      ...sorting
+     }
     delete sortingClone.label
     variables = { ...variables, sorting: sortingClone }
   }

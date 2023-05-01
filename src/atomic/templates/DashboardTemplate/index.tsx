@@ -14,7 +14,7 @@ const DashboardTemplate = ({ children, title }: DashboardTemplate) => {
             h="100%"
             bgColor="primary.100"
             flexGrow={1}
-            minHeight="100vh"
+            height="100vh"
         >
             <Flex
                 display="grid"
@@ -26,15 +26,16 @@ const DashboardTemplate = ({ children, title }: DashboardTemplate) => {
                 <Flex
                     flexDirection="column"
                     flexGrow={1}
+                    maxH="100%"
                     boxShadow="rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px"
                 >
                     <SiderMenu />
                 </Flex>
-                <Flex flexDirection="column">
+                <Flex flexDirection="column" maxH="100%">
                     <Flex
                         w="100%"
                         boxShadow="rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px"
-                        minH="60px"
+                        height="60px"
                         padding="10px 20px"
                         justifyContent="center"
                         alignItems="center"
@@ -43,7 +44,7 @@ const DashboardTemplate = ({ children, title }: DashboardTemplate) => {
                     >
                         Penssan | {title}
                     </Flex>
-                    <Flex flexDirection="column" padding="20px">
+                    <Flex flexDirection="column" padding="20px" height="calc(100vh - 60px)" overflowY="auto">
                         {children}
                     </Flex>
                 </Flex>

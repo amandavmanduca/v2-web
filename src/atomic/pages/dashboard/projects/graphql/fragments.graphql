@@ -1,0 +1,24 @@
+
+fragment ProjectFields on Project {
+    id
+    name
+    interviewerOrientations
+    terms
+    generalDescription
+    numberOfEstimatedInterviews
+    template {
+        id
+        name
+        isAvailable
+        isFinished
+    }
+    interviews {
+        totalCount
+    }
+    interviewers {
+        id
+    }
+    coordinators {
+        id
+    }
+}

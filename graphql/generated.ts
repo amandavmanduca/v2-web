@@ -16,6 +16,13 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type AddAnswersToInterviewInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
 export type AddAnswersToQuestionInput = {
   /** The id of the record. */
   id: Scalars['ID'];
@@ -59,6 +66,13 @@ export type AddEnrolledProjectsToUserInput = {
 };
 
 export type AddInterviewersToProjectInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
+export type AddInterviewsToProjectInput = {
   /** The id of the record. */
   id: Scalars['ID'];
   /** The ids of the relations. */
@@ -202,6 +216,7 @@ export type CreateProjectInput = {
   interviewerOrientations?: InputMaybe<Scalars['String']>;
   interviewers?: InputMaybe<Array<UpdateUserInput>>;
   name: Scalars['String'];
+  numberOfEstimatedInterviews?: InputMaybe<Scalars['Float']>;
   terms?: InputMaybe<Scalars['String']>;
 };
 
@@ -350,6 +365,7 @@ export type DeleteOneUserInput = {
 
 export type Interview = {
   __typename?: 'Interview';
+  answers?: Maybe<Array<Response>>;
   createdAt?: Maybe<Scalars['DateTime']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
   id: Scalars['String'];
@@ -361,6 +377,12 @@ export type Interview = {
   template: InterviewTemplate;
   templateId: Scalars['String'];
   updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+
+export type InterviewAnswersArgs = {
+  filter?: ResponseFilter;
+  sorting?: Array<ResponseSort>;
 };
 
 export type InterviewAggregateGroupBy = {
@@ -422,6 +444,7 @@ export type InterviewDeleteResponse = {
 
 export type InterviewFilter = {
   and?: InputMaybe<Array<InterviewFilter>>;
+  answers?: InputMaybe<InterviewFilterResponseFilter>;
   createdAt?: InputMaybe<DateFieldComparison>;
   deletedAt?: InputMaybe<DateFieldComparison>;
   id?: InputMaybe<StringFieldComparison>;
@@ -460,8 +483,21 @@ export type InterviewFilterProjectFilter = {
   id?: InputMaybe<StringFieldComparison>;
   interviewerOrientations?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
+  numberOfEstimatedInterviews?: InputMaybe<NumberFieldComparison>;
   or?: InputMaybe<Array<InterviewFilterProjectFilter>>;
   terms?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type InterviewFilterResponseFilter = {
+  and?: InputMaybe<Array<InterviewFilterResponseFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
+  interviewId?: InputMaybe<StringFieldComparison>;
+  interviewerId?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<InterviewFilterResponseFilter>>;
+  questionId?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -636,6 +672,7 @@ export type InterviewTemplateFilterProjectFilter = {
   id?: InputMaybe<StringFieldComparison>;
   interviewerOrientations?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
+  numberOfEstimatedInterviews?: InputMaybe<NumberFieldComparison>;
   or?: InputMaybe<Array<InterviewTemplateFilterProjectFilter>>;
   terms?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
@@ -731,6 +768,7 @@ export type InterviewUpdateFilter = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addAnswersToInterview: Interview;
   addAnswersToQuestion: Question;
   addCoordinatorsToProject: Project;
   addCreatedProjectsToUser: User;
@@ -738,6 +776,7 @@ export type Mutation = {
   addDependentsToQuestion: Question;
   addEnrolledProjectsToUser: User;
   addInterviewersToProject: Project;
+  addInterviewsToProject: Project;
   addProjectsToUser: User;
   addQuestionGroupsToInterviewTemplate: InterviewTemplate;
   addQuestionsToQuestionGroup: QuestionGroup;
@@ -774,6 +813,7 @@ export type Mutation = {
   deleteOneResponse: ResponseDeleteResponse;
   deleteOneUser: UserDeleteResponse;
   login: AuthType;
+  removeAnswersFromInterview: Interview;
   removeAnswersFromQuestion: Question;
   removeCoordinatorsFromProject: Project;
   removeCreatedProjectsFromUser: User;
@@ -787,6 +827,7 @@ export type Mutation = {
   removeInterviewerFromInterview: Interview;
   removeInterviewerFromResponse: Response;
   removeInterviewersFromProject: Project;
+  removeInterviewsFromProject: Project;
   removeProjectFromInterview: Interview;
   removeProjectFromInterviewTemplate: InterviewTemplate;
   removeProjectsFromUser: User;
@@ -796,6 +837,7 @@ export type Mutation = {
   removeTemplateFromInterview: Interview;
   removeTemplateFromProject: Project;
   removeTemplateFromQuestionGroup: QuestionGroup;
+  setAnswersOnInterview: Interview;
   setAnswersOnQuestion: Question;
   setCoordinatorsOnProject: Project;
   setCreatedProjectsOnUser: User;
@@ -809,6 +851,7 @@ export type Mutation = {
   setInterviewerOnInterview: Interview;
   setInterviewerOnResponse: Response;
   setInterviewersOnProject: Project;
+  setInterviewsOnProject: Project;
   setProjectOnInterview: Interview;
   setProjectOnInterviewTemplate: InterviewTemplate;
   setProjectsOnUser: User;
@@ -834,6 +877,11 @@ export type Mutation = {
   updateOneQuestionGroup: QuestionGroup;
   updateOneResponse: Response;
   updateOneUser: User;
+};
+
+
+export type MutationAddAnswersToInterviewArgs = {
+  input: AddAnswersToInterviewInput;
 };
 
 
@@ -869,6 +917,11 @@ export type MutationAddEnrolledProjectsToUserArgs = {
 
 export type MutationAddInterviewersToProjectArgs = {
   input: AddInterviewersToProjectInput;
+};
+
+
+export type MutationAddInterviewsToProjectArgs = {
+  input: AddInterviewsToProjectInput;
 };
 
 
@@ -1052,6 +1105,11 @@ export type MutationLoginArgs = {
 };
 
 
+export type MutationRemoveAnswersFromInterviewArgs = {
+  input: RemoveAnswersFromInterviewInput;
+};
+
+
 export type MutationRemoveAnswersFromQuestionArgs = {
   input: RemoveAnswersFromQuestionInput;
 };
@@ -1117,6 +1175,11 @@ export type MutationRemoveInterviewersFromProjectArgs = {
 };
 
 
+export type MutationRemoveInterviewsFromProjectArgs = {
+  input: RemoveInterviewsFromProjectInput;
+};
+
+
 export type MutationRemoveProjectFromInterviewArgs = {
   input: RemoveProjectFromInterviewInput;
 };
@@ -1159,6 +1222,11 @@ export type MutationRemoveTemplateFromProjectArgs = {
 
 export type MutationRemoveTemplateFromQuestionGroupArgs = {
   input: RemoveTemplateFromQuestionGroupInput;
+};
+
+
+export type MutationSetAnswersOnInterviewArgs = {
+  input: SetAnswersOnInterviewInput;
 };
 
 
@@ -1224,6 +1292,11 @@ export type MutationSetInterviewerOnResponseArgs = {
 
 export type MutationSetInterviewersOnProjectArgs = {
   input: SetInterviewersOnProjectInput;
+};
+
+
+export type MutationSetInterviewsOnProjectArgs = {
+  input: SetInterviewsOnProjectInput;
 };
 
 
@@ -1395,8 +1468,10 @@ export type Project = {
   generalDescription?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   interviewerOrientations?: Maybe<Scalars['String']>;
-  interviewers?: Maybe<ProjectInterviewersConnection>;
+  interviewers?: Maybe<Array<User>>;
+  interviews?: Maybe<ProjectInterviewsConnection>;
   name?: Maybe<Scalars['String']>;
+  numberOfEstimatedInterviews?: Maybe<Scalars['Float']>;
   template?: Maybe<InterviewTemplate>;
   terms?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
@@ -1411,8 +1486,14 @@ export type ProjectCoordinatorsArgs = {
 
 export type ProjectInterviewersArgs = {
   filter?: UserFilter;
-  paging?: OffsetPaging;
   sorting?: Array<UserSort>;
+};
+
+
+export type ProjectInterviewsArgs = {
+  filter?: InterviewFilter;
+  paging?: OffsetPaging;
+  sorting?: Array<InterviewSort>;
 };
 
 export type ProjectAggregateGroupBy = {
@@ -1424,8 +1505,14 @@ export type ProjectAggregateGroupBy = {
   id?: Maybe<Scalars['String']>;
   interviewerOrientations?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  numberOfEstimatedInterviews?: Maybe<Scalars['Float']>;
   terms?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type ProjectAvgAggregate = {
+  __typename?: 'ProjectAvgAggregate';
+  numberOfEstimatedInterviews?: Maybe<Scalars['Float']>;
 };
 
 export type ProjectConnection = {
@@ -1445,6 +1532,7 @@ export type ProjectCountAggregate = {
   id?: Maybe<Scalars['Int']>;
   interviewerOrientations?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['Int']>;
+  numberOfEstimatedInterviews?: Maybe<Scalars['Int']>;
   terms?: Maybe<Scalars['Int']>;
   updatedAt?: Maybe<Scalars['Int']>;
 };
@@ -1458,6 +1546,7 @@ export type ProjectDeleteFilter = {
   id?: InputMaybe<StringFieldComparison>;
   interviewerOrientations?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
+  numberOfEstimatedInterviews?: InputMaybe<NumberFieldComparison>;
   or?: InputMaybe<Array<ProjectDeleteFilter>>;
   terms?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
@@ -1472,6 +1561,7 @@ export type ProjectDeleteResponse = {
   id?: Maybe<Scalars['String']>;
   interviewerOrientations?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  numberOfEstimatedInterviews?: Maybe<Scalars['Float']>;
   terms?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
@@ -1486,10 +1576,25 @@ export type ProjectFilter = {
   id?: InputMaybe<StringFieldComparison>;
   interviewerOrientations?: InputMaybe<StringFieldComparison>;
   interviewers?: InputMaybe<ProjectFilterUserFilter>;
+  interviews?: InputMaybe<ProjectFilterInterviewFilter>;
   name?: InputMaybe<StringFieldComparison>;
+  numberOfEstimatedInterviews?: InputMaybe<NumberFieldComparison>;
   or?: InputMaybe<Array<ProjectFilter>>;
   template?: InputMaybe<ProjectFilterInterviewTemplateFilter>;
   terms?: InputMaybe<StringFieldComparison>;
+  updatedAt?: InputMaybe<DateFieldComparison>;
+};
+
+export type ProjectFilterInterviewFilter = {
+  and?: InputMaybe<Array<ProjectFilterInterviewFilter>>;
+  createdAt?: InputMaybe<DateFieldComparison>;
+  deletedAt?: InputMaybe<DateFieldComparison>;
+  id?: InputMaybe<StringFieldComparison>;
+  interviewerId?: InputMaybe<StringFieldComparison>;
+  name?: InputMaybe<StringFieldComparison>;
+  or?: InputMaybe<Array<ProjectFilterInterviewFilter>>;
+  projectId?: InputMaybe<StringFieldComparison>;
+  templateId?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
@@ -1520,12 +1625,14 @@ export type ProjectFilterUserFilter = {
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
-export type ProjectInterviewersConnection = {
-  __typename?: 'ProjectInterviewersConnection';
+export type ProjectInterviewsConnection = {
+  __typename?: 'ProjectInterviewsConnection';
   /** Array of nodes. */
-  nodes: Array<User>;
+  nodes: Array<Interview>;
   /** Paging information */
   pageInfo: OffsetPageInfo;
+  /** Fetch total count of records */
+  totalCount: Scalars['Int'];
 };
 
 export type ProjectMaxAggregate = {
@@ -1537,6 +1644,7 @@ export type ProjectMaxAggregate = {
   id?: Maybe<Scalars['String']>;
   interviewerOrientations?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  numberOfEstimatedInterviews?: Maybe<Scalars['Float']>;
   terms?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
@@ -1550,6 +1658,7 @@ export type ProjectMinAggregate = {
   id?: Maybe<Scalars['String']>;
   interviewerOrientations?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  numberOfEstimatedInterviews?: Maybe<Scalars['Float']>;
   terms?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
@@ -1568,9 +1677,15 @@ export enum ProjectSortFields {
   Id = 'id',
   InterviewerOrientations = 'interviewerOrientations',
   Name = 'name',
+  NumberOfEstimatedInterviews = 'numberOfEstimatedInterviews',
   Terms = 'terms',
   UpdatedAt = 'updatedAt'
 }
+
+export type ProjectSumAggregate = {
+  __typename?: 'ProjectSumAggregate';
+  numberOfEstimatedInterviews?: Maybe<Scalars['Float']>;
+};
 
 export type ProjectUpdateFilter = {
   and?: InputMaybe<Array<ProjectUpdateFilter>>;
@@ -1581,6 +1696,7 @@ export type ProjectUpdateFilter = {
   id?: InputMaybe<StringFieldComparison>;
   interviewerOrientations?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
+  numberOfEstimatedInterviews?: InputMaybe<NumberFieldComparison>;
   or?: InputMaybe<Array<ProjectUpdateFilter>>;
   terms?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
@@ -2327,6 +2443,13 @@ export type QuestionUpdateFilter = {
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
+export type RemoveAnswersFromInterviewInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
 export type RemoveAnswersFromQuestionInput = {
   /** The id of the record. */
   id: Scalars['ID'];
@@ -2412,6 +2535,13 @@ export type RemoveInterviewerFromResponseInput = {
 };
 
 export type RemoveInterviewersFromProjectInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
+export type RemoveInterviewsFromProjectInput = {
   /** The id of the record. */
   id: Scalars['ID'];
   /** The ids of the relations. */
@@ -2677,6 +2807,13 @@ export type ResponseUpdateFilter = {
   updatedAt?: InputMaybe<DateFieldComparison>;
 };
 
+export type SetAnswersOnInterviewInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
 export type SetAnswersOnQuestionInput = {
   /** The id of the record. */
   id: Scalars['ID'];
@@ -2762,6 +2899,13 @@ export type SetInterviewerOnResponseInput = {
 };
 
 export type SetInterviewersOnProjectInput = {
+  /** The id of the record. */
+  id: Scalars['ID'];
+  /** The ids of the relations. */
+  relationIds: Array<Scalars['ID']>;
+};
+
+export type SetInterviewsOnProjectInput = {
   /** The id of the record. */
   id: Scalars['ID'];
   /** The ids of the relations. */
@@ -3006,6 +3150,7 @@ export type UpdateProjectInput = {
   interviewerOrientations?: InputMaybe<Scalars['String']>;
   interviewers?: InputMaybe<Array<UpdateUserInput>>;
   name?: InputMaybe<Scalars['String']>;
+  numberOfEstimatedInterviews?: InputMaybe<Scalars['Float']>;
   terms?: InputMaybe<Scalars['String']>;
 };
 
@@ -3160,6 +3305,7 @@ export type UserFilterProjectFilter = {
   id?: InputMaybe<StringFieldComparison>;
   interviewerOrientations?: InputMaybe<StringFieldComparison>;
   name?: InputMaybe<StringFieldComparison>;
+  numberOfEstimatedInterviews?: InputMaybe<NumberFieldComparison>;
   or?: InputMaybe<Array<UserFilterProjectFilter>>;
   terms?: InputMaybe<StringFieldComparison>;
   updatedAt?: InputMaybe<DateFieldComparison>;
@@ -3271,7 +3417,7 @@ export type GetInterviewsQueryVariables = Exact<{
 }>;
 
 
-export type GetInterviewsQuery = { __typename?: 'Query', interviews: { __typename?: 'InterviewConnection', nodes: Array<{ __typename?: 'Interview', id: string, name: string, createdAt?: any | null, project: { __typename?: 'Project', id: string, name?: string | null }, interviewer: { __typename?: 'User', id: string, name?: string | null, role: UserRoleEnum }, template: { __typename?: 'InterviewTemplate', id: string, name: string } }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
+export type GetInterviewsQuery = { __typename?: 'Query', interviews: { __typename?: 'InterviewConnection', nodes: Array<{ __typename?: 'Interview', id: string, name: string, createdAt?: any | null, project: { __typename?: 'Project', id: string, name?: string | null }, interviewer: { __typename?: 'User', id: string, name?: string | null, role: UserRoleEnum }, answers?: Array<{ __typename?: 'Response', id: string }> | null, template: { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, questions?: Array<{ __typename?: 'Question', id: string }> | null }> | null } }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
 
 export type GetInterviewQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -3281,12 +3427,21 @@ export type GetInterviewQueryVariables = Exact<{
 
 export type GetInterviewQuery = { __typename?: 'Query', interview?: { __typename?: 'Interview', id: string, name: string, interviewerId: string, template: { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, questions?: Array<{ __typename?: 'Question', id: string, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, answers?: Array<{ __typename?: 'Response', id: string, questionId: string, interviewId: string, answer: Array<string> }> | null }> | null }> | null } } | null };
 
+export type ProjectFieldsFragment = { __typename?: 'Project', id: string, name?: string | null, interviewerOrientations?: string | null, terms?: string | null, generalDescription?: string | null, numberOfEstimatedInterviews?: number | null, template?: { __typename?: 'InterviewTemplate', id: string, name: string, isAvailable: boolean, isFinished: boolean } | null, interviews?: { __typename?: 'ProjectInterviewsConnection', totalCount: number } | null, interviewers?: Array<{ __typename?: 'User', id: string }> | null, coordinators?: Array<{ __typename?: 'User', id: string }> | null };
+
 export type CreateOneProjectMutationVariables = Exact<{
   input: CreateOneProjectInput;
 }>;
 
 
-export type CreateOneProjectMutation = { __typename?: 'Mutation', createOneProject: { __typename?: 'Project', id: string } };
+export type CreateOneProjectMutation = { __typename?: 'Mutation', createOneProject: { __typename?: 'Project', id: string, name?: string | null, interviewerOrientations?: string | null, terms?: string | null, generalDescription?: string | null, numberOfEstimatedInterviews?: number | null, template?: { __typename?: 'InterviewTemplate', id: string, name: string, isAvailable: boolean, isFinished: boolean } | null, interviews?: { __typename?: 'ProjectInterviewsConnection', totalCount: number } | null, interviewers?: Array<{ __typename?: 'User', id: string }> | null, coordinators?: Array<{ __typename?: 'User', id: string }> | null } };
+
+export type UpdateOneProjectMutationVariables = Exact<{
+  input: UpdateOneProjectInput;
+}>;
+
+
+export type UpdateOneProjectMutation = { __typename?: 'Mutation', updateOneProject: { __typename?: 'Project', id: string, name?: string | null, interviewerOrientations?: string | null, terms?: string | null, generalDescription?: string | null, numberOfEstimatedInterviews?: number | null, template?: { __typename?: 'InterviewTemplate', id: string, name: string, isAvailable: boolean, isFinished: boolean } | null, interviews?: { __typename?: 'ProjectInterviewsConnection', totalCount: number } | null, interviewers?: Array<{ __typename?: 'User', id: string }> | null, coordinators?: Array<{ __typename?: 'User', id: string }> | null } };
 
 export type GetProjectsQueryVariables = Exact<{
   filter?: InputMaybe<ProjectFilter>;
@@ -3295,7 +3450,7 @@ export type GetProjectsQueryVariables = Exact<{
 }>;
 
 
-export type GetProjectsQuery = { __typename?: 'Query', projects: { __typename?: 'ProjectConnection', nodes: Array<{ __typename?: 'Project', id: string, name?: string | null, template?: { __typename?: 'InterviewTemplate', id: string, name: string, isAvailable: boolean, isFinished: boolean } | null }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
+export type GetProjectsQuery = { __typename?: 'Query', projects: { __typename?: 'ProjectConnection', nodes: Array<{ __typename?: 'Project', id: string, name?: string | null, interviewerOrientations?: string | null, terms?: string | null, generalDescription?: string | null, numberOfEstimatedInterviews?: number | null, template?: { __typename?: 'InterviewTemplate', id: string, name: string, isAvailable: boolean, isFinished: boolean } | null, interviews?: { __typename?: 'ProjectInterviewsConnection', totalCount: number } | null, interviewers?: Array<{ __typename?: 'User', id: string }> | null, coordinators?: Array<{ __typename?: 'User', id: string }> | null }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
 
 export type GetUsersToProjectsQueryVariables = Exact<{
   filter?: InputMaybe<UserFilter>;
@@ -3304,6 +3459,13 @@ export type GetUsersToProjectsQueryVariables = Exact<{
 
 
 export type GetUsersToProjectsQuery = { __typename?: 'Query', users: { __typename?: 'UserConnection', nodes: Array<{ __typename?: 'User', id: string, name?: string | null, role: UserRoleEnum }>, pageInfo: { __typename?: 'OffsetPageInfo', hasNextPage?: boolean | null, hasPreviousPage?: boolean | null } } };
+
+export type GetProjectQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetProjectQuery = { __typename?: 'Query', project?: { __typename?: 'Project', id: string, name?: string | null, interviewerOrientations?: string | null, terms?: string | null, generalDescription?: string | null, numberOfEstimatedInterviews?: number | null, template?: { __typename?: 'InterviewTemplate', id: string, name: string, isAvailable: boolean, isFinished: boolean } | null, interviews?: { __typename?: 'ProjectInterviewsConnection', totalCount: number } | null, interviewers?: Array<{ __typename?: 'User', id: string }> | null, coordinators?: Array<{ __typename?: 'User', id: string }> | null } | null };
 
 export type TemplateFieldsFragment = { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, isFinished: boolean, isAvailable: boolean, projectId?: string | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index?: number | null, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, groupId?: string | null }> | null }> | null };
 
@@ -3422,6 +3584,31 @@ export const InterviewFieldsFragmentDoc = gql`
   }
 }
     ${InterviewResponseFieldsFragmentDoc}`;
+export const ProjectFieldsFragmentDoc = gql`
+    fragment ProjectFields on Project {
+  id
+  name
+  interviewerOrientations
+  terms
+  generalDescription
+  numberOfEstimatedInterviews
+  template {
+    id
+    name
+    isAvailable
+    isFinished
+  }
+  interviews {
+    totalCount
+  }
+  interviewers {
+    id
+  }
+  coordinators {
+    id
+  }
+}
+    `;
 export const QuestionFieldsFragmentDoc = gql`
     fragment QuestionFields on Question {
   id
@@ -3579,9 +3766,19 @@ export const GetInterviewsDocument = gql`
         name
         role
       }
+      answers {
+        id
+      }
       template {
         id
         name
+        version
+        questionGroups {
+          id
+          questions {
+            id
+          }
+        }
       }
     }
     pageInfo {
@@ -3683,10 +3880,10 @@ export type GetInterviewQueryResult = Apollo.QueryResult<GetInterviewQuery, GetI
 export const CreateOneProjectDocument = gql`
     mutation createOneProject($input: CreateOneProjectInput!) {
   createOneProject(input: $input) {
-    id
+    ...ProjectFields
   }
 }
-    `;
+    ${ProjectFieldsFragmentDoc}`;
 export type CreateOneProjectMutationFn = Apollo.MutationFunction<CreateOneProjectMutation, CreateOneProjectMutationVariables>;
 
 /**
@@ -3713,18 +3910,44 @@ export function useCreateOneProjectMutation(baseOptions?: Apollo.MutationHookOpt
 export type CreateOneProjectMutationHookResult = ReturnType<typeof useCreateOneProjectMutation>;
 export type CreateOneProjectMutationResult = Apollo.MutationResult<CreateOneProjectMutation>;
 export type CreateOneProjectMutationOptions = Apollo.BaseMutationOptions<CreateOneProjectMutation, CreateOneProjectMutationVariables>;
+export const UpdateOneProjectDocument = gql`
+    mutation updateOneProject($input: UpdateOneProjectInput!) {
+  updateOneProject(input: $input) {
+    ...ProjectFields
+  }
+}
+    ${ProjectFieldsFragmentDoc}`;
+export type UpdateOneProjectMutationFn = Apollo.MutationFunction<UpdateOneProjectMutation, UpdateOneProjectMutationVariables>;
+
+/**
+ * __useUpdateOneProjectMutation__
+ *
+ * To run a mutation, you first call `useUpdateOneProjectMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOneProjectMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOneProjectMutation, { data, loading, error }] = useUpdateOneProjectMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateOneProjectMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOneProjectMutation, UpdateOneProjectMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOneProjectMutation, UpdateOneProjectMutationVariables>(UpdateOneProjectDocument, options);
+      }
+export type UpdateOneProjectMutationHookResult = ReturnType<typeof useUpdateOneProjectMutation>;
+export type UpdateOneProjectMutationResult = Apollo.MutationResult<UpdateOneProjectMutation>;
+export type UpdateOneProjectMutationOptions = Apollo.BaseMutationOptions<UpdateOneProjectMutation, UpdateOneProjectMutationVariables>;
 export const GetProjectsDocument = gql`
     query getProjects($filter: ProjectFilter, $sorting: [ProjectSort!], $paging: OffsetPaging) {
   projects(filter: $filter, sorting: $sorting, paging: $paging) {
     nodes {
-      id
-      name
-      template {
-        id
-        name
-        isAvailable
-        isFinished
-      }
+      ...ProjectFields
     }
     pageInfo {
       hasNextPage
@@ -3732,7 +3955,7 @@ export const GetProjectsDocument = gql`
     }
   }
 }
-    `;
+    ${ProjectFieldsFragmentDoc}`;
 
 /**
  * __useGetProjectsQuery__
@@ -3807,6 +4030,41 @@ export function useGetUsersToProjectsLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type GetUsersToProjectsQueryHookResult = ReturnType<typeof useGetUsersToProjectsQuery>;
 export type GetUsersToProjectsLazyQueryHookResult = ReturnType<typeof useGetUsersToProjectsLazyQuery>;
 export type GetUsersToProjectsQueryResult = Apollo.QueryResult<GetUsersToProjectsQuery, GetUsersToProjectsQueryVariables>;
+export const GetProjectDocument = gql`
+    query getProject($id: ID!) {
+  project(id: $id) {
+    ...ProjectFields
+  }
+}
+    ${ProjectFieldsFragmentDoc}`;
+
+/**
+ * __useGetProjectQuery__
+ *
+ * To run a query within a React component, call `useGetProjectQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProjectQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProjectQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetProjectQuery(baseOptions: Apollo.QueryHookOptions<GetProjectQuery, GetProjectQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProjectQuery, GetProjectQueryVariables>(GetProjectDocument, options);
+      }
+export function useGetProjectLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProjectQuery, GetProjectQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProjectQuery, GetProjectQueryVariables>(GetProjectDocument, options);
+        }
+export type GetProjectQueryHookResult = ReturnType<typeof useGetProjectQuery>;
+export type GetProjectLazyQueryHookResult = ReturnType<typeof useGetProjectLazyQuery>;
+export type GetProjectQueryResult = Apollo.QueryResult<GetProjectQuery, GetProjectQueryVariables>;
 export const CreateOneTemplateDocument = gql`
     mutation createOneTemplate($input: CreateOneInterviewTemplateInput!) {
   createOneInterviewTemplate(input: $input) {

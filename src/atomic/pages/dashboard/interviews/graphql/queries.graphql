@@ -13,9 +13,19 @@ query getInterviews($filter: InterviewFilter $sorting: [InterviewSort!] $paging:
                 name
                 role
             }
+            answers {
+                id
+            }
             template {
                 id
                 name
+                version
+                questionGroups {
+                    id
+                    questions {
+                        id
+                    }
+                }  
             }
         }
         pageInfo {
@@ -27,29 +37,29 @@ query getInterviews($filter: InterviewFilter $sorting: [InterviewSort!] $paging:
 
 query getInterview($id: ID!, $answerFilter: ResponseFilter) {
     interview(id: $id) {
-    id
-    name
-    interviewerId
-    template {
         id
         name
-        version
-        questionGroups {
+        interviewerId
+        template {
             id
             name
-            description
-            questions {
+            version
+            questionGroups {
                 id
-                title
+                name
                 description
-                placeholder
-                type
-                options
-                answers(filter: $answerFilter) {
-                    ...InterviewResponseFields
+                questions {
+                    id
+                    title
+                    description
+                    placeholder
+                    type
+                    options
+                    answers(filter: $answerFilter) {
+                        ...InterviewResponseFields
+                    }
                 }
-            }
-        }  
-    }
+            }  
+        }
     }
 }
