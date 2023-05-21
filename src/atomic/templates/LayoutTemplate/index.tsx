@@ -6,7 +6,17 @@ import {
     DocumentNode,
     TypedDocumentNode,
   } from '@apollo/client'
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { BaseActionsEnum, ModuleTypesEnum, handlePermissions } from "@app/src/common/utils/role-permissions";
+import { UserRoleEnum } from "@app/graphql/generated";
+
+type HandleNew ={
+    handleNew: () => void;
+    role: UserRoleEnum,
+    action: BaseActionsEnum
+    module: ModuleTypesEnum
+    titleComplement?: String;
+}
 
 export type LayoutTemplateProps = {
     paginatedQueryName: string,
@@ -14,6 +24,7 @@ export type LayoutTemplateProps = {
     Card: ({ item }: any) => JSX.Element,
     refetchFilter?: (v: string, variables?: Partial<Record<string, any>> | undefined) => Promise<ApolloQueryResult<any>> | null;
     options?: usePaginatedQueryProps,
+    handleNew?: HandleNew;
 }
 
 const LayoutTemplate = ({
@@ -22,6 +33,7 @@ const LayoutTemplate = ({
     Card,
     refetchFilter,
     options,
+    handleNew,
 }: LayoutTemplateProps) => {
     const [input, setInput] = useState('');
     const {
@@ -55,6 +67,11 @@ const LayoutTemplate = ({
 
     return (
         <Flex display="grid" gridGap="20px">
+            {handleNew && handlePermissions(handleNew?.role, handleNew.module, handleNew.action) && (
+                <Flex w="100%" justifyContent="flex-end">
+                    <Button onClick={handleNew?.handleNew}>+ Adicinar {handleNew?.titleComplement}</Button>
+                </Flex>
+            )}
             {refetchFilter && (
                 <input
                     type="text"

@@ -7,6 +7,9 @@ import useUpdateOneTemplate from "../hooks/updateOneTemplate";
 import { setSelectedValue } from "@app/src/common/utils/setSelectedValue";
 import GroupForm from "./GroupForm";
 import useCreateOneGroup from "../hooks/useCreateOneGroup";
+import { Flex } from "@chakra-ui/react";
+import Button from "@app/src/atomic/atoms/Button";
+import InterviewFormLayoutHelper from "@app/src/atomic/molecules/InterviewFormLayoutHelper";
 
 const TemplateForm = ({
     projects,
@@ -91,20 +94,26 @@ const TemplateForm = ({
 
     return (
         <DashboardTemplate title="Modelos">
-            <FormProvider
-                title="Novo Modelo"
-                onSubmit={(v) => handleSubmit(v)}
-                initialValues={initialValues}
-                // validate={}
-                submitButton="Salvar"
-                submitOnBlur={true}
-                displayButtons={false}
-                fields={fields}
-            />
-            {questionGroups?.map((g: QuestionGroup, index: number) => (
-                <GroupForm key={index} templateId={template?.id} values={g} />
-            ))}
-            <button onClick={() => handleCreateGroup(template?.id)}>+ Grupo</button>
+            <InterviewFormLayoutHelper
+                backgroundColor="gray.200"
+            >
+                <FormProvider
+                    title="Novo Modelo"
+                    onSubmit={(v) => handleSubmit(v)}
+                    initialValues={initialValues}
+                    // validate={}
+                    submitButton="Salvar"
+                    submitOnBlur={true}
+                    displayButtons={false}
+                    fields={fields}
+                />
+                {questionGroups?.map((g: QuestionGroup, index: number) => (
+                    <GroupForm key={index} templateId={template?.id} values={g} />
+                ))}
+                <Flex w="100%" justifyContent="flex-end">
+                    <Button onClick={() => handleCreateGroup(template?.id)}>+ Grupo</Button>
+                </Flex>
+            </InterviewFormLayoutHelper>
         </DashboardTemplate>
     )
 }

@@ -26,26 +26,32 @@ const FormProvider = ({
   submitOnBlur?: boolean;
   displayButtons?: boolean;
 }) => {
-
   return (
     <Form
       onSubmit={onSubmit}
       validate={validate}
       initialValues={initialValues}
       render={({ handleSubmit, form: { reset } }) => (
-        <form style={{ width: '100%' }} onSubmit={handleSubmit}>
-          <Text fontSize="24px" fontWeight="bold">{title}</Text>
+        <form
+          style={{
+            width: '100%',
+            marginTop: '0px',
+            marginBottom: '10px'
+          }}
+          onSubmit={handleSubmit}
+        >
+          {/* <Text fontSize="20px" fontWeight="bold">{title}</Text> */}
           <Flex
             display="grid"
-            gridGap="15px"
-            marginTop="20px"
+            gridGap="5px"
+            marginTop="8px"
           >
             {fields?.map((field: FormFieldProps, index: number) => (
               <FormField key={index} {...field} {...(submitOnBlur) && { onBlur: handleSubmit }} />
             ))}
           </Flex>
           {displayButtons && (
-            <Flex gridGap="10px" marginTop="20px">
+            <Flex gridGap="5px" marginTop="20px">
               {resetButton && <Button type="reset" onClick={() => reset()}>{resetButton}</Button>}
               <Button type="submit">{submitButton}</Button>
             </Flex>

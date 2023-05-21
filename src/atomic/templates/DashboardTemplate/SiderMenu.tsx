@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import { RouteProps, routes } from "./routes";
 import Text from "../../atoms/Text";
 import { useEffect } from "react";
+import { roleLabel } from "@app/src/common/utils/role-label";
+import { UserRoleEnum } from "@app/graphql/generated";
 
 const SiderMenu = () => {
     const { me, logout, refetchMe } = useAuthContext();
@@ -40,7 +42,7 @@ const SiderMenu = () => {
             </Flex>
             <Flex flexDirection="column" gap="5px">
                 <Flex w="100%">
-                    <Text fontWeight="bold" padding="20px" bgColor="gray.200" textAlign="center" w="100%">{me?.role}</Text>
+                    <Text fontWeight="bold" padding="20px" bgColor="gray.200" textAlign="center" w="100%">{roleLabel[me?.role as UserRoleEnum]}</Text>
                 </Flex>
                 <Flex onClick={() => logout()} cursor="pointer" w="100%">
                     <Text padding="20px" bgColor="gray.200" textAlign="center" w="100%">Sair</Text>

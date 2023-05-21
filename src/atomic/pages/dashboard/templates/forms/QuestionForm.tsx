@@ -5,6 +5,7 @@ import { Maybe, Question } from "@app/graphql/generated";
 import useUpdateOneQuestion from "../hooks/useUpdateOneQuestion";
 import { questionTypeOptions } from "@app/src/common/utils/question-types-helper";
 import { createAndsetSelectedValue, setSelectedValue } from "@app/src/common/utils/setSelectedValue";
+import InterviewFormLayoutHelper from "@app/src/atomic/molecules/InterviewFormLayoutHelper";
 
 type QuestionFormProps = {
     groupId: Maybe<string> | undefined;
@@ -107,16 +108,20 @@ const QuestionForm = ({
     }
 
     return (
-        <FormProvider
-            title="Group"
-            onSubmit={(v) => handleSubmit(v)}
-            initialValues={initialValues}
-            // validate={}
-            submitButton="Salvar"
-            submitOnBlur={true}
-            displayButtons={false}
-            fields={fields}
-        />
+        <InterviewFormLayoutHelper
+            backgroundColor="#FAFAFA"
+        >
+            <FormProvider
+                title={question?.title ?? 'Questão'}
+                onSubmit={(v) => handleSubmit(v)}
+                initialValues={initialValues}
+                // validate={}
+                submitButton="Salvar"
+                submitOnBlur={true}
+                displayButtons={false}
+                fields={fields}
+            />
+        </InterviewFormLayoutHelper>
     )
 }
 export default QuestionForm;

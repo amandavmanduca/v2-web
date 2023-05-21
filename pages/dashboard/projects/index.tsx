@@ -5,6 +5,7 @@ import useCreateOnInterview from "@app/src/atomic/pages/dashboard/interviews/hoo
 import useCreateOneProject from "@app/src/atomic/pages/dashboard/projects/hooks/useCreateOneProject";
 import DashboardTemplate from "@app/src/atomic/templates/DashboardTemplate"
 import LayoutTemplate from "@app/src/atomic/templates/LayoutTemplate";
+import { BaseActionsEnum, ModuleTypesEnum } from "@app/src/common/utils/role-permissions";
 import { useAuthContext } from "@app/src/context/auth";
 import { Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
@@ -29,7 +30,6 @@ const Projects = () => {
     }
     return (
         <DashboardTemplate title="Projetos">
-            <button onClick={() => handleCreate()}>Create</button>
             <LayoutTemplate
                 paginatedQueryName="projects"
                 query={GetProjectsDocument}
@@ -39,6 +39,13 @@ const Projects = () => {
                         field: ProjectSortFields.CreatedAt,
                         direction: SortDirection.Desc
                     }
+                }}
+                handleNew={{
+                    handleNew: handleCreate,
+                    titleComplement: "Projeto",
+                    action: BaseActionsEnum.create,
+                    module: ModuleTypesEnum.Project,
+                    role: me?.role as UserRoleEnum
                 }}
                 refetchFilter={(value: string, refetch: any) => refetch({
                     filter: {

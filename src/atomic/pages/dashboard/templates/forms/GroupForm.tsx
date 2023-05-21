@@ -6,6 +6,8 @@ import { useState } from "react";
 import { Maybe, Question, QuestionGroup } from "@app/graphql/generated";
 import useCreateOneQuestion from "../hooks/useCreateOneQuestion";
 import QuestionForm from "./QuestionForm";
+import { Button, Flex } from "@chakra-ui/react";
+import InterviewFormLayoutHelper from "@app/src/atomic/molecules/InterviewFormLayoutHelper";
 
 type GroupFormProps = {
     templateId: Maybe<string> | undefined;
@@ -98,20 +100,26 @@ const GroupForm = ({
 
     return (
         <>
-            <FormProvider
-                title="Group"
-                onSubmit={(v) => handleSubmit(v)}
-                initialValues={initialValues}
-                // validate={}
-                submitButton="Salvar"
-                submitOnBlur={true}
-                displayButtons={false}
-                fields={fields}
-            />
-            {questions?.map((g: Question, index: number) => (
-                <QuestionForm key={index} groupId={group?.id} values={g} />
-            ))}
-            <button onClick={() => handleCreateQuestion(group?.id)}>+ Questão</button>
+            <InterviewFormLayoutHelper
+                backgroundColor="gray.100"
+            >
+                <FormProvider
+                    title={group?.name ?? 'Grupo de Questões'}
+                    onSubmit={(v) => handleSubmit(v)}
+                    initialValues={initialValues}
+                    // validate={}
+                    submitButton="Salvar"
+                    submitOnBlur={true}
+                    displayButtons={false}
+                    fields={fields}
+                />
+                {questions?.map((g: Question, index: number) => (
+                    <QuestionForm key={index} groupId={group?.id} values={g} />
+                ))}
+                <Flex w="100%" justifyContent="flex-start">
+                    <Button onClick={() => handleCreateQuestion(group?.id)}>+ Questão</Button>
+                </Flex>
+            </InterviewFormLayoutHelper>
         </>
     )
 }
