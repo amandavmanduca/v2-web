@@ -1,6 +1,8 @@
 import { Project, UpdateOneProjectInput, UpdateUserInput, useUpdateOneProjectMutation } from "@app/graphql/generated"
+import useToast from "@app/src/common/hooks/useToast"
 
 const useUpdateOneProject = () => {
+    const toast = useToast()
     const [mutate] = useUpdateOneProjectMutation({
         refetchQueries: ['getProjects']
     })
@@ -28,6 +30,10 @@ const useUpdateOneProject = () => {
             return response?.data?.updateOneProject ?? null
         } catch (err) {
             console.log(err)
+            toast({
+                title: 'Erro ao atualizar projeto',
+                status: 'error',
+            })
         }
     }
     return {

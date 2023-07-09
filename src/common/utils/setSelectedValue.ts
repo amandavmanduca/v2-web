@@ -1,20 +1,14 @@
-import { Maybe } from "graphql/jsutils/Maybe";
+import { SelectOptions } from "../types/select";
 
 export const setSelectedValue = (
-    options: {
-        value: string;
-        label: Maybe<string> | undefined;
-    }[] | [],
+    options: SelectOptions,
     selectedValue: string
 ) => {
     return options?.filter(v => v?.value === selectedValue) ?? {}
 }
 
 export const setSelectedArrayOfValues = (
-    options: {
-        value: string;
-        label: Maybe<string> | undefined;
-    }[] | [],
+    options: SelectOptions,
     selectedValuesId: string[]
 ) => {
     return options?.filter(v => selectedValuesId.includes(v?.value)) ?? {}

@@ -1,6 +1,8 @@
 import { CreateOneInterviewInput, Interview, useCreateOneInterviewMutation } from "@app/graphql/generated"
+import useToast from "@app/src/common/hooks/useToast"
 
 const useCreateOnInterview = () => {
+    const toast = useToast()
     const [mutate] = useCreateOneInterviewMutation({
         refetchQueries: ['getInterviews']
     })
@@ -21,6 +23,10 @@ const useCreateOnInterview = () => {
             return response?.data?.createOneInterview ?? null
         } catch (err) {
             console.log(err)
+            toast({
+                title: 'Erro ao criar entrevista',
+                status: 'error',
+            })
         }
     }
     async function handleCreate({

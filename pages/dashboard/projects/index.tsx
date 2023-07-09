@@ -94,16 +94,18 @@ const Projects = () => {
                                 <Text>Entrevistadores: {item?.interviewers?.length}</Text>
                                 <Text>Entrevistas: {item?.interviews?.totalCount}</Text>
                             </div>
-                            <Text
-                                style={{ cursor: 'pointer' }}
-                                _hover={{ textDecoration: 'underline' }}
-                                alignSelf="end"
-                                display="flex"
-                                height="100%"
-                                alignItems="flex-end"
-                            >
-                                <a href={`/dashboard/projects/${item?.id}`} target="_blank">Ver Detalhes</a>
-                            </Text>
+                            {!isInterviewer && (
+                                <Text
+                                    style={{ cursor: 'pointer' }}
+                                    _hover={{ textDecoration: 'underline' }}
+                                    alignSelf="end"
+                                    display="flex"
+                                    height="100%"
+                                    alignItems="flex-end"
+                                >
+                                    <a href={`/dashboard/projects/${item?.id}`} target="_blank">Ver Detalhes</a>
+                                </Text>
+                            )}
                             {numberOfEstimatedInterviews > 0 && (
                                 <Flex
                                     flexDirection="column"

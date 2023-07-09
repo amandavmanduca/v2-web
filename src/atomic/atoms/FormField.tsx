@@ -74,7 +74,7 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
                 {...component.type === 'select' && isMulti}
                 {...component.type === 'select' && isCreatable}
             />
-            {meta?.touched && meta?.error && <span>{meta?.error}</span>}
+            {meta?.touched && meta?.error && <span style={{ fontSize: '12px', color: 'red', textAlign: 'right' }}>{meta?.error}</span>}
           </Flex>
         )}}
     </FinalFormField>

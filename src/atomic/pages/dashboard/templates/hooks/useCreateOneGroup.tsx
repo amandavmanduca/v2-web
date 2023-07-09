@@ -1,6 +1,8 @@
 import { CreateOneQuestionGroupInput, QuestionGroup, useCreateOneQuestionGroupMutation } from "@app/graphql/generated"
+import useToast from "@app/src/common/hooks/useToast"
 
 const useCreateOneGroup = () => {
+    const toast = useToast()
     const [mutate] = useCreateOneQuestionGroupMutation({
         refetchQueries: ['getTemplates', 'getTemplate']
     })
@@ -21,6 +23,10 @@ const useCreateOneGroup = () => {
             return response?.data?.createOneQuestionGroup ?? null
         } catch (err) {
             console.log(err)
+            toast({
+                title: 'Erro ao criar grupo de perguntas',
+                status: 'error',
+            })
         }
     }
     async function handleCreate(templateId: string) {

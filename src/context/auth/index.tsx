@@ -8,6 +8,7 @@ import { MeQuery } from "@app/graphql/generated";
 import useMeLazy from "./hooks/useMe";
 import useLogin from "./hooks/useLogin";
 import { destroyCookie, setCookie } from "@app/src/common/utils/cookies";
+import useToast from "@app/src/common/hooks/useToast";
 
 
 
@@ -36,6 +37,7 @@ const AuthContext = createContext<AuthContextType>({
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const toast = useToast()
 
   const { getMe, data, refetch, loading } = useMeLazy();
   const me = data?.me;
@@ -65,9 +67,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       } catch (error) {
         console.log(error);
+        toast({
+          title: 'Erro ao realizar login',
+          description: "E-mail ou senha incorretos",
+          status: 'error',
+        })
       }
     },
-    [getMe, loginMutation, router]
+    [getMe, loginMutation, router, toast]
   );
 
   const logout = useCallback(async () => {

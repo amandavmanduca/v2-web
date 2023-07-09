@@ -1,6 +1,8 @@
 import { InterviewTemplate, UpdateOneInterviewTemplateInput, useUpdateOneTemplateMutation } from "@app/graphql/generated"
+import useToast from "@app/src/common/hooks/useToast"
 
 const useUpdateOneTemplate = () => {
+    const toast = useToast()
     const [mutate] = useUpdateOneTemplateMutation({
         refetchQueries: ['getTemplates', 'getTemplate']
     })
@@ -23,6 +25,10 @@ const useUpdateOneTemplate = () => {
             return response?.data?.updateOneInterviewTemplate
         } catch (err) {
             console.log(err)
+            toast({
+                title: 'Erro ao atualizar questionário',
+                status: 'error',
+            })
         }
     }
     return {

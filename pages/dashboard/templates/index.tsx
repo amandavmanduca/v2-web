@@ -44,7 +44,7 @@ const Templates = () => {
                     <GeneralCard
                         cardtitle={item?.name}
                     >
-                        <Text>{item?.project?.name}</Text>
+                        {item?.project?.name && <Text>Projeto: [{item?.project?.name}]</Text>}
                         <Text
                             style={{ cursor: 'pointer' }}
                             _hover={{ textDecoration: 'underline' }}

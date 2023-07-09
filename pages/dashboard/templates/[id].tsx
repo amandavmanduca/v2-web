@@ -2,6 +2,7 @@ import { InterviewTemplate, Maybe, Project } from "@app/graphql/generated"
 import TemplateForm from "@app/src/atomic/pages/dashboard/templates/forms/TemplateForm"
 import useGetMyCreatedProjects from "@app/src/atomic/pages/dashboard/templates/hooks/useGetMyCreatedProjects"
 import useGetTemplate from "@app/src/atomic/pages/dashboard/templates/hooks/useGetTemplate"
+import { SelectOptions } from "@app/src/common/types/select"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
@@ -13,10 +14,7 @@ const UpdateTemplate = () => {
 
     const { getProjects, loading: loadingProjects } = useGetMyCreatedProjects()
 
-    const [projects, setProjects] = useState<{
-            value: string;
-            label: Maybe<string> | undefined;
-        }[] | []>([])
+    const [projects, setProjects] = useState<SelectOptions>([])
 
     useEffect(() => {
         (async () => {

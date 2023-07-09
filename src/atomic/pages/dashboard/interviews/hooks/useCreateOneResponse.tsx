@@ -1,6 +1,8 @@
 import { CreateOneResponseInput, Response, useCreateOneResponseMutation } from "@app/graphql/generated"
+import useToast from "@app/src/common/hooks/useToast"
 
 const useCreateOneResponse = () => {
+    const toast = useToast()
     const [mutate] = useCreateOneResponseMutation({
         refetchQueries: ['getInterview']
     })
@@ -23,6 +25,10 @@ const useCreateOneResponse = () => {
             return mutationResponse?.data?.createOneResponse ?? null
         } catch (err) {
             console.log(err)
+            toast({
+                title: 'Erro ao responder pergunta',
+                status: 'error',
+            })
         }
     }
 

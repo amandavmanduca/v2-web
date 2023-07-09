@@ -1,6 +1,8 @@
 import { CreateOneQuestionInput, Question, QuestionTypeEnum, useCreateOneQuestionMutation } from "@app/graphql/generated"
+import useToast from "@app/src/common/hooks/useToast"
 
 const useCreateOneQuestion = () => {
+    const toast = useToast()
     const [mutate] = useCreateOneQuestionMutation({
         refetchQueries: []
     })
@@ -25,6 +27,10 @@ const useCreateOneQuestion = () => {
             return response?.data?.createOneQuestion ?? null
         } catch (err) {
             console.log(err)
+            toast({
+                title: 'Erro ao criar pergunta',
+                status: 'error',
+            })
         }
     }
     async function handleCreate(groupId: string) {

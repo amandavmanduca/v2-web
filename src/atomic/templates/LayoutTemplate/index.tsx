@@ -1,6 +1,7 @@
 import Button from "@app/src/atomic/atoms/Button";
 import { usePaginatedQuery, usePaginatedQueryProps } from "@app/src/common/hooks/usePaginatedQuery";
 import { Flex } from "@chakra-ui/react";
+import { ChevronRightIcon, ChevronLeftIcon } from '@chakra-ui/icons'
 import {
     ApolloQueryResult,
     DocumentNode,
@@ -88,9 +89,9 @@ const LayoutTemplate = ({
                 ))}
             </Flex>
             <Flex>
-                {hasPrev && <Button onClick={() => prevPage(options?.sorting)}>{"<"}</Button>}
+                {hasPrev && <Button onClick={() => prevPage(options?.sorting)}><ChevronLeftIcon /></Button>}
                 <Button>{page}</Button>
-                {hasNext && <Button onClick={() => nextPage(options?.sorting)}>{">"}</Button>}
+                {hasNext && <Button onClick={() => nextPage(options?.sorting)}><ChevronRightIcon /></Button>}
             </Flex>
         </Flex>
     )

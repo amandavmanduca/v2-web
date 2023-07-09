@@ -1,6 +1,8 @@
 import { QuestionGroup, UpdateOneQuestionGroupInput, useUpdateOneQuestionGroupMutation } from "@app/graphql/generated"
+import useToast from "@app/src/common/hooks/useToast"
 
 const useUpdateOneGroup = () => {
+    const toast = useToast()
     const [mutate] = useUpdateOneQuestionGroupMutation({
         refetchQueries: ['getTemplates', 'getTemplate']
     })
@@ -22,6 +24,10 @@ const useUpdateOneGroup = () => {
             return response?.data?.updateOneQuestionGroup ?? null
         } catch (err) {
             console.log(err)
+            toast({
+                title: 'Erro ao atualizar grupo de perguntas',
+                status: 'error',
+            })
         }
     }
     return {

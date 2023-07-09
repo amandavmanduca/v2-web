@@ -1,8 +1,10 @@
 import { CreateOneProjectInput, Project, UpdateUserInput, useCreateOneProjectMutation } from "@app/graphql/generated"
+import useToast from "@app/src/common/hooks/useToast"
 import { useRouter } from "next/router"
 
 const useCreateOneProject = () => {
     const router = useRouter()
+    const toast = useToast()
     const [mutate] = useCreateOneProjectMutation({
         refetchQueries: ['getProjects']
     })
@@ -32,6 +34,10 @@ const useCreateOneProject = () => {
             return response?.data?.createOneProject ?? null
         } catch (err) {
             console.log(err)
+            toast({
+                title: 'Erro ao criar projeto',
+                status: 'error',
+            })
         }
     }
     async function handleCreate() {

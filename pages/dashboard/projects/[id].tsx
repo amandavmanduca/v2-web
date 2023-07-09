@@ -1,7 +1,8 @@
-import { Maybe, Project, User } from "@app/graphql/generated";
+import { Project, User } from "@app/graphql/generated";
 import ProjectForm from "@app/src/atomic/pages/dashboard/projects/forms/ProjectForm";
 import useGetProject from "@app/src/atomic/pages/dashboard/projects/hooks/useGetProject";
 import useGetUsersToProject from "@app/src/atomic/pages/dashboard/projects/hooks/useGetUsersToProjects";
+import { SelectOptions } from "@app/src/common/types/select";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -14,14 +15,8 @@ const UpdateProject = () => {
     const [project, setProject] = useState<Project | null | any>(null)
 
     const [users, setUsers] = useState<{
-        coordinators: {
-            value: string;
-            label: Maybe<string> | undefined;
-        }[] | [],
-        interviewers: {
-            value: string;
-            label: Maybe<string> | undefined;
-        }[] | []
+        coordinators: SelectOptions,
+        interviewers: SelectOptions
     }>({
         coordinators: [],
         interviewers: []

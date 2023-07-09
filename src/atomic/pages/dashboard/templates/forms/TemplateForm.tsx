@@ -1,4 +1,4 @@
-import { InterviewTemplate, Maybe, QuestionGroup } from "@app/graphql/generated";
+import { InterviewTemplate, QuestionGroup } from "@app/graphql/generated";
 import { FormFieldProps } from "@app/src/atomic/atoms/FormField";
 import DashboardTemplate from "@app/src/atomic/templates/DashboardTemplate"
 import FormProvider from "@app/src/providers/FormProvider";
@@ -10,15 +10,13 @@ import useCreateOneGroup from "../hooks/useCreateOneGroup";
 import { Flex } from "@chakra-ui/react";
 import Button from "@app/src/atomic/atoms/Button";
 import InterviewFormLayoutHelper from "@app/src/atomic/molecules/InterviewFormLayoutHelper";
+import { SelectOptions } from "@app/src/common/types/select";
 
 const TemplateForm = ({
     projects,
     values
 }: {
-    projects: {
-        value: string;
-        label: Maybe<string> | undefined;
-    }[] | [],
+    projects: SelectOptions,
     values: InterviewTemplate
 }) => {
     const [template, setTemplate] = useState<InterviewTemplate>(values)

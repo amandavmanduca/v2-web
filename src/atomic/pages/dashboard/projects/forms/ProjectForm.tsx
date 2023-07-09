@@ -6,26 +6,32 @@ import FormProvider from "@app/src/providers/FormProvider";
 import { Maybe } from "graphql/jsutils/Maybe";
 import { useState } from "react";
 import useUpdateOneProject from "../hooks/useUpdateOneProject";
+import { SelectOptions } from "@app/src/common/types/select";
+import { createProjectValidation } from "../validations/create-project-validation";
+
+export type IProject = {
+    name: string;
+    terms: string;
+    generalDescription?: string;
+    interviewerOrientations?: string;
+    numberOfEstimatedInterviews?: number;
+    coordinators?: SelectOptions
+    interviewers?: SelectOptions
+}
 
 const ProjectForm = ({
     users,
     values
 }: {
     users: {
-        coordinators: {
-            value: string;
-            label: Maybe<string> | undefined;
-        }[] | [],
-        interviewers: {
-            value: string;
-            label: Maybe<string> | undefined;
-        }[] | []
+        coordinators: SelectOptions,
+        interviewers: SelectOptions
     },
     values: Project
 }) => {
     const [project, setProject] = useState<Project>(values)
     const { updateProject } = useUpdateOneProject()
-    const fields: FormFieldProps[] = [
+    const fields: any[] = [
         {
             label: "Nome",
             name: "name",
@@ -33,7 +39,11 @@ const ProjectForm = ({
             component: {
                 type: "input"
             },
-            placeholder: "Digite o nome do projeto"
+            placeholder: "Digite o nome do projeto",
+            validate: {
+                required: true,
+                message: "asdasd"
+            }
         },
         {
             label: "Total de Entrevistas Estimadas",
@@ -131,14 +141,13 @@ const ProjectForm = ({
         interviewers: project?.coordinators ? setSelectedArrayOfValues(users?.interviewers, interviewesIds) : null
     }
 
-    console.log(initialValues)
     return (
         <DashboardTemplate title="Projetos">
             <FormProvider
                 title="Editando Projeto"
                 onSubmit={(v) => handleSubmit(v)}
                 initialValues={initialValues}
-                // validate={}
+                validate={createProjectValidation}
                 submitButton="Salvar"
                 fields={fields}
             />

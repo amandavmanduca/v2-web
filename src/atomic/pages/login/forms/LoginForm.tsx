@@ -1,5 +1,6 @@
 import { FormFieldProps } from "@app/src/atomic/atoms/FormField";
 import FormProvider from "@app/src/providers/FormProvider";
+import { loginValidation } from "../validations/login-validation";
 
 export type LoginFormValues = {
     email: string;
@@ -37,8 +38,9 @@ const LoginForm = ({
             title="Login"
             onSubmit={handleLogin}
             initialValues={{}}
-            // validate={}
-            submitButton="Salvar"
+            validate={loginValidation}
+            submitButton="Entrar"
+            resetButton={null}
             fields={fields}
         />
     )

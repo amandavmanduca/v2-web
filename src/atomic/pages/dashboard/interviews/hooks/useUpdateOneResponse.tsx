@@ -1,6 +1,8 @@
 import { UpdateOneResponseInput, Response, useUpdateOneResponseMutation } from "@app/graphql/generated"
+import useToast from "@app/src/common/hooks/useToast"
 
 const useUpdateOneResponse = () => {
+    const toast = useToast()
     const [mutate] = useUpdateOneResponseMutation({
         refetchQueries: ['getInterview']
     })
@@ -24,6 +26,10 @@ const useUpdateOneResponse = () => {
             return mutationResponse?.data?.updateOneResponse ?? null
         } catch (err) {
             console.log(err)
+            toast({
+                title: 'Erro ao atualizar resposta',
+                status: 'error',
+            })
         }
     }
 
