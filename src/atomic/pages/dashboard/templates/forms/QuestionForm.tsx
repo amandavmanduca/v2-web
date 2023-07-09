@@ -1,7 +1,7 @@
 import { FormFieldProps } from "@app/src/atomic/atoms/FormField";
 import FormProvider from "@app/src/providers/FormProvider";
 import { useState } from "react";
-import { Maybe, Question } from "@app/graphql/generated";
+import { Maybe, Question, QuestionTypeEnum } from "@app/graphql/generated";
 import useUpdateOneQuestion from "../hooks/useUpdateOneQuestion";
 import { questionTypeOptions } from "@app/src/common/utils/question-types-helper";
 import { createAndsetSelectedValue, setSelectedValue } from "@app/src/common/utils/setSelectedValue";
@@ -69,8 +69,9 @@ const QuestionForm = ({
                 options: createdOptions,
                 isCreatable: true
             },
+            disabled: question?.type !== QuestionTypeEnum.MultiSelect && question?.type !== QuestionTypeEnum.Select,
             placeholder: "Adicione as opções para as questões de selecionar"
-        },
+        }
     ]
 
     async function handleUpdate(values: any) {
@@ -80,7 +81,7 @@ const QuestionForm = ({
             update: {
                 index: values?.index,
                 title: values?.title,
-                type: values?.type?.value,
+                type: values?.type?.value || question?.type,
                 description: values?.description,
                 groupId: groupId,
                 options: options,

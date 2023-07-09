@@ -74,7 +74,7 @@ const UpdateInterview = () => {
     }
 
     return (
-        <DashboardTemplate title="Entrevistas">
+        <DashboardTemplate title={`Entrevista ${interview?.name} [${interview?.template?.name}]`}>
             {groups?.map((g: QuestionGroup) => (
                 <div key={g?.id}>
                     <p>{g?.name}</p>

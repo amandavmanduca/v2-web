@@ -8,7 +8,7 @@ const useUpdateOneQuestion = () => {
     })
     async function updateQuestion({ id, update }: UpdateOneQuestionInput): Promise<Question | null | any> {
         try {
-
+            const setOptions = update?.type === QuestionTypeEnum.Select || update?.type === QuestionTypeEnum.MultiSelect
             const response = await mutate({
                 variables: {
                     input: {
@@ -19,7 +19,7 @@ const useUpdateOneQuestion = () => {
                             type: update?.type,
                             description: update?.description,
                             groupId: update?.groupId,
-                            options: update?.options,
+                            options: setOptions ? update?.options : null,
                             placeholder: update?.placeholder
                         }
                     }
