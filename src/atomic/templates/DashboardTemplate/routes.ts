@@ -13,7 +13,7 @@ export const routesOptions = [
         permission: [UserRoleEnum.Coordinator, UserRoleEnum.Interviewer]
     },
     {
-        name: 'Modelos',
+        name: 'Formulário de Pesquisa',
         path: '/dashboard/templates',
         permission: [UserRoleEnum.Coordinator]
     },

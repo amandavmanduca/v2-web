@@ -35,7 +35,7 @@ const SiderMenu = () => {
                             cursor="pointer"
                             onClick={() => router.push(route?.path)}
                         >
-                            <Text>{route?.name}</Text>
+                            <Text textAlign="start">{route?.name}</Text>
                         </Flex>
                     )}
                 )}

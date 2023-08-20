@@ -91,7 +91,7 @@ const TemplateForm = ({
     }
 
     return (
-        <DashboardTemplate title="Modelos">
+        <DashboardTemplate title="Formulário de Pesquisa">
             <InterviewFormLayoutHelper
                 backgroundColor="gray.200"
             >

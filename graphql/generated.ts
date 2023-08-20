@@ -3467,6 +3467,13 @@ export type GetProjectQueryVariables = Exact<{
 
 export type GetProjectQuery = { __typename?: 'Query', project?: { __typename?: 'Project', id: string, name?: string | null, interviewerOrientations?: string | null, terms?: string | null, generalDescription?: string | null, numberOfEstimatedInterviews?: number | null, template?: { __typename?: 'InterviewTemplate', id: string, name: string, isAvailable: boolean, isFinished: boolean } | null, interviews?: { __typename?: 'ProjectInterviewsConnection', totalCount: number } | null, interviewers?: Array<{ __typename?: 'User', id: string }> | null, coordinators?: Array<{ __typename?: 'User', id: string }> | null } | null };
 
+export type GetProjectDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetProjectDetailsQuery = { __typename?: 'Query', project?: { __typename?: 'Project', id: string, name?: string | null, interviewerOrientations?: string | null, terms?: string | null, generalDescription?: string | null, numberOfEstimatedInterviews?: number | null, template?: { __typename?: 'InterviewTemplate', id: string, name: string, isAvailable: boolean, isFinished: boolean, version?: number | null, projectId?: string | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index?: number | null, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, groupId?: string | null }> | null }> | null } | null, interviews?: { __typename?: 'ProjectInterviewsConnection', totalCount: number, nodes: Array<{ __typename?: 'Interview', id: string, name: string, interviewerId: string, template: { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, questions?: Array<{ __typename?: 'Question', id: string, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, answers?: Array<{ __typename?: 'Response', id: string, questionId: string, interviewId: string, answer: Array<string> }> | null }> | null }> | null } }> } | null, interviewers?: Array<{ __typename?: 'User', id: string }> | null, coordinators?: Array<{ __typename?: 'User', id: string }> | null } | null };
+
 export type TemplateFieldsFragment = { __typename?: 'InterviewTemplate', id: string, name: string, version?: number | null, isFinished: boolean, isAvailable: boolean, projectId?: string | null, questionGroups?: Array<{ __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index?: number | null, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, groupId?: string | null }> | null }> | null };
 
 export type GroupFieldsFragment = { __typename?: 'QuestionGroup', id: string, name: string, description?: string | null, templateId?: string | null, questions?: Array<{ __typename?: 'Question', id: string, index?: number | null, title: string, description?: string | null, placeholder?: string | null, type: QuestionTypeEnum, options?: Array<string> | null, groupId?: string | null }> | null };
@@ -4065,6 +4072,51 @@ export function useGetProjectLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetProjectQueryHookResult = ReturnType<typeof useGetProjectQuery>;
 export type GetProjectLazyQueryHookResult = ReturnType<typeof useGetProjectLazyQuery>;
 export type GetProjectQueryResult = Apollo.QueryResult<GetProjectQuery, GetProjectQueryVariables>;
+export const GetProjectDetailsDocument = gql`
+    query getProjectDetails($id: ID!) {
+  project(id: $id) {
+    ...ProjectFields
+    template {
+      ...TemplateFields
+    }
+    interviews {
+      nodes {
+        ...InterviewFields
+      }
+    }
+  }
+}
+    ${ProjectFieldsFragmentDoc}
+${TemplateFieldsFragmentDoc}
+${InterviewFieldsFragmentDoc}`;
+
+/**
+ * __useGetProjectDetailsQuery__
+ *
+ * To run a query within a React component, call `useGetProjectDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProjectDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProjectDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetProjectDetailsQuery(baseOptions: Apollo.QueryHookOptions<GetProjectDetailsQuery, GetProjectDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProjectDetailsQuery, GetProjectDetailsQueryVariables>(GetProjectDetailsDocument, options);
+      }
+export function useGetProjectDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProjectDetailsQuery, GetProjectDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProjectDetailsQuery, GetProjectDetailsQueryVariables>(GetProjectDetailsDocument, options);
+        }
+export type GetProjectDetailsQueryHookResult = ReturnType<typeof useGetProjectDetailsQuery>;
+export type GetProjectDetailsLazyQueryHookResult = ReturnType<typeof useGetProjectDetailsLazyQuery>;
+export type GetProjectDetailsQueryResult = Apollo.QueryResult<GetProjectDetailsQuery, GetProjectDetailsQueryVariables>;
 export const CreateOneTemplateDocument = gql`
     mutation createOneTemplate($input: CreateOneInterviewTemplateInput!) {
   createOneInterviewTemplate(input: $input) {

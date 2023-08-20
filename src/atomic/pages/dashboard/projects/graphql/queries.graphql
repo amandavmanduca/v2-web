@@ -29,3 +29,17 @@ query getProject($id: ID!) {
     ...ProjectFields
   }
 }
+
+query getProjectDetails($id: ID!) {
+  project(id: $id) {
+    ...ProjectFields
+    template {
+        ...TemplateFields
+    }
+    interviews {
+        nodes {
+            ...InterviewFields
+        }
+    }
+  }
+}
